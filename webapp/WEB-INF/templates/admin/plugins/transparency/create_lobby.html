@@ -1,0 +1,33 @@
+<#include "managelobbies_tabs.html" />
+<@tabs2 tab="lobby" />
+<@box>
+	<@boxHeader title='#i18n{transparency.create_lobby.title}' />
+	<@boxBody>
+    <@tform name='create_lobby' action='jsp/admin/plugins/transparency/ManageLobbys.jsp'>
+
+        <@messages errors=errors />
+        <input type="hidden" id="id" name="id"/>
+        
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelName}' helpKey='#i18n{transparency.create_lobby.labelName.help}' mandatory=true>
+					<@input type='text' name='name' value='${lobby.name!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelNationalId}' helpKey='#i18n{transparency.create_lobby.labelNationalId.help}' >
+					<@input type='text' name='national_id' value='${lobby.nationalId!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelNationalIdType}' helpKey='#i18n{transparency.create_lobby.labelNationalIdType.help}' >
+					<@input type='text' name='national_id_type' value='${lobby.nationalIdType!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelUrl}' helpKey='#i18n{transparency.create_lobby.labelUrl.help}' >
+					<@input type='text' name='url' value='${lobby.url!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelJsonData}' helpKey='#i18n{transparency.create_lobby.labelJsonData.help}' >
+					<@input type='text' name='json_data' value='${lobby.jsonData!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_lobby.labelVersionDate}' helpKey='#i18n{transparency.create_lobby.labelVersionDate.help}' mandatory=true>
+					<@input type='text' name='version_date' value='${lobby.versionDate!\'\'}' />
+				</@formGroup>
+				
+				<@actionButtons button1Name="action_createLobby" button2Name="view_manageLobby"/>
+    </@tform>
+	</@boxBody>
+</@box>

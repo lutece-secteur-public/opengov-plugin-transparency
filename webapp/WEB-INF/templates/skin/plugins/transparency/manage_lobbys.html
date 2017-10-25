@@ -1,0 +1,56 @@
+<#include "lobbylist_tabs.html" />
+<@tabs2 tab="lobby" />
+
+<@row>
+	<@columns>
+		<@messages infos=infos />
+		<@tform action='jsp/site/Portal.jsp?page=lobby'>
+			<@button type='submit' name='view_createLobby' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_lobbys.buttonAdd}' />
+		</@tform>
+
+    <h4>#i18n{transparency.manage_lobbys.title}</h4>
+        
+    <@table>
+			<tr>
+				<input type="hidden" id="id" name="id"/>
+					<th>#i18n{transparency.manage_lobbys.columnName}</th>
+					<th>#i18n{transparency.manage_lobbys.columnNationalId}</th>
+					<th>#i18n{transparency.manage_lobbys.columnNationalIdType}</th>
+					<th>#i18n{transparency.manage_lobbys.columnUrl}</th>
+					<th>#i18n{transparency.manage_lobbys.columnJsonData}</th>
+					<th>#i18n{transparency.manage_lobbys.columnVersionDate}</th>
+					<th>#i18n{portal.util.labelActions}</th>
+        </tr>
+				<#list lobby_list as lobby >
+        <tr>
+					<input type="hidden" id="id" name="id" />
+            <td>
+							${lobby.name}
+            </td>    
+            <td>
+							${lobby.nationalId}
+            </td>    
+            <td>
+							${lobby.nationalIdType}
+            </td>    
+            <td>
+							${lobby.url}
+            </td>    
+            <td>
+							${lobby.jsonData}
+            </td>    
+            <td>
+							${lobby.versionDate}
+            </td>    
+					<td>
+						<@aButton href='jsp/site/Portal.jsp?page=lobby&view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
+						
+						<@aButton href='jsp/site/Portal.jsp?page=lobby&action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
+					</td>
+        </tr>
+        </#list>
+    </@table>
+	</@columns>
+</@row>
+
+  

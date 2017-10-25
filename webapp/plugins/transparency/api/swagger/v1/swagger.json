@@ -1,0 +1,597 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Plugin transparency",
+        "description": "Transparency API"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/electedofficials": {
+            "get": {
+                "description": "Get ElectedOfficial list",
+                "tags": [
+                    "ElectedOfficial"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the ElectedOfficial list",
+                        "schema": {
+                            "$ref": "#/definitions/ElectedOfficialListResult"
+                        }
+                    },
+                    "204": {
+                        "description": "No content",
+                        "schema": {
+                            "$ref": "#/definitions/NoContent"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create ElectedOfficial",
+                "tags": [
+                    "ElectedOfficial"
+                ],
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "formData",
+                        "description": "first_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "formData",
+                        "description": "last_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "title",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the ElectedOfficial created",
+                        "schema": {
+                            "$ref": "#/definitions/ElectedOfficialResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Empty parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/electedofficials/{id}": {
+            "get": {
+                "description": "Get ElectedOfficial",
+                "tags": [
+                    "ElectedOfficial"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the ElectedOfficial",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the ElectedOfficial",
+                        "schema": {
+                            "$ref": "#/definitions/ElectedOfficialResult"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Modify ElectedOfficial",
+                "tags": [
+                    "ElectedOfficial"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the ElectedOfficial to modify",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "formData",
+                        "description": "first_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "formData",
+                        "description": "last_name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "title",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the ElectedOfficial modified",
+                        "schema": {
+                            "$ref": "#/definitions/ElectedOfficialResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Empty parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete ElectedOfficial",
+                "tags": [
+                    "ElectedOfficial"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the ElectedOfficial to delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the ElectedOfficial deleted (No Content)",
+                        "schema": {
+                            "$ref": "#/definitions/NoContent"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/lobbys": {
+            "get": {
+                "description": "Get Lobby list",
+                "tags": [
+                    "Lobby"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the Lobby list",
+                        "schema": {
+                            "$ref": "#/definitions/LobbyListResult"
+                        }
+                    },
+                    "204": {
+                        "description": "No content",
+                        "schema": {
+                            "$ref": "#/definitions/NoContent"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Lobby",
+                "tags": [
+                    "Lobby"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "national_id",
+                        "in": "formData",
+                        "description": "national_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "national_id_type",
+                        "in": "formData",
+                        "description": "national_id_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "url",
+                        "in": "formData",
+                        "description": "url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "json_data",
+                        "in": "formData",
+                        "description": "json_data",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "version_date",
+                        "in": "formData",
+                        "description": "version_date",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the Lobby created",
+                        "schema": {
+                            "$ref": "#/definitions/LobbyResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Empty parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/lobbys/{id}": {
+            "get": {
+                "description": "Get Lobby",
+                "tags": [
+                    "Lobby"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Lobby",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the Lobby",
+                        "schema": {
+                            "$ref": "#/definitions/LobbyResult"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Modify Lobby",
+                "tags": [
+                    "Lobby"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Lobby to modify",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "national_id",
+                        "in": "formData",
+                        "description": "national_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "national_id_type",
+                        "in": "formData",
+                        "description": "national_id_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "url",
+                        "in": "formData",
+                        "description": "url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "json_data",
+                        "in": "formData",
+                        "description": "json_data",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "version_date",
+                        "in": "formData",
+                        "description": "version_date",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the Lobby modified",
+                        "schema": {
+                            "$ref": "#/definitions/LobbyResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Empty parameter",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Lobby",
+                "tags": [
+                    "Lobby"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the Lobby to delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the Lobby deleted (No Content)",
+                        "schema": {
+                            "$ref": "#/definitions/NoContent"
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "NoContent": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "errorCode": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "ElectedOfficialListResult": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectedOfficial"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "ElectedOfficialResult": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "$ref": "#/definitions/ElectedOfficial"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "ElectedOfficial": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "LobbyListResult": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Lobby"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "LobbyResult": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "$ref": "#/definitions/Lobby"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "Lobby": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "national_id": {
+                    "type": "string"
+                },
+                "national_id_type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "json_data": {
+                    "type": "string"
+                },
+                "version_date": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

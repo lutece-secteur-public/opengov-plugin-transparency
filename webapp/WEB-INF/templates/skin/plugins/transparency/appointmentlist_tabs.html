@@ -1,0 +1,9 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@listTabs>
+			<li <#if tab="appointment">class="active"</#if>>
+				<a href="jsp/site/Portal.jsp?page=appointment">#i18n{transparency.manage_appointments.pageTitle}</a>
+			</li>
+	</@listTabs>
+</@tabs>
+</#macro>

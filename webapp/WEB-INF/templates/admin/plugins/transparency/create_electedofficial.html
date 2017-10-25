@@ -1,0 +1,24 @@
+<#include "manageelectedofficials_tabs.html" />
+<@tabs2 tab="electedofficial" />
+<@box>
+	<@boxHeader title='#i18n{transparency.create_electedofficial.title}' />
+	<@boxBody>
+    <@tform name='create_electedofficial' action='jsp/admin/plugins/transparency/ManageElectedOfficials.jsp'>
+
+        <@messages errors=errors />
+        <input type="hidden" id="id" name="id"/>
+        
+				<@formGroup labelKey='#i18n{transparency.create_electedofficial.labelFirstName}' helpKey='#i18n{transparency.create_electedofficial.labelFirstName.help}' mandatory=true>
+					<@input type='text' name='first_name' value='${electedofficial.firstName!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_electedofficial.labelLastName}' helpKey='#i18n{transparency.create_electedofficial.labelLastName.help}' mandatory=true>
+					<@input type='text' name='last_name' value='${electedofficial.lastName!\'\'}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.create_electedofficial.labelTitle}' helpKey='#i18n{transparency.create_electedofficial.labelTitle.help}' mandatory=true>
+					<@input type='text' name='title' value='${electedofficial.title!\'\'}' />
+				</@formGroup>
+				
+				<@actionButtons button1Name="action_createElectedOfficial" button2Name="view_manageElectedOfficial"/>
+    </@tform>
+	</@boxBody>
+</@box>

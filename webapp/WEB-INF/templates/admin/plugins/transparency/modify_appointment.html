@@ -1,0 +1,35 @@
+<#include "manageappointements_tabs.html" />
+<@tabs2 tab="appointment" />
+
+<@box>
+	<@boxHeader title='#i18n{transparency.modify_appointment.title}' />
+	<@boxBody>
+    <@tform class="form-horizontal" method="post" name="modify_appointment" action="jsp/admin/plugins/transparency/ManageAppointments.jsp">
+			<@messages errors=errors />
+			<input type="hidden" id="id" name="id" value="${appointment.id}"/>
+			
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTitle}' helpKey='#i18n{transparency.modify_appointment.labelTitle.help}' mandatory=true>
+					<@input type='text' name='title' value='${appointment.title}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelDescription}' helpKey='#i18n{transparency.modify_appointment.labelDescription.help}' >
+					<@input type='text' name='description' value='${appointment.description}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelStartDate}' helpKey='#i18n{transparency.modify_appointment.labelStartDate.help}' mandatory=true>
+					<@input type='text' name='start_date' value='${appointment.startDate}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelEndDate}' helpKey='#i18n{transparency.modify_appointment.labelEndDate.help}' >
+					<@input type='text' name='end_date' value='${appointment.endDate}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeId}' helpKey='#i18n{transparency.modify_appointment.labelTypeId.help}' mandatory=true>
+					<@input type='text' name='type_id' value='${appointment.typeId}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' helpKey='#i18n{transparency.modify_appointment.labelTypeLabel.help}' >
+					<@input type='text' name='type_label' value='${appointment.typeLabel}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelUrl}' helpKey='#i18n{transparency.modify_appointment.labelUrl.help}' >
+					<@input type='text' name='url' value='${appointment.url}' />
+				</@formGroup>
+        <@actionButtons button1Name="action_modifyAppointment" button2Name="view_manageAppointment"/>
+    </@tform>
+	</@boxBody>
+</@box>

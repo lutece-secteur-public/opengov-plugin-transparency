@@ -1,0 +1,60 @@
+<#include "managelobbies_tabs.html" />
+<@tabs2 tab="lobby" />
+
+<@box>
+	<@boxHeader title='#i18n{transparency.manage_lobby.title}' boxTools=true>
+		<@tform class='form-inline pull-right' name='manage_lobby' action='jsp/admin/plugins/transparency/ManageLobbys.jsp'>
+			<@button type='submit' name='view_createLobby' buttonIcon='plus' title='#i18n{transparency.manage_lobbys.buttonAdd}' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>#i18n{transparency.manage_lobbys.columnName}</th>
+            <th>#i18n{transparency.manage_lobbys.columnNationalId}</th>
+            <th>#i18n{transparency.manage_lobbys.columnNationalIdType}</th>
+            <th>#i18n{transparency.manage_lobbys.columnUrl}</th>
+            <th>#i18n{transparency.manage_lobbys.columnJsonData}</th>
+            <th>#i18n{transparency.manage_lobbys.columnVersionDate}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+            <#list lobby_list as lobby >
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <td>
+                ${lobby.name}
+            </td>
+            <td>
+                ${lobby.nationalId}
+            </td>
+            <td>
+                ${lobby.nationalIdType}
+            </td>
+            <td>
+                ${lobby.url}
+            </td>
+            <td>
+                ${lobby.jsonData}
+            </td>
+            <td>
+                ${lobby.versionDate}
+            </td>
+        <td>
+			<@aButton href='jsp/admin/plugins/transparency/ManageLobbys.jsp?view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
+						
+			<@aButton href='jsp/admin/plugins/transparency/ManageLobbys.jsp?action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' showTitle=false />
+
+        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>

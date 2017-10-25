@@ -1,0 +1,44 @@
+<#include "electedofficiallist_tabs.html" />
+<@tabs2 tab="electedofficial" />
+
+<@row>
+	<@columns>
+		<@messages infos=infos />
+		<@tform action='jsp/site/Portal.jsp?page=electedofficial'>
+			<@button type='submit' name='view_createElectedOfficial' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_electedofficials.buttonAdd}' />
+		</@tform>
+
+    <h4>#i18n{transparency.manage_electedofficials.title}</h4>
+        
+    <@table>
+			<tr>
+				<input type="hidden" id="id" name="id"/>
+					<th>#i18n{transparency.manage_electedofficials.columnFirstName}</th>
+					<th>#i18n{transparency.manage_electedofficials.columnLastName}</th>
+					<th>#i18n{transparency.manage_electedofficials.columnTitle}</th>
+					<th>#i18n{portal.util.labelActions}</th>
+        </tr>
+				<#list electedofficial_list as electedofficial >
+        <tr>
+					<input type="hidden" id="id" name="id" />
+            <td>
+							${electedofficial.firstName}
+            </td>    
+            <td>
+							${electedofficial.lastName}
+            </td>    
+            <td>
+							${electedofficial.title}
+            </td>    
+					<td>
+						<@aButton href='jsp/site/Portal.jsp?page=electedofficial&view=modifyElectedOfficial&id=${electedofficial.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
+						
+						<@aButton href='jsp/site/Portal.jsp?page=electedofficial&action=confirmRemoveElectedOfficial&id=${electedofficial.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
+					</td>
+        </tr>
+        </#list>
+    </@table>
+	</@columns>
+</@row>
+
+  

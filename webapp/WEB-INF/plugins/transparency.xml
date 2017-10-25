@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plug-in>
+    <name>transparency</name>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <version>1.0.0</version>
+    <documentation></documentation>
+    <installation></installation>
+    <changes></changes>
+    <user-guide></user-guide>
+    <description>transparency.plugin.description</description>
+    <provider>transparency.plugin.provider</provider>
+    <provider-url>http://fr.lutece.paris.fr/fr/</provider-url>
+    <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
+    <copyright>Copyright (c) 2017 Paris</copyright>
+    <db-pool-required>1</db-pool-required>
+    
+    <core-version-dependency>
+        <min-core-version>4.1.0</min-core-version>
+        <max-core-version/>	
+    </core-version-dependency>
+
+    <!-- Admin features parameters -->
+    <admin-features>
+        <admin-feature>
+            <feature-id>TRANSPARENCY_ELECTED_OFFICIALS_MANAGEMENT</feature-id>
+            <feature-title>transparency.adminFeature.ManageElectedOfficials.name</feature-title>
+            <feature-description>transparency.adminFeature.ManageElectedOfficials.description</feature-description>
+            <feature-level>1</feature-level>
+            <feature-url>jsp/admin/plugins/transparency/ManageElectedOfficials.jsp</feature-url>
+            <feature-icon-url></feature-icon-url>
+      </admin-feature>
+        <admin-feature>
+            <feature-id>TRANSPARENCY_LOBBIES_MANAGEMENT</feature-id>
+            <feature-title>transparency.adminFeature.ManageLobbies.name</feature-title>
+            <feature-description>transparency.adminFeature.ManageLobbies.description</feature-description>
+            <feature-level>1</feature-level>
+            <feature-url>jsp/admin/plugins/transparency/ManageLobbys.jsp</feature-url>
+            <feature-icon-url></feature-icon-url>
+      </admin-feature>
+        <admin-feature>
+            <feature-id>TRANSPARENCY_APPOINTMENTS_MANAGEMENT</feature-id>
+            <feature-title>transparency.adminFeature.ManageAppointements.name</feature-title>
+            <feature-description>transparency.adminFeature.ManageAppointements.description</feature-description>
+            <feature-level>1</feature-level>
+            <feature-url>jsp/admin/plugins/transparency/ManageAppointments.jsp</feature-url>
+            <feature-icon-url></feature-icon-url>
+      </admin-feature>
+    </admin-features>    
+
+    <!-- XPages parameters -->
+    <applications>
+        <application>
+            <application-id>appointment</application-id>
+            <application-class>fr.paris.lutece.plugins.transparency.web.AppointmentXPage</application-class>
+        </application>
+        <application>
+            <application-id>lobby</application-id>
+            <application-class>fr.paris.lutece.plugins.transparency.web.LobbyXPage</application-class>
+        </application>
+        <application>
+            <application-id>electedofficial</application-id>
+            <application-class>fr.paris.lutece.plugins.transparency.web.ElectedOfficialXPage</application-class>
+        </application>
+    </applications>
+
+    <!-- Portlet parameters -->
+    <portlets>
+   </portlets>
+</plug-in>

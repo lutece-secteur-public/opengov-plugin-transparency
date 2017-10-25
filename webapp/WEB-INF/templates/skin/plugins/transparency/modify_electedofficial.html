@@ -1,0 +1,31 @@
+<#include "electedofficiallist_tabs.html" />
+<@tabs2 tab="electedofficial" />
+
+<@row>
+	<@columns>
+		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=electedofficial'>
+			<fieldset>
+				<legend>#i18n{transparency.modify_electedofficial.title}</legend>
+				<@messages errors=errors />
+				<input type="hidden" id="id" name="id" value="${electedofficial.id}"/>
+				
+				<@formGroup labelFor='first_name' labelKey='#i18n{transparency.modify_electedofficial.labelFirstName}' mandatory=true>
+          <@input type='text' id='first_name' name='first_name'  maxlength=255 value='${electedofficial.firstName}' tabIndex='0' />
+				</@formGroup>
+				<@formGroup labelFor='last_name' labelKey='#i18n{transparency.modify_electedofficial.labelLastName}' mandatory=true>
+          <@input type='text' id='last_name' name='last_name'  maxlength=255 value='${electedofficial.lastName}' tabIndex='1' />
+				</@formGroup>
+				<@formGroup labelFor='title' labelKey='#i18n{transparency.modify_electedofficial.labelTitle}' mandatory=true>
+          <@input type='text' id='title' name='title'  maxlength=50 value='${electedofficial.title}' tabIndex='2' />
+				</@formGroup>
+
+				<@formGroup>
+          <@button name='action_modifyElectedOfficial' type='submit' tabIndex='3' title='#i18n{portal.util.labelModify}' buttonIcon='plus' />
+          <@button name='view_manageElectedOfficials' type='submit' title='#i18n{portal.util.labelCancel}' buttonIcon='close' color='btn-secondary' />
+				</@formGroup>
+        </fieldset>
+		</@tform>
+	</@columns>
+</@row>
+
+  

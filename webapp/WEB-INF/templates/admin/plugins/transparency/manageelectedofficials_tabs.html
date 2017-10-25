@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@listTabs>
+			<li <#if tab="electedofficial">class="active"</#if>>
+				<a href="jsp/admin/plugins/transparency/ManageElectedOfficials.jsp">#i18n{transparency.manage_electedofficials.pageTitle}</a>
+			</li>
+	</@listTabs>
+</@tabs>
+
+</#macro>

@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@listTabs>
+			<li <#if tab="lobby">class="active"</#if>>
+				<a href="jsp/admin/plugins/transparency/ManageLobbys.jsp">#i18n{transparency.manage_lobbys.pageTitle}</a>
+			</li>
+	</@listTabs>
+</@tabs>
+
+</#macro>
