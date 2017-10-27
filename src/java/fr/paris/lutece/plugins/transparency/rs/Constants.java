@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
@@ -17,11 +17,11 @@
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVREST_IDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCREST_IDENTAL, SPECIAL, EXEMPLARY, OR
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
@@ -43,6 +43,8 @@ public final class Constants
     public static final String ID_PATH = "/{" + Constants.ID + "}";
     public static final String VERSION = "version";
     public static final String ID = "id";
+    public static final String SEARCH_PATH = "/search={" + Constants.TEXT + "}";
+    public static final String TEXT = "text";
     
     public static final String SWAGGER_DIRECTORY_PATH = "/plugins/";
     public static final String SWAGGER_PATH = "/swagger";
@@ -60,11 +62,17 @@ public final class Constants
     public static final String ELECTEDOFFICIAL_ATTRIBUTE_LAST_NAME = "last_name";
     public static final String ELECTEDOFFICIAL_ATTRIBUTE_TITLE = "title";
     
-    public static final String LOBBY_PATH = "/lobbys";
+    public static final String LOBBY_PATH = "/lobbies";
     public static final String LOBBY_ATTRIBUTE_NAME = "name";
     public static final String LOBBY_ATTRIBUTE_NATIONAL_ID = "national_id";
     public static final String LOBBY_ATTRIBUTE_NATIONAL_ID_TYPE = "national_id_type";
     public static final String LOBBY_ATTRIBUTE_URL = "url";
     public static final String LOBBY_ATTRIBUTE_JSON_DATA = "json_data";
     public static final String LOBBY_ATTRIBUTE_VERSION_DATE = "version_date";
+    
+    public static final String JSON_AUTOCOMPLETE_ID_KEY = "id";
+    public static final String JSON_AUTOCOMPLETE_VALUE_KEY = "value";
+    public static final String JSON_AUTOCOMPLETE_LABEL_KEY = "label";
+    
+    public static final String MESSAGE_NO_PROPOSAL_I18N_KEY = "transparency.msg.no_proposal" ;
 }

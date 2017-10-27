@@ -18,13 +18,16 @@
 					<@input type='text' name='start_date' value='${appointment.startDate}' />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelEndDate}' helpKey='#i18n{transparency.modify_appointment.labelEndDate.help}' >
-					<@input type='text' name='end_date' value='${appointment.endDate}' />
+					<@input type="text" name="end_date" value="${appointment.endDate!''}" />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeId}' helpKey='#i18n{transparency.modify_appointment.labelTypeId.help}' mandatory=true>
 					<@input type='text' name='type_id' value='${appointment.typeId}' />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' helpKey='#i18n{transparency.modify_appointment.labelTypeLabel.help}' >
 					<@input type='text' name='type_label' value='${appointment.typeLabel}' />
+				</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
+					<@input type="text" name="type_label" value="${appointment.contacts!''}" />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelUrl}' helpKey='#i18n{transparency.modify_appointment.labelUrl.help}' >
 					<@input type='text' name='url' value='${appointment.url}' />

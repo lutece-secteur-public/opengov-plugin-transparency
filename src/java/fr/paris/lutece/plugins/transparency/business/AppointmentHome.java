@@ -109,6 +109,39 @@ public final class AppointmentHome
     }
     
     /**
+     * Load the data of all the appointment objects and returns them as a list
+     * @return the list which contains the data of all the appointment objects
+     */
+    public static List<Appointment> getFullAppointmentsList( )
+    {
+        List<Appointment> list = _dao.selectAppointmentsList( _plugin );
+        for (Appointment appointment : list) 
+        {
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
+            
+        }
+        return list;
+    }
+    
+    /**
+     * Load the data of all the appointment objects associated to the delegation of the user 
+     * and returns them as a list
+     * @return the list which contains the data of all the appointment objects
+     */
+    public static List<Appointment> getFullAppointmentsListByDelegation( int idUser )
+    {
+        List<Appointment> list = _dao.selectAppointmentsListByDelegation( idUser, _plugin );
+        for (Appointment appointment : list) 
+        {
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
+            
+        }
+        return list;
+    }
+    
+    /**
      * Load the id of all the appointment objects and returns them as a list
      * @return the list which contains the id of all the appointment objects
      */

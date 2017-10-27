@@ -37,15 +37,11 @@ package fr.paris.lutece.plugins.transparency.web;
  
 import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
-import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
-import fr.paris.lutece.util.url.UrlItem;
-import fr.paris.lutece.portal.service.message.SiteMessageService;
-import fr.paris.lutece.portal.service.message.SiteMessage;
-import fr.paris.lutece.portal.service.message.SiteMessageException;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest; 
@@ -57,41 +53,27 @@ import javax.servlet.http.HttpServletRequest;
 public class LobbyXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_LOBBYS="/skin/plugins/transparency/manage_lobbys.html";
-    private static final String TEMPLATE_CREATE_LOBBY="/skin/plugins/transparency/create_lobby.html";
-    private static final String TEMPLATE_MODIFY_LOBBY="/skin/plugins/transparency/modify_lobby.html";
+    private static final String TEMPLATE_MANAGE_LOBBIES="/skin/plugins/transparency/manage_lobbies.html";
+    private static final String TEMPLATE_DETAIL_LOBBY="/skin/plugins/transparency/detail_lobby.html";
     
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
     
     // Parameters
     private static final String PARAMETER_ID_LOBBY="id";
-    private static final String PARAM_ACTION = "action";
-    private static final String PARAM_PAGE = "page";
     
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
-    
-    // Message
-    private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
+    private static final String MARK_LOBBY_REFERENCE_START_URL = "lobbyReferenceStartUrl";
     
     // Views
-    private static final String VIEW_MANAGE_LOBBYS = "manageLobbys";
-    private static final String VIEW_CREATE_LOBBY = "createLobby";
-    private static final String VIEW_MODIFY_LOBBY = "modifyLobby";
+    private static final String VIEW_MANAGE_LOBBIES = "manageLobbies";
+    private static final String VIEW_DETAIL_LOBBY = "detailLobby";
 
-    // Actions
-    private static final String ACTION_CREATE_LOBBY = "createLobby";
-    private static final String ACTION_MODIFY_LOBBY= "modifyLobby";
-    private static final String ACTION_REMOVE_LOBBY = "removeLobby";
-    private static final String ACTION_CONFIRM_REMOVE_LOBBY = "confirmRemoveLobby";
+    // Properties
+    private static final String PROPERTY_LOBBY_REFERENCE_START_URL_KEY = "lobby.json.detail.startUrl" ;
 
-    // Infos
-    private static final String INFO_LOBBY_CREATED = "transparency.info.lobby.created";
-    private static final String INFO_LOBBY_UPDATED = "transparency.info.lobby.updated";
-    private static final String INFO_LOBBY_REMOVED = "transparency.info.lobby.removed";
-    
     // Session variable to store working values
     private Lobby _lobby;
     
@@ -101,92 +83,17 @@ public class LobbyXPage extends MVCApplication
      * @param request The HTTP request
      * @return The Xpage
      */
-    @View( value = VIEW_MANAGE_LOBBYS, defaultView = true )
-    public XPage getManageLobbys( HttpServletRequest request )
+    @View( value = VIEW_MANAGE_LOBBIES, defaultView = true )
+    public XPage getManageLobbies( HttpServletRequest request )
     {
         _lobby = null;
         Map<String, Object> model = getModel(  );
-        model.put( MARK_LOBBY_LIST, LobbyHome.getLobbysList(  ) );
+        model.put( MARK_LOBBY_LIST, LobbyHome.getLobbiesList(  ) );
 
-        return getXPage( TEMPLATE_MANAGE_LOBBYS, request.getLocale(  ), model );
+        return getXPage( TEMPLATE_MANAGE_LOBBIES, request.getLocale(  ), model );
     }
 
-    /**
-     * Returns the form to create a lobby
-     *
-     * @param request The Http request
-     * @return the html code of the lobby form
-     */
-    @View( VIEW_CREATE_LOBBY )
-    public XPage getCreateLobby( HttpServletRequest request )
-    {
-        _lobby = ( _lobby != null ) ? _lobby : new Lobby(  );
 
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_LOBBY, _lobby );
-           
-        return getXPage( TEMPLATE_CREATE_LOBBY, request.getLocale(  ), model );
-    }
-
-    /**
-     * Process the data capture form of a new lobby
-     *
-     * @param request The Http Request
-     * @return The Jsp URL of the process result
-     */
-    @Action( ACTION_CREATE_LOBBY )
-    public XPage doCreateLobby( HttpServletRequest request )
-    {
-        populate( _lobby, request );
-
-        // Check constraints
-        if ( !validateBean( _lobby ) )
-        {
-            return redirectView( request, VIEW_CREATE_LOBBY );
-        }
-
-        LobbyHome.create( _lobby );
-        addInfo( INFO_LOBBY_CREATED, getLocale( request ) );
-
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
-    }
-
-    /**
-     * Manages the removal form of a lobby whose identifier is in the http
-     * request
-     *
-     * @param request The Http request
-     * @return the html code to confirm
-     * @throws fr.paris.lutece.portal.service.message.SiteMessageException
-     */
-    @Action( ACTION_CONFIRM_REMOVE_LOBBY )
-    public XPage getConfirmRemoveLobby( HttpServletRequest request ) throws SiteMessageException
-    {
-        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
-        UrlItem url = new UrlItem( JSP_PAGE_PORTAL );
-        url.addParameter( PARAM_PAGE, MARK_LOBBY );
-        url.addParameter( PARAM_ACTION, ACTION_REMOVE_LOBBY );
-        url.addParameter( PARAMETER_ID_LOBBY, nId );
-        
-        SiteMessageService.setMessage(request, MESSAGE_CONFIRM_REMOVE_LOBBY, SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ));
-        return null;
-    }
-
-    /**
-     * Handles the removal form of a lobby
-     *
-     * @param request The Http request
-     * @return the jsp URL to display the form to manage lobbys
-     */
-    @Action( ACTION_REMOVE_LOBBY )
-    public XPage doRemoveLobby( HttpServletRequest request )
-    {
-        int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
-        LobbyHome.remove( nId );
-        addInfo( INFO_LOBBY_REMOVED, getLocale( request ) );
-
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
-    }
 
     /**
      * Returns the form to update info about a lobby
@@ -194,8 +101,8 @@ public class LobbyXPage extends MVCApplication
      * @param request The Http request
      * @return The HTML form to update info
      */
-    @View( VIEW_MODIFY_LOBBY )
-    public XPage getModifyLobby( HttpServletRequest request )
+    @View( VIEW_DETAIL_LOBBY )
+    public XPage getDetailLobby( HttpServletRequest request )
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
 
@@ -207,29 +114,11 @@ public class LobbyXPage extends MVCApplication
         Map<String, Object> model = getModel(  );
         model.put( MARK_LOBBY, _lobby );
         
-        return getXPage( TEMPLATE_MODIFY_LOBBY, request.getLocale(  ), model );
+        model.put(MARK_LOBBY_REFERENCE_START_URL, AppPropertiesService.getProperty( PROPERTY_LOBBY_REFERENCE_START_URL_KEY ) );
+        
+        return getXPage( TEMPLATE_DETAIL_LOBBY, request.getLocale(  ), model );
     }
+    
+    
 
-    /**
-     * Process the change form of a lobby
-     *
-     * @param request The Http request
-     * @return The Jsp URL of the process result
-     */
-    @Action( ACTION_MODIFY_LOBBY )
-    public XPage doModifyLobby( HttpServletRequest request )
-    {
-        populate( _lobby, request );
-
-        // Check constraints
-        if ( !validateBean( _lobby ) )
-        {
-            return redirect( request, VIEW_MODIFY_LOBBY, PARAMETER_ID_LOBBY, _lobby.getId( ) );
-        }
-
-        LobbyHome.update( _lobby );
-        addInfo( INFO_LOBBY_UPDATED, getLocale( request ) );
-
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
-    }
 }

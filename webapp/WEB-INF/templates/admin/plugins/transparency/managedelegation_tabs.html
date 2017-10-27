@@ -1,0 +1,10 @@
+<#macro tabs2 tab >
+<@tabs>
+	<@listTabs>
+			<li <#if tab="delegation">class="active"</#if>>
+				<a href="jsp/admin/plugins/transparency/ManageDelegations.jsp">#i18n{transparency.manage_delegations.pageTitle}</a>
+			</li>
+	</@listTabs>
+</@tabs>
+
+</#macro>

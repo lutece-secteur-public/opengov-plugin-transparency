@@ -26,11 +26,46 @@
 				<@formGroup labelKey='#i18n{transparency.create_appointment.labelTypeLabel}' helpKey='#i18n{transparency.create_appointment.labelTypeLabel.help}' >
 					<@input type='text' name='type_label' value='${appointment.typeLabel!\'\'}' />
 				</@formGroup>
+                                <@formGroup labelKey='#i18n{transparency.create_appointment.contactsLabel}' helpKey='#i18n{transparency.create_appointment.contactsLabel.help}' >
+					<@input type="text" name="type_label" value="${appointment.contacts!''}" />
+				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.create_appointment.labelUrl}' helpKey='#i18n{transparency.create_appointment.labelUrl.help}' >
 					<@input type='text' name='url' value='${appointment.url!\'\'}' />
 				</@formGroup>
-				
+
+				<@formGroup labelKey='#i18n{transparency.create_appointment.labelElectedOfficials}' helpKey='#i18n{transparency.create_appointment.labelElectedOfficials.help}' >
+                                        <@select name='id_elected_official'  default_value="-1" items=electedofficials_list />
+				</@formGroup>	
+                                
+                                <@formGroup labelKey='#i18n{transparency.create_appointment.labelLobby}' helpKey='#i18n{transparency.create_appointment.labelLobby.help}' >
+					<@input type='text' name='lobby_search' id='lobby_search' value='' />
+				</@formGroup>
+
+                                <input type='hidden' name='lobby_id' id='lobby_id' value='' />
+
 				<@actionButtons button1Name="action_createAppointment" button2Name="view_manageAppointment"/>
     </@tform>
 	</@boxBody>
 </@box>
+
+<script  type="text/javascript" >
+  $( function() {
+
+    var getData = function (request, response) {
+        $.getJSON(
+            "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+            function (data) {
+                response(data);
+            }
+        );
+    };
+
+    $( "#lobby_search" ).autocomplete({
+      source: getData,
+      minLength: 3,
+      select: function( event, ui ) {
+        $( "#lobby_id" ).val( ui.item.id  );
+      }
+    });
+  } );
+  </script>

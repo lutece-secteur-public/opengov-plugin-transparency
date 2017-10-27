@@ -220,7 +220,7 @@
                 }
             }
         },
-        "/lobbys": {
+        "/lobbies": {
             "get": {
                 "description": "Get Lobby list",
                 "tags": [
@@ -318,7 +318,7 @@
                 }
             }
         },
-        "/lobbys/{id}": {
+        "/lobbies/{id}": {
             "get": {
                 "description": "Get Lobby",
                 "tags": [

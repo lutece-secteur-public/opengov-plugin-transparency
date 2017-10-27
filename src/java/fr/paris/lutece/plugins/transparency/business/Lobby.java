@@ -33,10 +33,15 @@
  */ 
 package fr.paris.lutece.plugins.transparency.business;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;
 import java.sql.Date;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONML;
 
 /**
  * This is the business class for the object Lobby
@@ -140,6 +145,7 @@ public class Lobby implements Serializable
      * Returns the Url
      * @return The Url
      */
+    @JsonIgnore
     public String getUrl( )
     {
         return _strUrl;
@@ -158,6 +164,7 @@ public class Lobby implements Serializable
      * Returns the JsonData
      * @return The JsonData
      */
+    @JsonIgnore    
     public String getJsonData( )
     {
         return _strJsonData;
@@ -176,6 +183,7 @@ public class Lobby implements Serializable
      * Returns the VersionDate
      * @return The VersionDate
      */
+    @JsonIgnore    
     public Date getVersionDate( )
     {
         return _dateVersionDate;
@@ -188,5 +196,80 @@ public class Lobby implements Serializable
     public void setVersionDate( Date dateVersionDate )
     {
         _dateVersionDate = dateVersionDate;
+    }
+    
+    
+    /**
+     * Get the JSON data formated in HTML
+     * 
+     */
+    @JsonIgnore    
+    public String getHtmlData( )
+    {
+        return jsonToHtml( new JSONObject( _strJsonData ) );
+    }
+ 
+    
+    
+    /**
+     * convert json Data to structured Html text
+     * 
+     * @param json
+     * @return string
+     */
+    private String jsonToHtml( Object obj )
+    {
+        StringBuilder html = new StringBuilder( );
+        
+        try 
+        {
+            if (obj instanceof JSONObject) 
+            {
+                JSONObject jsonObject = (JSONObject)obj;
+                String[] keys = JSONObject.getNames( jsonObject );
+                
+                html.append("<div class=\"json_object\">");
+                        
+                if (keys.length > 0) {
+                    for (String key : keys)
+                    {
+                        // print the key and open a DIV
+                        html.append("<div><span class=\"json_title\">")
+                            .append(key).append("</span> : ");
+
+                        Object val = jsonObject.get(key);
+                        // recursive call
+                        html.append( jsonToHtml( val ) );
+                        // close the div
+                        html.append("</div>");
+                    }
+                }
+                
+                html.append("</div>");
+            }
+            else if (obj instanceof JSONArray) 
+            {
+                JSONArray array = (JSONArray)obj;
+                for ( int i=0; i < array.length( ); i++)
+                {
+                    // recursive call
+                    html.append( jsonToHtml( array.get(i) ) );
+                    
+                }
+
+            }
+            else 
+            {
+                // print the value
+                html.append( obj );
+            }
+                
+        }
+        catch (JSONException e) 
+        {
+            return e.getLocalizedMessage( ) ;
+        }
+         
+        return html.toString( );
     }
 }

@@ -107,6 +107,27 @@ public final class ElectedOfficialHome
     {
         return _dao.selectElectedOfficialsList( _plugin );
     }
+
+    /**
+     * Load the data of all the electedOfficial objects and returns them as a list
+     * @param idAdminUser
+     * @return the list which contains the data of all the electedOfficial objects
+     */
+    public static List<ElectedOfficial> getElectedOfficialsListByDelegation( int idAdminUser)
+    {
+        return _dao.selectElectedOfficialsListByDelegation( idAdminUser, _plugin );
+    }
+
+    
+    /**
+     * Load the data of all the electedOfficial objects and returns them as a list
+     * @return the list which contains the data of all the electedOfficial objects
+     */
+    public static List<ElectedOfficial> getElectedOfficialsListByAppointment( int idAppointment )
+    {
+        return _dao.selectElectedOfficialsListByAppointment( idAppointment, _plugin );
+    }
+    
     
     /**
      * Load the id of all the electedOfficial objects and returns them as a list
@@ -125,5 +146,15 @@ public final class ElectedOfficialHome
     {
         return _dao.selectElectedOfficialsReferenceList(_plugin );
     }
+
+    /**
+     * Load the data of all the electedOfficial objects and returns them as a referenceList
+     * @return the referenceList which contains the data of all the electedOfficial objects
+     */
+    public static ReferenceList getElectedOfficialsReferenceListByDelegation( int idAdminUser )
+    {
+        return _dao.selectElectedOfficialsReferenceListByDelegation( idAdminUser, _plugin );
+    }
+
 }
 

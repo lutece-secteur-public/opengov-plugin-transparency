@@ -36,25 +36,29 @@ package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.url.UrlItem;
+import java.sql.Date;
 
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.converters.DateConverter;
 
 /**
  * This class provides the user interface to manage Lobby features ( manage, create, modify, remove )
  */
-@Controller( controllerJsp = "ManageLobbys.jsp", controllerPath = "jsp/admin/plugins/transparency/", right = "TRANSPARENCY_LOBBIES_MANAGEMENT" )
+@Controller( controllerJsp = "ManageLobbies.jsp", controllerPath = "jsp/admin/plugins/transparency/", right = "TRANSPARENCY_LOBBIES_MANAGEMENT" )
 public class LobbyJspBean extends AbstractManageLobbiesJspBean
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_LOBBYS = "/admin/plugins/transparency/manage_lobbys.html";
+    private static final String TEMPLATE_MANAGE_LOBBIES = "/admin/plugins/transparency/manage_lobbies.html";
     private static final String TEMPLATE_CREATE_LOBBY = "/admin/plugins/transparency/create_lobby.html";
     private static final String TEMPLATE_MODIFY_LOBBY = "/admin/plugins/transparency/modify_lobby.html";
 
@@ -62,7 +66,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String PARAMETER_ID_LOBBY = "id";
 
     // Properties for page titles
-    private static final String PROPERTY_PAGE_TITLE_MANAGE_LOBBYS = "transparency.manage_lobbys.pageTitle";
+    private static final String PROPERTY_PAGE_TITLE_MANAGE_LOBBIES = "transparency.manage_lobbies.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_MODIFY_LOBBY = "transparency.modify_lobby.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_CREATE_LOBBY = "transparency.create_lobby.pageTitle";
 
@@ -70,7 +74,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
 
-    private static final String JSP_MANAGE_LOBBYS = "jsp/admin/plugins/transparency/ManageLobbys.jsp";
+    private static final String JSP_MANAGE_LOBBIES = "jsp/admin/plugins/transparency/ManageLobbies.jsp";
 
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
@@ -79,7 +83,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
 
     // Views
-    private static final String VIEW_MANAGE_LOBBYS = "manageLobbys";
+    private static final String VIEW_MANAGE_LOBBIES = "manageLobbies";
     private static final String VIEW_CREATE_LOBBY = "createLobby";
     private static final String VIEW_MODIFY_LOBBY = "modifyLobby";
 
@@ -87,7 +91,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String ACTION_CREATE_LOBBY = "createLobby";
     private static final String ACTION_MODIFY_LOBBY = "modifyLobby";
     private static final String ACTION_REMOVE_LOBBY = "removeLobby";
-    private static final String ACTION_CONFIRM_REMOVE_LOBBY = "confirmRemoveLobby";
+    private static final String ACTION_CONFIRM_REMOVE_LOBBY = "confirmRemoveLobby" ;
+    private static final String ACTION_SYNCHRONIZE_LOBBIES = "synchronizeLobbies" ;
 
     // Infos
     private static final String INFO_LOBBY_CREATED = "transparency.info.lobby.created";
@@ -102,14 +107,14 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
      * @param request The HTTP request
      * @return The page
      */
-    @View( value = VIEW_MANAGE_LOBBYS, defaultView = true )
-    public String getManageLobbys( HttpServletRequest request )
+    @View( value = VIEW_MANAGE_LOBBIES, defaultView = true )
+    public String getManageLobbies( HttpServletRequest request )
     {
         _lobby = null;
-        List<Lobby> listLobbys = LobbyHome.getLobbysList(  );
-        Map<String, Object> model = getPaginatedListModel( request, MARK_LOBBY_LIST, listLobbys, JSP_MANAGE_LOBBYS );
+        List<Lobby> listLobbies = LobbyHome.getLobbiesList(  );
+        Map<String, Object> model = getPaginatedListModel( request, MARK_LOBBY_LIST, listLobbies, JSP_MANAGE_LOBBIES );
 
-        return getPage( PROPERTY_PAGE_TITLE_MANAGE_LOBBYS, TEMPLATE_MANAGE_LOBBYS, model );
+        return getPage( PROPERTY_PAGE_TITLE_MANAGE_LOBBIES, TEMPLATE_MANAGE_LOBBIES, model );
     }
 
     /**
@@ -138,6 +143,11 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     @Action( ACTION_CREATE_LOBBY )
     public String doCreateLobby( HttpServletRequest request )
     {
+        // add a date format converter
+        DateConverter converter = new DateConverter( null );
+        converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
+        ConvertUtils.register( converter, Date.class ) ;
+         
         populate( _lobby, request );
 
         // Check constraints
@@ -149,7 +159,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         LobbyHome.create( _lobby );
         addInfo( INFO_LOBBY_CREATED, getLocale(  ) );
 
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
+        return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 
     /**
@@ -175,7 +185,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
      * Handles the removal form of a lobby
      *
      * @param request The Http request
-     * @return the jsp URL to display the form to manage lobbys
+     * @return the jsp URL to display the form to manage lobbies
      */
     @Action( ACTION_REMOVE_LOBBY )
     public String doRemoveLobby( HttpServletRequest request )
@@ -184,7 +194,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         LobbyHome.remove( nId );
         addInfo( INFO_LOBBY_REMOVED, getLocale(  ) );
 
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
+        return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 
     /**
@@ -218,6 +228,11 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     @Action( ACTION_MODIFY_LOBBY )
     public String doModifyLobby( HttpServletRequest request )
     {
+        // add a date format converter
+        DateConverter converter = new DateConverter( null );
+        converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
+        ConvertUtils.register( converter, Date.class ) ;
+         
         populate( _lobby, request );
 
         // Check constraints
@@ -229,6 +244,24 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         LobbyHome.update( _lobby );
         addInfo( INFO_LOBBY_UPDATED, getLocale(  ) );
 
-        return redirectView( request, VIEW_MANAGE_LOBBYS );
+        return redirectView( request, VIEW_MANAGE_LOBBIES );
+    }
+    
+    /**
+     * Refresh the lobby data base
+     *
+     * @param request The Http request
+     * @return The Jsp URL of the process result
+     */
+    @Action( ACTION_SYNCHRONIZE_LOBBIES )
+    public String synchronizeLobbies( HttpServletRequest request )
+    {    
+        /*URI uri = new URI("http://someserver/data.json");
+    JSONTokener tokener = new JSONTokener(uri.toURL().openStream());
+    JSONObject root = new JSONObject(tokener);*/
+
+    addInfo( "not implemented yet", getLocale(  ) );
+
+        return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 }

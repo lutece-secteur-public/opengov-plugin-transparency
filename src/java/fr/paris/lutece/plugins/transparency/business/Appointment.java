@@ -37,6 +37,8 @@ import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the business class for the object Appointment
@@ -66,6 +68,11 @@ public class Appointment implements Serializable
     @Size( max = 255 , message = "#i18n{transparency.validation.appointment.Url.size}" ) 
     private String _strUrl;
 
+    private List<ElectedOfficial> electedOfficialList = new ArrayList<>( );
+    private List<Lobby> lobbyList = new ArrayList<>( );
+    
+    private String _strContacts ;
+    
     /**
      * Returns the Id
      * @return The Id
@@ -209,4 +216,65 @@ public class Appointment implements Serializable
     {
         _strUrl = strUrl;
     }
+
+    /**
+     * get Elected Official List
+     * 
+     * @return  Elected Official List
+     */
+    public List<ElectedOfficial> getElectedOfficialList( ) 
+    {
+        return electedOfficialList;
+    }
+
+    /**
+     * set Elected Official List
+     * 
+     * @param electedOfficialList 
+     */
+    public void setElectedOfficialList( List<ElectedOfficial> electedOfficialList) 
+    {
+        this.electedOfficialList = electedOfficialList;
+    }
+
+    /**
+     * get Lobby List
+     * @return lobby List
+     */
+    public List<Lobby> getLobbyList( ) 
+    {
+        return lobbyList;
+    }
+
+    /**
+     * set Lobby List
+     * 
+     * @param lobbyList 
+     */
+    public void setLobbyList( List<Lobby> lobbyList) 
+    {
+        this.lobbyList = lobbyList;
+    }
+
+    /**
+     * get Contacts
+     * 
+     * @return the contacts
+     */
+    public String getContacts() {
+        return _strContacts;
+    }
+
+    /**
+     * set Contacts
+     * 
+     * @param _strContacts 
+     */
+    public void setContacts(String _strContacts) {
+        this._strContacts = _strContacts;
+    }
+    
+    
+    
+    
 }

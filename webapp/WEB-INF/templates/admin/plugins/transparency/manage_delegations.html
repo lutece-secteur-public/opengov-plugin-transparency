@@ -1,0 +1,47 @@
+
+
+<@box>
+	<@boxHeader title='#i18n{transparency.manage_delegation.title}' boxTools=true>
+		<@tform class='form-inline pull-right' name='manage_delegation' action='jsp/admin/plugins/transparency/ManageDelegations.jsp'>
+			<@button type='submit' name='view_createDelegation' buttonIcon='plus' title='#i18n{transparency.manage_delegations.buttonAdd}' />
+		</@tform>
+	</@boxHeader>
+	<@boxBody>    
+    <@messages infos=infos />
+    <@paginationAdmin paginator=paginator combo=1 />
+    <div class="clearfix"></div>
+    <@table>
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <th>#i18n{transparency.manage_delegations.columnIdAdminuser}</th>
+            <th>#i18n{transparency.manage_delegations.columnIdElectedofficial}</th>
+            <th>#i18n{transparency.manage_delegations.columnDateCreation}</th>
+            <th>#i18n{portal.util.labelActions}</th>
+        </tr>
+        <@tableHeadBodySeparator />
+            <#list delegation_list as delegation >
+        <tr>
+            <input type="hidden" id="id" name="id"/>
+            <td>
+                ${delegation.idAdminUser}: ${delegation.adminUserName} 
+            </td>
+            <td>
+                ${delegation.idElectedOfficial}: ${delegation.electedOfficialName}
+            </td>
+            <td>
+                ${delegation.dateCreation}
+            </td>
+        <td>
+			<@aButton href='jsp/admin/plugins/transparency/ManageDelegations.jsp?view=modifyDelegation&id=${delegation.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
+						
+			<@aButton href='jsp/admin/plugins/transparency/ManageDelegations.jsp?action=confirmRemoveDelegation&id=${delegation.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' showTitle=false />
+
+        </td>
+        </tr>
+        </#list>
+    </@table>
+
+    <@paginationAdmin paginator=paginator />
+
+  </@boxBody>
+</@box>

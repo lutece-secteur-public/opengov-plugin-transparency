@@ -11,13 +11,21 @@
             </p>
             -->
             <subsection name="Introduction">
-                <p></p>
+                <p>This plugin provides public diffusion of meetings between lobbies and elected officials</p>
             </subsection>
             <subsection name="Configuration">
-                <p></p>
+                <p>Contents : 
+                    <ul>
+                        <li>Appointments display</li>
+                        <li>Appointment management</li>
+                        <li>Lobby management</li>
+                        <li>Elected Officials management</li>
+                        <li>Delegations management</li>
+                    </ul>
+                </p>
             </subsection>
             <subsection name="Usage">
-                <p></p>
+                <p>The lobby data base is provided by default by the french "Haute Autorité pour la Transparence de la Vie Publique" organism</p>
             </subsection>
         </section>
     </body>

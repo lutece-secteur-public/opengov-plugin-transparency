@@ -11,13 +11,22 @@
             </p>
             -->
             <subsection name="Introduction">
-                <p></p>
+                <p>Transparence de la vie publique : </p>
+                <p>Déclaration et diffusion de la liste des rencontres entre  élus et représentants d'intérêt</p>
             </subsection>
             <subsection name="Configuration">
-                <p></p>
+                <p>Fonctionnalités :
+                    <ul>
+                        <li>Diffusion publique des rendez-vous</li>
+                        <li>Gestion des rendez-vous</li>
+                        <li>Gestion des représentants d'intérêts</li>
+                        <li>Gestion des élus</li>
+                        <li>Gestion des délégations (saisies au nom d'un ou plusieurs élus)</li>
+                    </ul>
+                </p>
             </subsection>
             <subsection name="Usage">
-                <p></p>
+                <p>La base des représentants d'intérêts est synchronisée depuis le site de la Haute Autorité pour la Transparence de la Vie Publique.</p>
             </subsection>
         </section>
     </body>

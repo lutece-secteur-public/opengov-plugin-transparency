@@ -1,0 +1,83 @@
+
+
+<@row>
+	<@columns>
+		
+      <h4>#i18n{transparency.detail_appointment.title}</h4>
+    
+        <input type="hidden" id="id" name="id" value="${appointment.id}"/>
+
+	
+	<div class="panel panel-primary">
+	  <div class="panel-heading">${appointment.title}</div>
+
+	  <div class="panel-body">
+	    <div class=list-group">
+                <p class="list-group-item">		
+                    <strong>#i18n{transparency.modify_appointment.labelTitle}</strong>
+                     : ${appointment.title}
+                </p>
+		<p class="list-group-item">		
+                    <strong>#i18n{transparency.modify_appointment.labelDescription}</strong>
+                     : ${appointment.description!''}
+                </p>
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.labelStartDate}</strong>
+                     : ${appointment.startDate}
+                </p>
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.labelEndDate}</strong>
+                     : ${appointment.endDate!''}
+                </p>
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.labelTypeId}</strong>
+                     : ${appointment.typeId}
+                </p>
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.labelTypeLabel}</strong>
+                     : ${appointment.typeLabel!''}
+                </p>
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.labelUrl}</strong>
+                     : 		
+                    <#if appointment.url??>	
+                        <a href='${appointment.url}' target='_blank'>${appointment.url}</a>
+                    </#if>
+                </p>
+                <p class="list-group-item">
+                    <strong>#i18n{transparency.modify_appointment.contactsLabel}</strong>
+                     : ${appointment.contacts!''}
+                </p>
+
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.manage_appointments.columnElectedOfficials}</strong>
+                     : 		
+                <#list appointment.electedOfficialList as electedOfficial>
+                    ${electedOfficial.firstName} ${electedOfficial.lastName} <br> 
+                </#list>
+                </p>
+
+		<p class="list-group-item">
+                    <strong>#i18n{transparency.manage_appointments.columnLobbies}</strong>
+                     : 		
+		<#list appointment.lobbyList as lobby>
+                     <a href='jsp/site/Portal.jsp?page=lobby&view=detailLobby&id=${lobby.id}' title='#i18n{transparency.detail_lobby.title}' >
+                        ${lobby.name} 
+                    </a>
+                    <br>
+                </#list>
+                </p>    
+
+            </div>
+
+                <a class="btn btn-primary pull-right" href="jsp/site/Portal.jsp?page=appointment" >
+                    #i18n{portal.util.labelBack}
+                </a>
+          </div>
+        </div>
+
+
+	</@columns>
+</@row>
+
+  

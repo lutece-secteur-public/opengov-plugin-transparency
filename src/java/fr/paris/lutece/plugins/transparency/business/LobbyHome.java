@@ -103,27 +103,46 @@ public final class LobbyHome
      * Load the data of all the lobby objects and returns them as a list
      * @return the list which contains the data of all the lobby objects
      */
-    public static List<Lobby> getLobbysList( )
+    public static List<Lobby> getLobbiesList( )
     {
-        return _dao.selectLobbysList( _plugin );
+        return _dao.selectLobbiesList( null, _plugin );
+    }
+
+    /**
+     * Load the data of all the lobby objects with Name like %strLikeName% and returns them as a list
+     * @return the list which contains the data of all the lobby objects
+     */
+    public static List<Lobby> getLobbiesListNamedLike( String strLikeName )
+    {
+        return _dao.selectLobbiesList( strLikeName, _plugin );
+    }
+
+    /**
+     * Load the data of all the lobby objects and returns them as a list
+     * @param idAppointment
+     * @return the list which contains the data of all the lobby objects
+     */
+    public static List<Lobby> getLobbiesListByAppointment( int idAppointment )
+    {
+        return _dao.selectLobbiesListByAppointment( idAppointment, _plugin );
     }
     
     /**
      * Load the id of all the lobby objects and returns them as a list
      * @return the list which contains the id of all the lobby objects
      */
-    public static List<Integer> getIdLobbysList( )
+    public static List<Integer> getIdLobbieslist( )
     {
-        return _dao.selectIdLobbysList( _plugin );
+        return _dao.selectIdLobbiesList( _plugin );
     }
     
     /**
      * Load the data of all the lobby objects and returns them as a referenceList
      * @return the referenceList which contains the data of all the lobby objects
      */
-    public static ReferenceList getLobbysReferenceList( )
+    public static ReferenceList getLobbiesReferenceList( )
     {
-        return _dao.selectLobbysReferenceList(_plugin );
+        return _dao.selectLobbiesReferenceList(_plugin );
     }
 }
 

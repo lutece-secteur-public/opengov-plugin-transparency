@@ -5,20 +5,20 @@
 	<@columns>
 		<@messages infos=infos />
 		<@tform action='jsp/site/Portal.jsp?page=lobby'>
-			<@button type='submit' name='view_createLobby' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_lobbys.buttonAdd}' />
+			<@button type='submit' name='view_createLobby' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_lobbies.buttonAdd}' />
 		</@tform>
 
-    <h4>#i18n{transparency.manage_lobbys.title}</h4>
+    <h4>#i18n{transparency.manage_lobbies.title}</h4>
         
     <@table>
 			<tr>
 				<input type="hidden" id="id" name="id"/>
-					<th>#i18n{transparency.manage_lobbys.columnName}</th>
-					<th>#i18n{transparency.manage_lobbys.columnNationalId}</th>
-					<th>#i18n{transparency.manage_lobbys.columnNationalIdType}</th>
-					<th>#i18n{transparency.manage_lobbys.columnUrl}</th>
-					<th>#i18n{transparency.manage_lobbys.columnJsonData}</th>
-					<th>#i18n{transparency.manage_lobbys.columnVersionDate}</th>
+					<th>#i18n{transparency.manage_lobbies.columnName}</th>
+					<th>#i18n{transparency.manage_lobbies.columnNationalId}</th>
+					<th>#i18n{transparency.manage_lobbies.columnNationalIdType}</th>
+					<th>#i18n{transparency.manage_lobbies.columnUrl}</th>
+					<th>#i18n{transparency.manage_lobbies.columnJsonData}</th>
+					<th>#i18n{transparency.manage_lobbies.columnVersionDate}</th>
 					<th>#i18n{portal.util.labelActions}</th>
         </tr>
 				<#list lobby_list as lobby >

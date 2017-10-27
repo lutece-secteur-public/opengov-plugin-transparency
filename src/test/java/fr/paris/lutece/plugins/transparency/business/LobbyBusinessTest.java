@@ -91,7 +91,7 @@ public class LobbyBusinessTest extends LuteceTestCase
         assertEquals( lobbyStored.getVersionDate() , lobby.getVersionDate( ) );
 
         // List test
-        LobbyHome.getLobbysList();
+        LobbyHome.getLobbiesList();
 
         // Delete test
         LobbyHome.remove( lobby.getId( ) );

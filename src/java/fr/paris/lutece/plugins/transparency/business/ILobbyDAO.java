@@ -76,23 +76,36 @@ public interface ILobbyDAO
     Lobby load( int nKey, Plugin plugin );
 
     /**
-     * Load the data of all the lobby objects and returns them as a list
+     * Load the data of all the lobby objects with a name like %strLikeText% (if not null) and returns them as a list
+     * 
+     * @param strLikeText
      * @param plugin the Plugin
      * @return The list which contains the data of all the lobby objects
      */
-    List<Lobby> selectLobbysList( Plugin plugin );
+    List<Lobby> selectLobbiesList( String strLikeText , Plugin plugin );
     
+    
+    /**
+     * Load the data of all the lobby objects and returns them as a list
+     * @param idAppointment
+     * @param plugin the Plugin
+     * @return The list which contains the data of all the lobby objects
+     */
+    List<Lobby> selectLobbiesListByAppointment( int idAppointment, Plugin plugin );
+    
+            
+            
     /**
      * Load the id of all the lobby objects and returns them as a list
      * @param plugin the Plugin
      * @return The list which contains the id of all the lobby objects
      */
-    List<Integer> selectIdLobbysList( Plugin plugin );
+    List<Integer> selectIdLobbiesList( Plugin plugin );
     
     /**
      * Load the data of all the lobby objects and returns them as a referenceList
      * @param plugin the Plugin
      * @return The referenceList which contains the data of all the lobby objects
      */
-    ReferenceList selectLobbysReferenceList( Plugin plugin );
+    ReferenceList selectLobbiesReferenceList( Plugin plugin );
 }

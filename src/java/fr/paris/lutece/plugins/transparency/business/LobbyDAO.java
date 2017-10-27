@@ -48,13 +48,16 @@ import java.util.List;
 public final class LobbyDAO implements ILobbyDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_lobby, name, national_id, national_id_type, url, json_data, version_date FROM transparency_lobby WHERE id_lobby = ?";
+    private static final String SQL_QUERY_SELECT = "SELECT transparency_lobby.id_lobby, name, national_id, national_id_type, url, json_data, version_date FROM transparency_lobby ";
     private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_lobby ( name, national_id, national_id_type, url, json_data, version_date ) VALUES ( ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_lobby WHERE id_lobby = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE transparency_lobby SET id_lobby = ?, name = ?, national_id = ?, national_id_type = ?, url = ?, json_data = ?, version_date = ? WHERE id_lobby = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_lobby, name, national_id, national_id_type, url, json_data, version_date FROM transparency_lobby";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_lobby FROM transparency_lobby";
 
+    private static final String SQL_WHERE_NAME_LIKE = " WHERE name like ? " ;
+    private static final String SQL_WHERECLAUSE_BY_APPOINTMENT = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_lobby = transparency_lobby.id_lobby WHERE id_appointment = ? ";
+    private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_lobby = ? ";
+    
     /**
      * {@inheritDoc }
      */
@@ -66,11 +69,11 @@ public final class LobbyDAO implements ILobbyDAO
         {
             int nIndex = 1;
             daoUtil.setString( nIndex++ , lobby.getName( ) );
-            daoUtil.setInt( nIndex++ , lobby.getNationalId( ) );
+            daoUtil.setInt(    nIndex++ , lobby.getNationalId( ) );
             daoUtil.setString( nIndex++ , lobby.getNationalIdType( ) );
             daoUtil.setString( nIndex++ , lobby.getUrl( ) );
             daoUtil.setString( nIndex++ , lobby.getJsonData( ) );
-            daoUtil.setDate( nIndex++ , lobby.getVersionDate( ) );
+            daoUtil.setDate(   nIndex++ , lobby.getVersionDate( ) );
             
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) ) 
@@ -90,7 +93,7 @@ public final class LobbyDAO implements ILobbyDAO
     @Override
     public Lobby load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_ID , plugin );
         daoUtil.setInt( 1 , nKey );
         daoUtil.executeQuery( );
         Lobby lobby = null;
@@ -151,10 +154,15 @@ public final class LobbyDAO implements ILobbyDAO
      * {@inheritDoc }
      */
     @Override
-    public List<Lobby> selectLobbysList( Plugin plugin )
+    public List<Lobby> selectLobbiesList( String strLikeText, Plugin plugin )
     {
         List<Lobby> lobbyList = new ArrayList<Lobby>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        String strSQL = SQL_QUERY_SELECT;
+        if ( strLikeText != null ) strSQL += SQL_WHERE_NAME_LIKE ;
+        
+        DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
+        if ( strLikeText != null ) daoUtil.setString(1, strLikeText );
+        
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -176,12 +184,44 @@ public final class LobbyDAO implements ILobbyDAO
         daoUtil.free( );
         return lobbyList;
     }
-    
+   
     /**
      * {@inheritDoc }
      */
     @Override
-    public List<Integer> selectIdLobbysList( Plugin plugin )
+    public List<Lobby> selectLobbiesListByAppointment( int idAppointment,  Plugin plugin )
+    {
+        List<Lobby> lobbyList = new ArrayList<Lobby>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_APPOINTMENT, plugin );
+        daoUtil.setInt( 1 , idAppointment );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            Lobby lobby = new Lobby(  );
+            int nIndex = 1;
+            
+            lobby.setId( daoUtil.getInt( nIndex++ ) );
+            lobby.setName( daoUtil.getString( nIndex++ ) );
+            lobby.setNationalId( daoUtil.getInt( nIndex++ ) );
+            lobby.setNationalIdType( daoUtil.getString( nIndex++ ) );
+            lobby.setUrl( daoUtil.getString( nIndex++ ) );
+            lobby.setJsonData( daoUtil.getString( nIndex++ ) );
+            lobby.setVersionDate( daoUtil.getDate( nIndex++ ) );
+
+            lobbyList.add( lobby );
+        }
+
+        daoUtil.free( );
+        return lobbyList;
+    }
+
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public List<Integer> selectIdLobbiesList( Plugin plugin )
     {
         List<Integer> lobbyList = new ArrayList<Integer>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
@@ -200,10 +240,10 @@ public final class LobbyDAO implements ILobbyDAO
      * {@inheritDoc }
      */
     @Override
-    public ReferenceList selectLobbysReferenceList( Plugin plugin )
+    public ReferenceList selectLobbiesReferenceList( Plugin plugin )
     {
         ReferenceList lobbyList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )

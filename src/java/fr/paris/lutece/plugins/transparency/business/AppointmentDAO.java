@@ -48,13 +48,15 @@ import java.util.List;
 public final class AppointmentDAO implements IAppointmentDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_appointment, title, description, start_date, end_date, type_id, type_label, url FROM transparency_appointment WHERE id_appointment = ?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_appointment ( title, description, start_date, end_date, type_id, type_label, url ) VALUES ( ?, ?, ?, ?, ?, ?, ? ) ";
+    private static final String SQL_QUERY_SELECT = "SELECT transparency_appointment.id_appointment, title, description, start_date, end_date, type_id, type_label, url, contacts FROM transparency_appointment ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_appointment ( title, description, start_date, end_date, type_id, type_label, url, contacts ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_appointment WHERE id_appointment = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE transparency_appointment SET id_appointment = ?, title = ?, description = ?, start_date = ?, end_date = ?, type_id = ?, type_label = ?, url = ? WHERE id_appointment = ?";
-    private static final String SQL_QUERY_SELECTALL = "SELECT id_appointment, title, description, start_date, end_date, type_id, type_label, url FROM transparency_appointment";
+    private static final String SQL_QUERY_UPDATE = "UPDATE transparency_appointment SET id_appointment = ?, title = ?, description = ?, start_date = ?, end_date = ?, type_id = ?, type_label = ?, url = ?, contacts = ? WHERE id_appointment = ?";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_appointment FROM transparency_appointment";
 
+    private static final String SQL_WHERECLAUSE_BY_DELEGATION = " LEFT JOIN transparency_elected_official_appointment ON transparency_elected_official_appointment.id_appointment = transparency_appointment.id_appointment LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official_appointment.id_elected_official WHERE transparency_delegation.id_user = ?  ";
+    private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_appointment = ?" ;
+    private static final String SQL_DEFAULT_ORDER_BY = " ORDER BY start_date DESC ";
     /**
      * {@inheritDoc }
      */
@@ -72,6 +74,7 @@ public final class AppointmentDAO implements IAppointmentDAO
             daoUtil.setInt( nIndex++ , appointment.getTypeId( ) );
             daoUtil.setString( nIndex++ , appointment.getTypeLabel( ) );
             daoUtil.setString( nIndex++ , appointment.getUrl( ) );
+            daoUtil.setString( nIndex++ , appointment.getContacts( ) );
             
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) ) 
@@ -91,7 +94,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     @Override
     public Appointment load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_ID, plugin );
         daoUtil.setInt( 1 , nKey );
         daoUtil.executeQuery( );
         Appointment appointment = null;
@@ -109,6 +112,7 @@ public final class AppointmentDAO implements IAppointmentDAO
             appointment.setTypeId( daoUtil.getInt( nIndex++ ) );
             appointment.setTypeLabel( daoUtil.getString( nIndex++ ) );
             appointment.setUrl( daoUtil.getString( nIndex++ ) );
+            appointment.setContacts( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -144,6 +148,7 @@ public final class AppointmentDAO implements IAppointmentDAO
         daoUtil.setInt( nIndex++ , appointment.getTypeId( ) );
         daoUtil.setString( nIndex++ , appointment.getTypeLabel( ) );
         daoUtil.setString( nIndex++ , appointment.getUrl( ) );
+        daoUtil.setString( nIndex++ , appointment.getContacts( ) );
         daoUtil.setInt( nIndex , appointment.getId( ) );
 
         daoUtil.executeUpdate( );
@@ -156,8 +161,8 @@ public final class AppointmentDAO implements IAppointmentDAO
     @Override
     public List<Appointment> selectAppointmentsList( Plugin plugin )
     {
-        List<Appointment> appointmentList = new ArrayList<Appointment>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        List<Appointment> appointmentList = new ArrayList<>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -173,6 +178,7 @@ public final class AppointmentDAO implements IAppointmentDAO
             appointment.setTypeId( daoUtil.getInt( nIndex++ ) );
             appointment.setTypeLabel( daoUtil.getString( nIndex++ ) );
             appointment.setUrl( daoUtil.getString( nIndex++ ) );
+            appointment.setContacts( daoUtil.getString( nIndex++ ) );
 
             appointmentList.add( appointment );
         }
@@ -181,6 +187,40 @@ public final class AppointmentDAO implements IAppointmentDAO
         return appointmentList;
     }
     
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public List<Appointment> selectAppointmentsListByDelegation( int idUser, Plugin plugin )
+    {
+        List<Appointment> appointmentList = new ArrayList<Appointment>(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_DEFAULT_ORDER_BY, plugin );
+        daoUtil.setInt( 1 , idUser );
+        daoUtil.executeQuery(  );
+
+        while ( daoUtil.next(  ) )
+        {
+            Appointment appointment = new Appointment(  );
+            int nIndex = 1;
+            
+            appointment.setId( daoUtil.getInt( nIndex++ ) );
+            appointment.setTitle( daoUtil.getString( nIndex++ ) );
+            appointment.setDescription( daoUtil.getString( nIndex++ ) );
+            appointment.setStartDate( daoUtil.getDate( nIndex++ ) );
+            appointment.setEndDate( daoUtil.getDate( nIndex++ ) );
+            appointment.setTypeId( daoUtil.getInt( nIndex++ ) );
+            appointment.setTypeLabel( daoUtil.getString( nIndex++ ) );
+            appointment.setUrl( daoUtil.getString( nIndex++ ) );
+            appointment.setContacts( daoUtil.getString( nIndex++ ) );
+
+            appointmentList.add( appointment );
+        }
+
+        daoUtil.free( );
+        return appointmentList;
+    }
+
     /**
      * {@inheritDoc }
      */
@@ -188,7 +228,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public List<Integer> selectIdAppointmentsList( Plugin plugin )
     {
         List<Integer> appointmentList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -207,7 +247,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public ReferenceList selectAppointmentsReferenceList( Plugin plugin )
     {
         ReferenceList appointmentList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
