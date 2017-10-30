@@ -114,7 +114,17 @@ public final class AppointmentHome
      */
     public static List<Appointment> getFullAppointmentsList( )
     {
-        List<Appointment> list = _dao.selectAppointmentsList( _plugin );
+        return getFullAppointmentsList( null ) ;
+    }
+
+    /**
+     * Load the data of all the filtred appointment objects and returns them as a list
+     * @param filter
+     * @return the list which contains the data of all the appointment objects
+     */
+    public static List<Appointment> getFullAppointmentsList( AppointmentFilter filter )
+    {
+        List<Appointment> list = _dao.selectAppointmentsList( filter, _plugin );
         for (Appointment appointment : list) 
         {
             appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;

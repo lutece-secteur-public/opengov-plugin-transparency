@@ -5,7 +5,41 @@
 		<@messages infos=infos />
 
     <h4>#i18n{transparency.manage_appointments.title}</h4>
-        
+	</@columns>
+</@row>
+<@row>
+	<@columns>
+
+            <@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=appointment">
+			<@messages errors=errors />
+                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
+                        
+                            <select id="search_period" name="search_period" class="form-control ">
+                                <option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
+                                <option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
+                                <option value="31">#i18n{transparency.manage_appointments.search_since_last_month}</option>
+                                <option value="92" selected=selected>#i18n{transparency.manage_appointments.search_since_last_3_months}</option>
+                            </select>
+                        </@formGroup>
+                    
+			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel.help}' >
+                            <@input type='text' name='search_elected_official' id='search_elected_official' value='' />
+			</@formGroup>
+                        
+                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel.help}' >
+                            <@input type='text' name='search_lobby' id='search_lobby' value=''  />
+                        </@formGroup>	
+
+                        <@formGroup>                        
+                            <@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" size="" />
+                        </@formGroup>
+
+            </@tform>
+	</@columns>
+</@row>
+<@row>
+	<@columns>
+        <div class="directory-result-list">
     <@table>
         <tr>
             <th>#i18n{transparency.manage_appointments.columnTitle}</th>
@@ -48,7 +82,29 @@
         </tr>
         </#list>
     </@table>
+    </div>
 	</@columns>
 </@row>
 
+
+<script src="js/jquery/jquery-ui.min.js"></script>  
+
+<script  type="text/javascript" >
+  $( function() {
+
+    var getData = function (request, response) {
+        $.getJSON(
+            "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+            function (data) {
+                response(data);
+            }
+        );
+    };
+
+    $( "#search_lobby" ).autocomplete({
+      source: getData,
+      minLength: 3
+    });
+  } );
+  </script>
   

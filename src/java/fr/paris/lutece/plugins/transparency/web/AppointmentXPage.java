@@ -36,14 +36,16 @@
 package fr.paris.lutece.plugins.transparency.web;
  
 import fr.paris.lutece.plugins.transparency.business.Appointment;
+import fr.paris.lutece.plugins.transparency.business.AppointmentFilter;
 import fr.paris.lutece.plugins.transparency.business.AppointmentHome;
 import fr.paris.lutece.plugins.transparency.business.ElectedOfficialHome;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
-import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.xpages.XPage;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
+import fr.paris.lutece.util.string.StringUtil;
 
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest; 
@@ -59,7 +61,10 @@ public class AppointmentXPage extends MVCApplication
     private static final String TEMPLATE_DETAIL_APPOINTMENT="/skin/plugins/transparency/detail_appointment.html";
     
     // Parameters
-    private static final String PARAMETER_ID_APPOINTMENT="id";
+    private static final String PARAMETER_ID_APPOINTMENT = "id";
+    private static final String PARAMETER_SEARCH_PERIOD = "search_period" ;
+    private static final String PARAMETER_SEARCH_ELECTED_OFFICIAL = "search_elected_official" ;
+    private static final String PARAMETER_SEARCH_LOBBY = "search_lobby" ;
     
     // Markers
     private static final String MARK_APPOINTMENT_LIST = "appointment_list";
@@ -82,9 +87,19 @@ public class AppointmentXPage extends MVCApplication
     public XPage getManageAppointments( HttpServletRequest request )
     {
         _appointment = null;
+        
+        String strSearchPeriod = request.getParameter( PARAMETER_SEARCH_PERIOD );
+        String strSearchElectedOfficial = request.getParameter( PARAMETER_SEARCH_ELECTED_OFFICIAL );
+        String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+        
+        AppointmentFilter filter = new AppointmentFilter( );
+        filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod , -1) );
+        filter.setLobbyName( strSearchLobby );
+        filter.setElectedOfficialName( strSearchElectedOfficial );
+        
         Map<String, Object> model = getModel(  );
-        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList(  ) );
-                
+        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) );
+        
         return getXPage( TEMPLATE_MANAGE_APPOINTMENTS, request.getLocale(  ), model );
     }
 
