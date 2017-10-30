@@ -6,32 +6,32 @@
         <input type="hidden" id="id" name="id" value="${lobby.id}"/>
 
 	
-	<div class="panel panel-primary">
+	<div class="panel-primary">
 	  <div class="panel-heading">${lobby.name}</div>
 
 	  <div class="panel-body">
 	    <div class=list-group">
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelName}</strong>
                      : ${lobby.name}
                 </p>
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelNationalId}</strong>
                      : ${lobby.nationalId}
                 </p>
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelNationalIdType}</strong>
                      : ${lobby.nationalIdType}
                 </p>
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelUrl}</strong>
                      : ${lobby.url}
                 </p>
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelVersionDate}</strong>
                      : ${lobby.versionDate}
                 </p>
-                <p class="list-group-item">		
+                <p>		
                     <strong>#i18n{transparency.modify_lobby.labelJsonData}</strong><br>
                     <a href="${lobbyReferenceStartUrl}${lobby.nationalId}" target=_blank>${lobbyReferenceStartUrl}${lobby.nationalId}</a>
                 </p>
@@ -50,7 +50,7 @@
                     .json_object { margin:10px; padding-left:10px; border-left:1px solid #ccc}
                     .json_title { font-weight: bold; }
                     </style>
-                    ${lobby.htmlData}
+                    ${lobby.htmlData!''}
                 </div>
           </div>
         </div>

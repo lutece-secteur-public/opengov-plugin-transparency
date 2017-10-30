@@ -8,48 +8,48 @@
         <input type="hidden" id="id" name="id" value="${appointment.id}"/>
 
 	
-	<div class="panel panel-primary">
+	<div class="panel-primary">
 	  <div class="panel-heading">${appointment.title}</div>
 
 	  <div class="panel-body">
 	    <div class=list-group">
-                <p class="list-group-item">		
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelTitle}</strong>
                      : ${appointment.title}
                 </p>
-		<p class="list-group-item">		
+		<p>		
                     <strong>#i18n{transparency.modify_appointment.labelDescription}</strong>
                      : ${appointment.description!''}
                 </p>
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelStartDate}</strong>
                      : ${appointment.startDate}
                 </p>
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelEndDate}</strong>
                      : ${appointment.endDate!''}
                 </p>
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelTypeId}</strong>
                      : ${appointment.typeId}
                 </p>
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelTypeLabel}</strong>
                      : ${appointment.typeLabel!''}
                 </p>
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.labelUrl}</strong>
                      : 		
                     <#if appointment.url??>	
                         <a href='${appointment.url}' target='_blank'>${appointment.url}</a>
                     </#if>
                 </p>
-                <p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.modify_appointment.contactsLabel}</strong>
                      : ${appointment.contacts!''}
                 </p>
 
-		<p class="list-group-item">
+		<p>
                     <strong>#i18n{transparency.manage_appointments.columnElectedOfficials}</strong>
                      : 		
                 <#list appointment.electedOfficialList as electedOfficial>
@@ -57,7 +57,8 @@
                 </#list>
                 </p>
 
-		<p class="list-group-item">
+		
+		<p>
                     <strong>#i18n{transparency.manage_appointments.columnLobbies}</strong>
                      : 		
 		<#list appointment.lobbyList as lobby>
