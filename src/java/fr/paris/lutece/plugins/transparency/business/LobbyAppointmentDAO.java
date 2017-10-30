@@ -35,12 +35,9 @@
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class provides Data Access methods for LobbyAppointment objects
@@ -50,6 +47,7 @@ public final class LobbyAppointmentDAO implements ILobbyAppointmentDAO
     // Constants
     private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_lobby_appointment ( id_lobby, id_appointment ) VALUES ( ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_lobby_appointment WHERE id_lobby = ? and id_appointment = ?  ";
+    private static final String SQL_QUERY_DELETE_BY_APPOINTMENT = "DELETE FROM transparency_lobby_appointment WHERE id_appointment = ? " ;
     
     /**
      * {@inheritDoc }
@@ -83,6 +81,18 @@ public final class LobbyAppointmentDAO implements ILobbyAppointmentDAO
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
         daoUtil.setInt( 1 , lobbyAppointment.getIdLobby( ) );
         daoUtil.setInt( 1 , lobbyAppointment.getIdAppointment( ) );
+        daoUtil.executeUpdate( );
+        daoUtil.free( );
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void deleteByAppointmentId( int nIdAppointment, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_APPOINTMENT , plugin );
+        daoUtil.setInt( 1 , nIdAppointment );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }

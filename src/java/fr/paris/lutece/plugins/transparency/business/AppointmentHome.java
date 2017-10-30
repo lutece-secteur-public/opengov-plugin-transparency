@@ -98,6 +98,26 @@ public final class AppointmentHome
     {
         return _dao.load( nKey, _plugin);
     }
+    
+    /**
+     * Returns an instance of a appointment whose identifier is specified in parameter
+     * @param nId
+     * @return an instance of Appointment
+     */
+    public static Appointment getFullAppointmentById( int nId )
+    {
+        Appointment appointment = _dao.load( nId , _plugin ) ;
+                
+        if ( appointment != null ) 
+        {
+            // get lobbies and elected officials
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
+            
+        }
+            
+        return appointment ;       
+    }
 
     /**
      * Load the data of all the appointment objects and returns them as a list
@@ -133,6 +153,7 @@ public final class AppointmentHome
         }
         return list;
     }
+
     
     /**
      * Load the data of all the appointment objects associated to the delegation of the user 

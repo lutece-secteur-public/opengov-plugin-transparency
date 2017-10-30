@@ -55,4 +55,12 @@ public interface ILobbyAppointmentDAO
      */
     void delete( LobbyAppointment lobbyAppointment, Plugin plugin );
 
+    /**
+     * Delete a record from the table
+     * @param nKey The identifier of the LobbyAppointment to delete
+     * @param plugin the Plugin
+     */
+    void deleteByAppointmentId( int nIdAppointment, Plugin plugin );
+
+    
 }

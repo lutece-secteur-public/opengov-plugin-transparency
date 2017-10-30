@@ -66,12 +66,12 @@ public final class LobbyAppointmentHome
     }
 
    /**
-     * Remove the lobbyAppointment whose identifier is specified in parameter
-     * @param lobbyAppointment
+     * Remove the lobby associations of the appointment
+     * @param nIdAppointment
      */
-    public static void remove( LobbyAppointment lobbyAppointment )
+    public static void removeByAppointmentId( int nIdAppointment )
     {
-        _dao.delete( lobbyAppointment, _plugin );
+        _dao.deleteByAppointmentId( nIdAppointment, _plugin );
     }
 
 }

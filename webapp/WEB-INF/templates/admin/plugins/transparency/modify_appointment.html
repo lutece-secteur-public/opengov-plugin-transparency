@@ -2,10 +2,15 @@
 <@box>
 	<@boxHeader title='#i18n{transparency.modify_appointment.title}' />
 	<@boxBody>
-    <@tform class="form-horizontal" method="post" name="modify_appointment" action="jsp/admin/plugins/transparency/ManageAppointments.jsp">
+                <@tform class="form-horizontal" method="post" name="modify_appointment" action="jsp/admin/plugins/transparency/ManageAppointments.jsp">
 			<@messages errors=errors />
 			<input type="hidden" id="id" name="id" value="${appointment.id}"/>
 			
+                                <@formGroup labelKey='#i18n{transparency.modify_appointment.labelElectedOfficial}' mandatory=false >
+                                        <#list appointment.electedOfficialList as electedOfficial>
+                                            ${electedOfficial.firstName} ${electedOfficial.lastName}<br>
+                                        </#list>
+                                </@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTitle}' helpKey='#i18n{transparency.modify_appointment.labelTitle.help}' mandatory=true>
 					<@input type='text' name='title' value='${appointment.title}' />
 				</@formGroup>
@@ -18,19 +23,55 @@
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelEndDate}' helpKey='#i18n{transparency.modify_appointment.labelEndDate.help}' >
 					<@input type="text" name="end_date" value="${appointment.endDate!''}" />
 				</@formGroup>
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeId}' helpKey='#i18n{transparency.modify_appointment.labelTypeId.help}' mandatory=true>
-					<@input type='text' name='type_id' value='${appointment.typeId}' />
-				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' helpKey='#i18n{transparency.modify_appointment.labelTypeLabel.help}' >
 					<@input type='text' name='type_label' value='${appointment.typeLabel}' />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
-					<@input type="text" name="type_label" value="${appointment.contacts!''}" />
+					<@input type="text" name="contacts" value="${appointment.contacts!''}" />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelUrl}' helpKey='#i18n{transparency.modify_appointment.labelUrl.help}' >
 					<@input type='text' name='url' value='${appointment.url}' />
 				</@formGroup>
-        <@actionButtons button1Name="action_modifyAppointment" button2Name="view_manageAppointment"/>
-    </@tform>
+                                
+                                <@formGroup labelKey='#i18n{transparency.modify_appointment.labelLobby}' mandatory=false >
+				    <#list appointment.lobbyList as lobby>
+                                        ${lobby.name}  <br>
+                                    </#list>
+                                    
+                                </@formGroup>
+                                <@formGroup labelKey='#i18n{transparency.modify_appointment.labelNewLobby}' helpKey='#i18n{transparency.create_appointment.labelNewLobby.help}' >
+                                    <@input type='text' name='lobby_search' id='lobby_search' value='' />
+                                </@formGroup>
+                                
+                                <#assign idFirstLobby = 0 />
+                                <#if appointment.lobbyList?? >
+                                    <#assign idFirstLobby = appointment.lobbyList[0].id />
+                                </#if>
+                                <input type='hidden' name='lobby_id' id='lobby_id' value=${idFirstLobby} />
+                        <@actionButtons button1Name="action_modifyAppointment" button2Name="view_manageAppointment"/>
+                </@tform>
 	</@boxBody>
 </@box>
+
+
+<script  type="text/javascript" >
+  $( function() {
+
+    var getData = function (request, response) {
+        $.getJSON(
+            "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+            function (data) {
+                response(data);
+            }
+        );
+    };
+
+    $( "#lobby_search" ).autocomplete({
+      source: getData,
+      minLength: 3,
+      select: function( event, ui ) {
+        $( "#lobby_id" ).val( ui.item.id  );
+      }
+    });
+  } );
+  </script>

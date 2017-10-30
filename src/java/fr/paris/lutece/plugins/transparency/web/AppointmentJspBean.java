@@ -159,7 +159,6 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
         
-        
         Map<String, Object> model = getModel(  );
         model.put( MARK_APPOINTMENT, _appointment );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
@@ -282,15 +281,16 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         if ( _appointment == null || ( _appointment.getId(  ) != nId ))
         {
-            _appointment = AppointmentHome.findByPrimaryKey( nId );
+            _appointment = AppointmentHome.getFullAppointmentById( nId );
         }
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
         
-        
         Map<String, Object> model = getModel(  );
         model.put( MARK_APPOINTMENT, _appointment );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
+        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) ) ;
+        
         
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_APPOINTMENT, TEMPLATE_MODIFY_APPOINTMENT, model );
     }
@@ -319,6 +319,34 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         }
 
         AppointmentHome.update( _appointment );
+        
+        // change Lobby to the appointment
+        String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
+        String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+        
+        int idLobby = StringUtil.getIntValue( strIdLobby, -1) ;
+
+        Lobby lobby = LobbyHome.findByPrimaryKey( idLobby ) ;
+        if ( idLobby > 0 && lobby != null ) 
+        {
+            LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
+            LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ) , _appointment.getId( ) ) ) ;
+            _appointment.getLobbyList( ).add( lobby ) ;
+        } 
+        else if ( !StringUtils.isBlank( strSearchLobby ) )
+        {
+            Lobby newLobby = new Lobby( );
+            newLobby.setName( strSearchLobby );
+            newLobby.setVersionDate( new Date( (new java.util.Date( )).getTime( ) ) ) ; 
+            newLobby = LobbyHome.create( newLobby );
+            
+            LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
+            LobbyAppointmentHome.create( new LobbyAppointment( newLobby.getId( ) , _appointment.getId( ) ) ) ;
+            _appointment.getLobbyList( ).add( newLobby ) ;
+            
+        }
+        
+        
         addInfo( INFO_APPOINTMENT_UPDATED, getLocale(  ) );
 
         return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
