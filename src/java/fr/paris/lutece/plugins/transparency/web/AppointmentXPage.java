@@ -69,6 +69,7 @@ public class AppointmentXPage extends MVCApplication
     // Markers
     private static final String MARK_APPOINTMENT_LIST = "appointment_list";
     private static final String MARK_APPOINTMENT = "appointment";
+    private static final String MARK_BASE_URL = "base_url" ;
     
     // Views
     private static final String VIEW_MANAGE_APPOINTMENTS = "manageAppointments";
@@ -99,6 +100,7 @@ public class AppointmentXPage extends MVCApplication
         
         Map<String, Object> model = getModel(  );
         model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) );
+        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) ) ; 
         
         return getXPage( TEMPLATE_MANAGE_APPOINTMENTS, request.getLocale(  ), model );
     }
