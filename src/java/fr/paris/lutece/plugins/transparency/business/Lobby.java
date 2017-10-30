@@ -38,10 +38,10 @@ import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;
 import java.sql.Date;
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONML;
 
 /**
  * This is the business class for the object Lobby
@@ -206,7 +206,15 @@ public class Lobby implements Serializable
     @JsonIgnore    
     public String getHtmlData( )
     {
-        return jsonToHtml( new JSONObject( _strJsonData ) );
+        if ( !StringUtils.isBlank(_strJsonData ) ) 
+        {
+            return jsonToHtml( new JSONObject( _strJsonData ) );
+        }
+        else
+        {
+            return "";
+        }
+            
     }
  
     
