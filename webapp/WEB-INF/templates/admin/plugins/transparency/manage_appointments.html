@@ -18,7 +18,7 @@
             <th>#i18n{transparency.manage_appointments.columnLobbies}</th>
             <th>#i18n{transparency.manage_appointments.columnStartDate}</th>
             <th>#i18n{transparency.manage_appointments.columnTypeLabel}</th>
-            <th>#i18n{transparency.manage_appointments.columnUrl}</th>
+            <th>#i18n{transparency.manage_appointments.columnContacts}</th>
             <th>#i18n{portal.util.labelActions}</th>
         </tr>
         <@tableHeadBodySeparator />
@@ -45,10 +45,10 @@
                 ${appointment.startDate}
             </td>
             <td>
-                ${appointment.typeLabel}
+                ${appointment.typeLabel!''}
             </td>
             <td>
-                ${appointment.url}
+                ${appointment.contacts!''}
             </td>
             <td>
                 <@aButton href='jsp/admin/plugins/transparency/ManageAppointments.jsp?view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
