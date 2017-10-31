@@ -49,7 +49,7 @@ import org.apache.commons.lang.StringUtils;
 public final class AppointmentDAO implements IAppointmentDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT transparency_appointment.id_appointment, transparency_appointment.title, description, start_date, end_date, type_id, type_label, transparency_appointment.url, contacts FROM transparency_appointment ";
+    private static final String SQL_QUERY_SELECT = "SELECT DISTINCT transparency_appointment.id_appointment, transparency_appointment.title, description, start_date, end_date, type_id, type_label, transparency_appointment.url, contacts FROM transparency_appointment ";
     private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_appointment ( title, description, start_date, end_date, type_id, type_label, url, contacts ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_appointment WHERE id_appointment = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE transparency_appointment SET id_appointment = ?, title = ?, description = ?, start_date = ?, end_date = ?, type_id = ?, type_label = ?, url = ?, contacts = ? WHERE id_appointment = ?";
@@ -277,7 +277,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public List<Appointment> selectAppointmentsListByDelegation( int idUser, Plugin plugin )
     {
         List<Appointment> appointmentList = new ArrayList<Appointment>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_DEFAULT_ORDER_BY, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.setInt( 1 , idUser );
         daoUtil.executeQuery(  );
 
@@ -310,7 +310,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public List<Integer> selectIdAppointmentsList( Plugin plugin )
     {
         List<Integer> appointmentList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_DEFAULT_ORDER_BY, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
@@ -329,7 +329,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public ReferenceList selectAppointmentsReferenceList( Plugin plugin )
     {
         ReferenceList appointmentList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )
