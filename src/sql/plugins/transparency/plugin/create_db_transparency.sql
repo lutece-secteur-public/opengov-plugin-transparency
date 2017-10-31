@@ -68,7 +68,7 @@ DROP TABLE IF EXISTS transparency_elected_official_appointment;
 CREATE TABLE transparency_elected_official_appointment (
 id_elected_official int default '0' NOT NULL,
 id_appointment int default '0' NOT NULL,
-PRIMARY KEY (id_electedofficial, id_appointment)
+PRIMARY KEY (id_elected_official, id_appointment)
 );
 
 --
