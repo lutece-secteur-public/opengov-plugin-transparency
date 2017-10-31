@@ -14,10 +14,10 @@
                             <@input type='text' name='description' value='${appointment.description!\'\'}' />
                     </@formGroup>
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelStartDate}' helpKey='#i18n{transparency.create_appointment.labelStartDate.help}' mandatory=true>
-                            <@input type='text' name='start_date' value='${appointment.startDate!\'\'}' />
+                            <@input type='text' name='start_date' id='start_date' value='${appointment.startDate!\'\'}' />
                     </@formGroup>
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelEndDate}' helpKey='#i18n{transparency.create_appointment.labelEndDate.help}' >
-                            <@input type='text' name='end_date' value='${appointment.endDate!\'\'}' />
+                            <@input type='text' name='end_date' id='end_date' value='${appointment.endDate!\'\'}' />
                     </@formGroup>
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelTypeLabel}' helpKey='#i18n{transparency.create_appointment.labelTypeLabel.help}' >
                             <@input type='text' name='type_label' value='${appointment.typeLabel!\'\'}' />
@@ -64,4 +64,13 @@
       }
     });
   } );
-  </script>
+</script>
+
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/locales/bootstrap-datepicker.fr.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$( function() {
+        $("#start_date").datepicker({language: 'fr', orientation: 'bottom'});
+        $("#end_date").datepicker({language: 'fr', orientation: 'bottom'});
+});
+</script>
