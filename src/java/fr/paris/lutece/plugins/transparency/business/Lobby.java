@@ -57,7 +57,7 @@ public class Lobby implements Serializable
     @Size( max = 255 , message = "#i18n{transparency.validation.lobby.Name.size}" ) 
     private String _strName;
     
-    private int _nNationalId;
+    private String _strNationalId;
     
     @Size( max = 50 , message = "#i18n{transparency.validation.lobby.NationalIdType.size}" ) 
     private String _strNationalIdType;
@@ -109,18 +109,18 @@ public class Lobby implements Serializable
      * Returns the NationalId
      * @return The NationalId
      */
-    public int getNationalId( )
+    public String getNationalId( )
     {
-        return _nNationalId;
+        return _strNationalId;
     }
 
     /**
      * Sets the NationalId
-     * @param nNationalId The NationalId
+     * @param strNationalId The NationalId
      */ 
-    public void setNationalId( int nNationalId )
+    public void setNationalId( String strNationalId )
     {
-        _nNationalId = nNationalId;
+        _strNationalId = strNationalId;
     }
     
     /**

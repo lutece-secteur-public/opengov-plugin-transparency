@@ -100,6 +100,16 @@ public final class LobbyHome
     }
 
     /**
+     * Returns an instance of a lobby whose identifier is specified in parameter
+     * @param strNationalId
+     * @return an instance of Lobby
+     */
+    public static Lobby getByNationalId( String strNationalId )
+    {
+        return _dao.loadByNationalId( strNationalId, _plugin);
+    }
+
+    /**
      * Load the data of all the lobby objects and returns them as a list
      * @return the list which contains the data of all the lobby objects
      */

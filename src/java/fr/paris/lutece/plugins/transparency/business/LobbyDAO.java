@@ -57,7 +57,10 @@ public final class LobbyDAO implements ILobbyDAO
     private static final String SQL_WHERE_NAME_LIKE = " WHERE name like ? " ;
     private static final String SQL_WHERECLAUSE_BY_APPOINTMENT = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_lobby = transparency_lobby.id_lobby WHERE id_appointment = ? ";
     private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_lobby = ? ";
+    private static final String SQL_WHERECLAUSE_BY_NATIONAL_ID = " WHERE national_id = ? ";
     
+    private static final String SQL_ORDER_BY = " ORDER BY name " ;
+            
     /**
      * {@inheritDoc }
      */
@@ -69,7 +72,7 @@ public final class LobbyDAO implements ILobbyDAO
         {
             int nIndex = 1;
             daoUtil.setString( nIndex++ , lobby.getName( ) );
-            daoUtil.setInt(    nIndex++ , lobby.getNationalId( ) );
+            daoUtil.setString(    nIndex++ , lobby.getNationalId( ) );
             daoUtil.setString( nIndex++ , lobby.getNationalIdType( ) );
             daoUtil.setString( nIndex++ , lobby.getUrl( ) );
             daoUtil.setString( nIndex++ , lobby.getJsonData( ) );
@@ -105,7 +108,7 @@ public final class LobbyDAO implements ILobbyDAO
             
             lobby.setId( daoUtil.getInt( nIndex++ ) );
             lobby.setName( daoUtil.getString( nIndex++ ) );
-            lobby.setNationalId( daoUtil.getInt( nIndex++ ) );
+            lobby.setNationalId( daoUtil.getString( nIndex++ ) );
             lobby.setNationalIdType( daoUtil.getString( nIndex++ ) );
             lobby.setUrl( daoUtil.getString( nIndex++ ) );
             lobby.setJsonData( daoUtil.getString( nIndex++ ) );
@@ -116,6 +119,37 @@ public final class LobbyDAO implements ILobbyDAO
         return lobby;
     }
 
+        /**
+     * {@inheritDoc }
+     */
+    @Override
+    public Lobby loadByNationalId( String strNationalId, Plugin plugin )
+    {
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_NATIONAL_ID , plugin );
+        daoUtil.setString( 1 , strNationalId );
+        daoUtil.executeQuery( );
+        Lobby lobby = null;
+
+        if ( daoUtil.next( ) )
+        {
+            lobby = new Lobby();
+            int nIndex = 1;
+            
+            lobby.setId( daoUtil.getInt( nIndex++ ) );
+            lobby.setName( daoUtil.getString( nIndex++ ) );
+            lobby.setNationalId( daoUtil.getString( nIndex++ ) );
+            lobby.setNationalIdType( daoUtil.getString( nIndex++ ) );
+            lobby.setUrl( daoUtil.getString( nIndex++ ) );
+            lobby.setJsonData( daoUtil.getString( nIndex++ ) );
+            lobby.setVersionDate( daoUtil.getDate( nIndex++ ) );
+        }
+
+        daoUtil.free( );
+        return lobby;
+    }
+
+     
+             
     /**
      * {@inheritDoc }
      */
@@ -139,7 +173,7 @@ public final class LobbyDAO implements ILobbyDAO
         
         daoUtil.setInt( nIndex++ , lobby.getId( ) );
         daoUtil.setString( nIndex++ , lobby.getName( ) );
-        daoUtil.setInt( nIndex++ , lobby.getNationalId( ) );
+        daoUtil.setString( nIndex++ , lobby.getNationalId( ) );
         daoUtil.setString( nIndex++ , lobby.getNationalIdType( ) );
         daoUtil.setString( nIndex++ , lobby.getUrl( ) );
         daoUtil.setString( nIndex++ , lobby.getJsonData( ) );
@@ -159,6 +193,7 @@ public final class LobbyDAO implements ILobbyDAO
         List<Lobby> lobbyList = new ArrayList<Lobby>(  );
         String strSQL = SQL_QUERY_SELECT;
         if ( strLikeText != null ) strSQL += SQL_WHERE_NAME_LIKE ;
+        strSQL += SQL_ORDER_BY ;
         
         DAOUtil daoUtil = new DAOUtil( strSQL, plugin );
         if ( strLikeText != null ) daoUtil.setString(1, strLikeText );
@@ -172,7 +207,7 @@ public final class LobbyDAO implements ILobbyDAO
             
             lobby.setId( daoUtil.getInt( nIndex++ ) );
             lobby.setName( daoUtil.getString( nIndex++ ) );
-            lobby.setNationalId( daoUtil.getInt( nIndex++ ) );
+            lobby.setNationalId( daoUtil.getString( nIndex++ ) );
             lobby.setNationalIdType( daoUtil.getString( nIndex++ ) );
             lobby.setUrl( daoUtil.getString( nIndex++ ) );
             lobby.setJsonData( daoUtil.getString( nIndex++ ) );
@@ -192,7 +227,7 @@ public final class LobbyDAO implements ILobbyDAO
     public List<Lobby> selectLobbiesListByAppointment( int idAppointment,  Plugin plugin )
     {
         List<Lobby> lobbyList = new ArrayList<Lobby>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_APPOINTMENT, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_APPOINTMENT + SQL_ORDER_BY, plugin );
         daoUtil.setInt( 1 , idAppointment );
         daoUtil.executeQuery(  );
 
@@ -203,7 +238,7 @@ public final class LobbyDAO implements ILobbyDAO
             
             lobby.setId( daoUtil.getInt( nIndex++ ) );
             lobby.setName( daoUtil.getString( nIndex++ ) );
-            lobby.setNationalId( daoUtil.getInt( nIndex++ ) );
+            lobby.setNationalId( daoUtil.getString( nIndex++ ) );
             lobby.setNationalIdType( daoUtil.getString( nIndex++ ) );
             lobby.setUrl( daoUtil.getString( nIndex++ ) );
             lobby.setJsonData( daoUtil.getString( nIndex++ ) );
@@ -243,7 +278,7 @@ public final class LobbyDAO implements ILobbyDAO
     public ReferenceList selectLobbiesReferenceList( Plugin plugin )
     {
         ReferenceList lobbyList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT, plugin );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY, plugin );
         daoUtil.executeQuery(  );
 
         while ( daoUtil.next(  ) )

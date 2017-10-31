@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS transparency_lobby;
 CREATE TABLE transparency_lobby (
 id_lobby int AUTO_INCREMENT,
 name varchar(255) default '' NOT NULL,
-national_id int default '0',
+national_id varchar(50) default '',
 national_id_type varchar(50) default '',
 url varchar(255) default '',
 json_data long varchar,

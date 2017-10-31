@@ -42,8 +42,8 @@ public class LobbyBusinessTest extends LuteceTestCase
 {
     private final static String NAME1 = "Name1";
     private final static String NAME2 = "Name2";
-    private final static int NATIONALID1 = 1;
-    private final static int NATIONALID2 = 2;
+    private final static String NATIONALID1 = "1";
+    private final static String NATIONALID2 = "2";
     private final static String NATIONALIDTYPE1 = "NationalIdType1";
     private final static String NATIONALIDTYPE2 = "NationalIdType2";
     private final static String URL1 = "Url1";

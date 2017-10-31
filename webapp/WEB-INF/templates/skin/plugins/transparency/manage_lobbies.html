@@ -15,7 +15,6 @@
 					<th>#i18n{transparency.manage_lobbies.columnNationalId}</th>
 					<th>#i18n{transparency.manage_lobbies.columnNationalIdType}</th>
 					<th>#i18n{transparency.manage_lobbies.columnUrl}</th>
-					<th>#i18n{transparency.manage_lobbies.columnJsonData}</th>
 					<th>#i18n{transparency.manage_lobbies.columnVersionDate}</th>
 					<th>#i18n{portal.util.labelActions}</th>
         </tr>
@@ -32,19 +31,16 @@
 							${lobby.nationalIdType}
             </td>    
             <td>
-							${lobby.url}
-            </td>    
-            <td>
-							${lobby.jsonData}
+							${lobby.url!''}
             </td>    
             <td>
 							${lobby.versionDate}
             </td>    
-					<td>
-						<@aButton href='jsp/site/Portal.jsp?page=lobby&view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
-						
-						<@aButton href='jsp/site/Portal.jsp?page=lobby&action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
-					</td>
+            <td>
+                    <@aButton href='jsp/site/Portal.jsp?page=lobby&view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
+
+                    <@aButton href='jsp/site/Portal.jsp?page=lobby&action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
+            </td>
         </tr>
         </#list>
     </@table>

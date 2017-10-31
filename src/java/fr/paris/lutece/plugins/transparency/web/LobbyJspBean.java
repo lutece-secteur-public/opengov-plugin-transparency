@@ -39,17 +39,26 @@ import fr.paris.lutece.plugins.transparency.business.LobbyHome;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.url.UrlItem;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Date;
+import java.text.MessageFormat;
 
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * This class provides the user interface to manage Lobby features ( manage, create, modify, remove )
@@ -70,6 +79,9 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String PROPERTY_PAGE_TITLE_MODIFY_LOBBY = "transparency.modify_lobby.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_CREATE_LOBBY = "transparency.create_lobby.pageTitle";
 
+    // Plugin properties
+    private static final String PROPERTY_URL_LOBBY_LIST_REFERENCE = "lobby.json.list.url" ;
+    
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
@@ -78,7 +90,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
 
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
-
+    private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro" ;
+    
     // Validations
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
 
@@ -98,6 +111,13 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String INFO_LOBBY_CREATED = "transparency.info.lobby.created";
     private static final String INFO_LOBBY_UPDATED = "transparency.info.lobby.updated";
     private static final String INFO_LOBBY_REMOVED = "transparency.info.lobby.removed";
+    
+    // constants (for synchro)
+    private static final String CONSTANT_KEY_PUBLICATIONS ="publications";
+    private static final String CONSTANT_KEY_DENOMINATION ="denomination";
+    private static final String CONSTANT_KEY_IDENTIFIANTNATIONAL = "identifiantNational" ;
+    private static final String CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ="typeIdentifiantNational" ;
+    private static final String CONSTANT_KEY_LIENSITEWEB = "lienSiteWeb" ;
     
     // Session variable to store working values
     private Lobby _lobby;
@@ -254,13 +274,70 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_SYNCHRONIZE_LOBBIES )
-    public String synchronizeLobbies( HttpServletRequest request )
+    public String synchronizeLobbies( HttpServletRequest request ) 
     {    
-        /*URI uri = new URI("http://someserver/data.json");
-    JSONTokener tokener = new JSONTokener(uri.toURL().openStream());
-    JSONObject root = new JSONObject(tokener);*/
+             
+        int nbLobbyCreated = 0 ;
+        int nbLobbyUpdated = 0 ;
+        
+        try 
+        {  
+            URI uri = new URI( AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE ) );
 
-    addInfo( "not implemented yet", getLocale(  ) );
+            JSONTokener tokener = new JSONTokener(uri.toURL( ).openStream( ));
+            JSONObject root = new JSONObject(tokener);
+            
+            JSONArray lobbyList = (JSONArray)root.get(CONSTANT_KEY_PUBLICATIONS);
+                
+            
+            for (int i=0; i < lobbyList.length( ) ; i++) 
+            {
+                JSONObject jsonLobby = lobbyList.getJSONObject(i);
+                Lobby lobby = new Lobby( );
+                
+                lobby.setName( jsonLobby.getString( CONSTANT_KEY_DENOMINATION ) ) ;
+                lobby.setNationalId( jsonLobby.getString( CONSTANT_KEY_IDENTIFIANTNATIONAL) ) ;
+                if (jsonLobby.has( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) )
+                        lobby.setNationalIdType( jsonLobby.getString( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) ) ;
+                if ( jsonLobby.has( CONSTANT_KEY_LIENSITEWEB ) )
+                         lobby.setUrl( jsonLobby.getString( CONSTANT_KEY_LIENSITEWEB ) ) ;
+                
+                lobby.setVersionDate( new Date( (new java.util.Date( )).getTime( ) ) ) ;       
+                
+                lobby.setJsonData( jsonLobby.toString( ) );
+                
+                Lobby existingLobby = LobbyHome.getByNationalId( lobby.getNationalId( ) );
+                
+                if ( existingLobby != null  )
+                {
+                    lobby.setId( existingLobby.getId( ) );
+                    LobbyHome.update( lobby );
+                    nbLobbyUpdated ++ ;
+                }
+                else
+                {
+                    LobbyHome.create( lobby );
+                    nbLobbyCreated ++ ;
+                }
+            }    
+            
+            String msg = I18nService.getLocalizedString( MSG_SYNCHRO_KEY, getLocale( ) );
+            msg = MessageFormat.format( msg , lobbyList.length( ) , nbLobbyCreated, nbLobbyUpdated );
+                    
+            addInfo( msg );
+
+        } 
+        catch (MalformedURLException e)
+        {
+              addError( e.getLocalizedMessage( ) );
+        }
+        catch (IOException | URISyntaxException e)
+        {
+              addError( e.getLocalizedMessage( ) );
+        }
+
+       
+       
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }

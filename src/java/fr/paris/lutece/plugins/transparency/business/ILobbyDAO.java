@@ -75,6 +75,17 @@ public interface ILobbyDAO
      */
     Lobby load( int nKey, Plugin plugin );
 
+    
+    /**
+     * find the data by national Id from the table
+     * 
+     * @param strNationalId
+     * @param plugin the Plugin
+     * @return The instance of the lobby
+     */
+    Lobby loadByNationalId( String strNationalId, Plugin plugin );
+
+
     /**
      * Load the data of all the lobby objects with a name like %strLikeText% (if not null) and returns them as a list
      * 
