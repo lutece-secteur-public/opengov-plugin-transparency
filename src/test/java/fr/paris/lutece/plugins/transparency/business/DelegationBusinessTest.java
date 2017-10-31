@@ -44,13 +44,13 @@ public class DelegationBusinessTest extends LuteceTestCase
     private final static int IDADMINUSER2 = 2;
     private final static int IDELECTEDOFFICIAL1 = 1;
     private final static int IDELECTEDOFFICIAL2 = 2;
-	private final static Date DATECREATION1 = new Date( 1000000l );
+    private final static Date DATECREATION1 = new Date( 1000000l );
     private final static Date DATECREATION2 = new Date( 2000000l );
 
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        Delegation delegation = new Delegation();
+        Delegation delegation = new Delegation( );
         delegation.setIdAdminUser( IDADMINUSER1 );
         delegation.setIdElectedOfficial( IDELECTEDOFFICIAL1 );
         delegation.setDateCreation( DATECREATION1 );
@@ -58,9 +58,9 @@ public class DelegationBusinessTest extends LuteceTestCase
         // Create test
         DelegationHome.create( delegation );
         Delegation delegationStored = DelegationHome.findByPrimaryKey( delegation.getId( ) );
-        assertEquals( delegationStored.getIdAdminUser() , delegation.getIdAdminUser( ) );
-        assertEquals( delegationStored.getIdElectedOfficial() , delegation.getIdElectedOfficial( ) );
-        assertEquals( delegationStored.getDateCreation() , delegation.getDateCreation( ) );
+        assertEquals( delegationStored.getIdAdminUser( ), delegation.getIdAdminUser( ) );
+        assertEquals( delegationStored.getIdElectedOfficial( ), delegation.getIdElectedOfficial( ) );
+        assertEquals( delegationStored.getDateCreation( ), delegation.getDateCreation( ) );
 
         // Update test
         delegation.setIdAdminUser( IDADMINUSER2 );
@@ -68,18 +68,18 @@ public class DelegationBusinessTest extends LuteceTestCase
         delegation.setDateCreation( DATECREATION2 );
         DelegationHome.update( delegation );
         delegationStored = DelegationHome.findByPrimaryKey( delegation.getId( ) );
-        assertEquals( delegationStored.getIdAdminUser() , delegation.getIdAdminUser( ) );
-        assertEquals( delegationStored.getIdElectedOfficial() , delegation.getIdElectedOfficial( ) );
-        assertEquals( delegationStored.getDateCreation() , delegation.getDateCreation( ) );
+        assertEquals( delegationStored.getIdAdminUser( ), delegation.getIdAdminUser( ) );
+        assertEquals( delegationStored.getIdElectedOfficial( ), delegation.getIdElectedOfficial( ) );
+        assertEquals( delegationStored.getDateCreation( ), delegation.getDateCreation( ) );
 
         // List test
-        DelegationHome.getDelegationsList();
+        DelegationHome.getDelegationsList( );
 
         // Delete test
         DelegationHome.remove( delegation.getId( ) );
         delegationStored = DelegationHome.findByPrimaryKey( delegation.getId( ) );
         assertNull( delegationStored );
-        
+
     }
 
 }

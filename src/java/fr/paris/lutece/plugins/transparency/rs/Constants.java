@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.transparency.rs;
 /**
  * Rest Constants
  */
-public final class Constants 
+public final class Constants
 {
     public static final String API_PATH = "transparency/api";
     public static final String VERSION_PATH = "/v{" + Constants.VERSION + "}";
@@ -45,23 +45,23 @@ public final class Constants
     public static final String ID = "id";
     public static final String SEARCH_PATH = "/search={" + Constants.TEXT + "}";
     public static final String TEXT = "text";
-    
+
     public static final String SWAGGER_DIRECTORY_PATH = "/plugins/";
     public static final String SWAGGER_PATH = "/swagger";
     public static final String SWAGGER_VERSION_PATH = "/v";
     public static final String SWAGGER_REST_PATH = "rest/";
     public static final String SWAGGER_JSON = "/swagger.json";
-    
+
     public static final String EMPTY_OBJECT = "{}";
     public static final String ERROR_NOT_FOUND_VERSION = "Version not found";
     public static final String ERROR_NOT_FOUND_RESOURCE = "Resource not found";
     public static final String ERROR_BAD_REQUEST_EMPTY_PARAMETER = "Empty parameter";
-    
+
     public static final String ELECTEDOFFICIAL_PATH = "/electedofficials";
     public static final String ELECTEDOFFICIAL_ATTRIBUTE_FIRST_NAME = "first_name";
     public static final String ELECTEDOFFICIAL_ATTRIBUTE_LAST_NAME = "last_name";
     public static final String ELECTEDOFFICIAL_ATTRIBUTE_TITLE = "title";
-    
+
     public static final String LOBBY_PATH = "/lobbies";
     public static final String LOBBY_ATTRIBUTE_NAME = "name";
     public static final String LOBBY_ATTRIBUTE_NATIONAL_ID = "national_id";
@@ -69,10 +69,10 @@ public final class Constants
     public static final String LOBBY_ATTRIBUTE_URL = "url";
     public static final String LOBBY_ATTRIBUTE_JSON_DATA = "json_data";
     public static final String LOBBY_ATTRIBUTE_VERSION_DATE = "version_date";
-    
+
     public static final String JSON_AUTOCOMPLETE_ID_KEY = "id";
     public static final String JSON_AUTOCOMPLETE_VALUE_KEY = "value";
     public static final String JSON_AUTOCOMPLETE_LABEL_KEY = "label";
-    
-    public static final String MESSAGE_NO_PROPOSAL_I18N_KEY = "transparency.msg.no_proposal" ;
+
+    public static final String MESSAGE_NO_PROPOSAL_I18N_KEY = "transparency.msg.no_proposal";
 }

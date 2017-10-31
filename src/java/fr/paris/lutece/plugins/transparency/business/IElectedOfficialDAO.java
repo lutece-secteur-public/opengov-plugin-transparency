@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 
+
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,77 +45,101 @@ public interface IElectedOfficialDAO
 {
     /**
      * Insert a new record in the table.
-     * @param electedOfficial instance of the ElectedOfficial object to insert
-     * @param plugin the Plugin
+     * 
+     * @param electedOfficial
+     *            instance of the ElectedOfficial object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( ElectedOfficial electedOfficial, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param electedOfficial the reference of the ElectedOfficial
-     * @param plugin the Plugin
+     * 
+     * @param electedOfficial
+     *            the reference of the ElectedOfficial
+     * @param plugin
+     *            the Plugin
      */
     void store( ElectedOfficial electedOfficial, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the ElectedOfficial to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the ElectedOfficial to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
-     * @param nKey The identifier of the electedOfficial
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the electedOfficial
+     * @param plugin
+     *            the Plugin
      * @return The instance of the electedOfficial
      */
     ElectedOfficial load( int nKey, Plugin plugin );
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the electedOfficial objects
      */
     List<ElectedOfficial> selectElectedOfficialsList( Plugin plugin );
-    
+
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
+     * 
      * @param idAdminUser
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the electedOfficial objects
      */
     List<ElectedOfficial> selectElectedOfficialsListByDelegation( int idAdminUser, Plugin plugin );
-    
+
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
+     * 
      * @param idAppointment
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the electedOfficial objects
      */
     List<ElectedOfficial> selectElectedOfficialsListByAppointment( int idAppointment, Plugin plugin );
-    
+
     /**
      * Load the id of all the electedOfficial objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the electedOfficial objects
      */
     List<Integer> selectIdElectedOfficialsList( Plugin plugin );
-    
+
     /**
      * Load the data of all the electedOfficial objects and returns them as a referenceList
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The referenceList which contains the data of all the electedOfficial objects
      */
     ReferenceList selectElectedOfficialsReferenceList( Plugin plugin );
-    
+
     /**
      * Load the data of all the electedOfficial objects and returns them as a referenceList
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The referenceList which contains the data of all the electedOfficial objects
      */
-    ReferenceList selectElectedOfficialsReferenceListByDelegation( int idAdminUser , Plugin plugin );
+    ReferenceList selectElectedOfficialsReferenceListByDelegation( int idAdminUser, Plugin plugin );
 }

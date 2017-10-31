@@ -55,25 +55,23 @@ public final class AppointmentDAO implements IAppointmentDAO
     private static final String SQL_QUERY_UPDATE = "UPDATE transparency_appointment SET id_appointment = ?, title = ?, description = ?, start_date = ?, end_date = ?, type_id = ?, type_label = ?, url = ?, contacts = ? WHERE id_appointment = ?";
     private static final String SQL_QUERY_SELECTALL_ID = "SELECT id_appointment FROM transparency_appointment";
 
-    private static final String SQL_WHERE_BASE = " WHERE 1 " ;
-    private static final String SQL_ADD_CLAUSE =  " AND ( " ;
-    private static final String SQL_END_ADD_CLAUSE =  " ) " ;
-    
-    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN transparency_elected_official_appointment on transparency_elected_official_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_elected_official on transparency_elected_official.id_elected_official = transparency_elected_official_appointment.id_elected_official " ;
-    private static final String SQL_FROM_FITLER_BY_LOBBY = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_lobby on transparency_lobby.id_lobby = transparency_lobby_appointment.id_lobby " ;
-            
+    private static final String SQL_WHERE_BASE = " WHERE 1 ";
+    private static final String SQL_ADD_CLAUSE = " AND ( ";
+    private static final String SQL_END_ADD_CLAUSE = " ) ";
+
+    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN transparency_elected_official_appointment on transparency_elected_official_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_elected_official on transparency_elected_official.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
+    private static final String SQL_FROM_FITLER_BY_LOBBY = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_lobby on transparency_lobby.id_lobby = transparency_lobby_appointment.id_lobby ";
+
     private static final String SQL_WHERECLAUSE_FILTER_BY_PERIOD = " start_date  >= date_add( current_timestamp , INTERVAL -? DAY) ";
-    private static final String SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL = " transparency_elected_official.last_name like ? " ; 
-    private static final String SQL_WHERECLAUSE_FILTER_BY_LOBBY = " transparency_lobby.name like ? " ; 
-    
+    private static final String SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL = " transparency_elected_official.last_name like ? ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_LOBBY = " transparency_lobby.name like ? ";
+
     private static final String SQL_WHERECLAUSE_BY_DELEGATION = " LEFT JOIN transparency_elected_official_appointment ON transparency_elected_official_appointment.id_appointment = transparency_appointment.id_appointment LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official_appointment.id_elected_official WHERE transparency_delegation.id_user = ?  ";
-    private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_appointment = ?" ;
+    private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_appointment = ?";
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DEFAULT_ORDER_BY = " start_date ";
-    private static final String SQL_DEFAULT_ASC = " DESC " ;
-    
-    
-    
+    private static final String SQL_DEFAULT_ASC = " DESC ";
+
     /**
      * {@inheritDoc }
      */
@@ -84,17 +82,17 @@ public final class AppointmentDAO implements IAppointmentDAO
         try
         {
             int nIndex = 1;
-            daoUtil.setString( nIndex++ , appointment.getTitle( ) );
-            daoUtil.setString( nIndex++ , appointment.getDescription( ) );
-            daoUtil.setDate( nIndex++ , appointment.getStartDate( ) );
-            daoUtil.setDate( nIndex++ , appointment.getEndDate( ) );
-            daoUtil.setInt( nIndex++ , appointment.getTypeId( ) );
-            daoUtil.setString( nIndex++ , appointment.getTypeLabel( ) );
-            daoUtil.setString( nIndex++ , appointment.getUrl( ) );
-            daoUtil.setString( nIndex++ , appointment.getContacts( ) );
-            
+            daoUtil.setString( nIndex++, appointment.getTitle( ) );
+            daoUtil.setString( nIndex++, appointment.getDescription( ) );
+            daoUtil.setDate( nIndex++, appointment.getStartDate( ) );
+            daoUtil.setDate( nIndex++, appointment.getEndDate( ) );
+            daoUtil.setInt( nIndex++, appointment.getTypeId( ) );
+            daoUtil.setString( nIndex++, appointment.getTypeLabel( ) );
+            daoUtil.setString( nIndex++, appointment.getUrl( ) );
+            daoUtil.setString( nIndex++, appointment.getContacts( ) );
+
             daoUtil.executeUpdate( );
-            if ( daoUtil.nextGeneratedKey( ) ) 
+            if ( daoUtil.nextGeneratedKey( ) )
             {
                 appointment.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
@@ -112,15 +110,15 @@ public final class AppointmentDAO implements IAppointmentDAO
     public Appointment load( int nKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_ID, plugin );
-        daoUtil.setInt( 1 , nKey );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeQuery( );
         Appointment appointment = null;
 
         if ( daoUtil.next( ) )
         {
-            appointment = new Appointment();
+            appointment = new Appointment( );
             int nIndex = 1;
-            
+
             appointment.setId( daoUtil.getInt( nIndex++ ) );
             appointment.setTitle( daoUtil.getString( nIndex++ ) );
             appointment.setDescription( daoUtil.getString( nIndex++ ) );
@@ -143,7 +141,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     public void delete( int nKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1 , nKey );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
@@ -156,102 +154,102 @@ public final class AppointmentDAO implements IAppointmentDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-        
-        daoUtil.setInt( nIndex++ , appointment.getId( ) );
-        daoUtil.setString( nIndex++ , appointment.getTitle( ) );
-        daoUtil.setString( nIndex++ , appointment.getDescription( ) );
-        daoUtil.setDate( nIndex++ , appointment.getStartDate( ) );
-        daoUtil.setDate( nIndex++ , appointment.getEndDate( ) );
-        daoUtil.setInt( nIndex++ , appointment.getTypeId( ) );
-        daoUtil.setString( nIndex++ , appointment.getTypeLabel( ) );
-        daoUtil.setString( nIndex++ , appointment.getUrl( ) );
-        daoUtil.setString( nIndex++ , appointment.getContacts( ) );
-        daoUtil.setInt( nIndex , appointment.getId( ) );
+
+        daoUtil.setInt( nIndex++, appointment.getId( ) );
+        daoUtil.setString( nIndex++, appointment.getTitle( ) );
+        daoUtil.setString( nIndex++, appointment.getDescription( ) );
+        daoUtil.setDate( nIndex++, appointment.getStartDate( ) );
+        daoUtil.setDate( nIndex++, appointment.getEndDate( ) );
+        daoUtil.setInt( nIndex++, appointment.getTypeId( ) );
+        daoUtil.setString( nIndex++, appointment.getTypeLabel( ) );
+        daoUtil.setString( nIndex++, appointment.getUrl( ) );
+        daoUtil.setString( nIndex++, appointment.getContacts( ) );
+        daoUtil.setInt( nIndex, appointment.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
 
-     /**
+    /**
      * {@inheritDoc }
      */
     @Override
     public List<Appointment> selectAppointmentsList( Plugin plugin )
     {
-        return selectAppointmentsList( null, plugin );        
+        return selectAppointmentsList( null, plugin );
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public List<Appointment> selectAppointmentsList( AppointmentFilter filter, Plugin plugin )
     {
-        List<Appointment> appointmentList = new ArrayList<>(  );
-        StringBuilder sql = new StringBuilder ( SQL_QUERY_SELECT ) ;
+        List<Appointment> appointmentList = new ArrayList<>( );
+        StringBuilder sql = new StringBuilder( SQL_QUERY_SELECT );
         StringBuilder where = new StringBuilder( );
         StringBuilder orderBy = new StringBuilder( );
-        
+
         if ( filter != null )
         {
-            where.append( SQL_WHERE_BASE ) ;
-            
+            where.append( SQL_WHERE_BASE );
+
             // period
-            if (filter.getNumberOfDays( ) > 0)
+            if ( filter.getNumberOfDays( ) > 0 )
             {
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_PERIOD ).append( SQL_END_ADD_CLAUSE );
             }
-            
+
             // elected official name
             if ( !StringUtils.isBlank( filter.getElectedOfficialName( ) ) )
             {
                 sql.append( SQL_FROM_FITLER_BY_ELECTED_OFFICIAL );
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL ).append( SQL_END_ADD_CLAUSE );
             }
-            
+
             // lobby name
-            if ( !StringUtils.isBlank( filter.getLobbyName( )  ) ) 
+            if ( !StringUtils.isBlank( filter.getLobbyName( ) ) )
             {
                 sql.append( SQL_FROM_FITLER_BY_LOBBY );
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_LOBBY ).append( SQL_END_ADD_CLAUSE );
             }
-            
+
             // order by
-            if ( !StringUtils.isBlank( filter.getOrderBy( ) ) ) 
-            { 
-                orderBy.append( SQL_ORDER_BY ).append( filter.getOrderBy( ) ) ;
-            } 
-            else 
+            if ( !StringUtils.isBlank( filter.getOrderBy( ) ) )
             {
-                orderBy.append( SQL_ORDER_BY ).append( SQL_DEFAULT_ORDER_BY ).append( SQL_DEFAULT_ASC ) ;
+                orderBy.append( SQL_ORDER_BY ).append( filter.getOrderBy( ) );
             }
-        } 
+            else
+            {
+                orderBy.append( SQL_ORDER_BY ).append( SQL_DEFAULT_ORDER_BY ).append( SQL_DEFAULT_ASC );
+            }
+        }
         else
         {
             // no filter
-            orderBy.append( SQL_ORDER_BY ).append( SQL_DEFAULT_ORDER_BY ).append( SQL_DEFAULT_ASC ) ;
+            orderBy.append( SQL_ORDER_BY ).append( SQL_DEFAULT_ORDER_BY ).append( SQL_DEFAULT_ASC );
         }
-        
-        // finalize request
-        sql.append( where ).append( orderBy ) ;
-        
-        DAOUtil daoUtil = new DAOUtil( sql.toString( ) , plugin );
-        int i = 1 ; 
-        if (filter != null && filter.getNumberOfDays( ) > 0) 
-            daoUtil.setInt( i++, filter.getNumberOfDays( ) );
-        if (filter != null && !StringUtils.isBlank( filter.getElectedOfficialName( ) ) ) 
-            daoUtil.setString( i++, "%" + filter.getElectedOfficialName( ) + "%" ) ;
-        if (filter != null && !StringUtils.isBlank( filter.getLobbyName( ) ) ) 
-            daoUtil.setString( i++, "%" + filter.getLobbyName( ) + "%" ) ;
-        
-        // execute        
-        daoUtil.executeQuery(  );
 
-        while ( daoUtil.next(  ) )
+        // finalize request
+        sql.append( where ).append( orderBy );
+
+        DAOUtil daoUtil = new DAOUtil( sql.toString( ), plugin );
+        int i = 1;
+        if ( filter != null && filter.getNumberOfDays( ) > 0 )
+            daoUtil.setInt( i++, filter.getNumberOfDays( ) );
+        if ( filter != null && !StringUtils.isBlank( filter.getElectedOfficialName( ) ) )
+            daoUtil.setString( i++, "%" + filter.getElectedOfficialName( ) + "%" );
+        if ( filter != null && !StringUtils.isBlank( filter.getLobbyName( ) ) )
+            daoUtil.setString( i++, "%" + filter.getLobbyName( ) + "%" );
+
+        // execute
+        daoUtil.executeQuery( );
+
+        while ( daoUtil.next( ) )
         {
-            Appointment appointment = new Appointment(  );
+            Appointment appointment = new Appointment( );
             int nIndex = 1;
-            
+
             appointment.setId( daoUtil.getInt( nIndex++ ) );
             appointment.setTitle( daoUtil.getString( nIndex++ ) );
             appointment.setDescription( daoUtil.getString( nIndex++ ) );
@@ -268,24 +266,23 @@ public final class AppointmentDAO implements IAppointmentDAO
         daoUtil.free( );
         return appointmentList;
     }
-    
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public List<Appointment> selectAppointmentsListByDelegation( int idUser, Plugin plugin )
     {
-        List<Appointment> appointmentList = new ArrayList<Appointment>(  );
+        List<Appointment> appointmentList = new ArrayList<Appointment>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.setInt( 1 , idUser );
-        daoUtil.executeQuery(  );
+        daoUtil.setInt( 1, idUser );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            Appointment appointment = new Appointment(  );
+            Appointment appointment = new Appointment( );
             int nIndex = 1;
-            
+
             appointment.setId( daoUtil.getInt( nIndex++ ) );
             appointment.setTitle( daoUtil.getString( nIndex++ ) );
             appointment.setDescription( daoUtil.getString( nIndex++ ) );
@@ -311,9 +308,9 @@ public final class AppointmentDAO implements IAppointmentDAO
     {
         List<Integer> appointmentList = new ArrayList<Integer>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             appointmentList.add( daoUtil.getInt( 1 ) );
         }
@@ -321,20 +318,20 @@ public final class AppointmentDAO implements IAppointmentDAO
         daoUtil.free( );
         return appointmentList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public ReferenceList selectAppointmentsReferenceList( Plugin plugin )
     {
-        ReferenceList appointmentList = new ReferenceList();
+        ReferenceList appointmentList = new ReferenceList( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            appointmentList.addItem( daoUtil.getInt( 1 ) , daoUtil.getString( 2 ) );
+            appointmentList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
 
         daoUtil.free( );

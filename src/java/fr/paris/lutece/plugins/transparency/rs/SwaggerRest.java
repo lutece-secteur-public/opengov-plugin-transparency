@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
@@ -66,9 +66,10 @@ public class SwaggerRest
     private final static String BASE_INFOS_SCHEMES = "schemes";
     private final static String BASE_INFOS_HOST = "host";
     private final static String BASE_INFOS_BASE_PATH = "basePath";
-    
+
     /**
      * Get Swagger.json
+     * 
      * @param request
      * @param strVersion
      * @return the swagger.json
@@ -78,86 +79,78 @@ public class SwaggerRest
     @GET
     @Path( Constants.SWAGGER_PATH )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response getSwagger( @Context HttpServletRequest request, @PathParam( Constants.VERSION ) String strVersion ) throws MalformedURLException, IOException
+    public Response getSwagger( @Context HttpServletRequest request, @PathParam( Constants.VERSION ) String strVersion ) throws MalformedURLException,
+            IOException
     {
         File fileJson = new File( getJsonFilePath( strVersion ) );
-        if( fileJson.exists( ) )
+        if ( fileJson.exists( ) )
         {
             Map<String, String> mapBaseInfos = getBaseInfos( AppPathService.getBaseUrl( request ), strVersion );
 
             ObjectMapper mapper = new ObjectMapper( );
             ObjectNode objectNode = mapper.readValue( fileJson, ObjectNode.class );
 
-            if( objectNode.path( BASE_INFOS_HOST ).isMissingNode( ) )
+            if ( objectNode.path( BASE_INFOS_HOST ).isMissingNode( ) )
             {
                 objectNode.put( BASE_INFOS_HOST, mapBaseInfos.get( BASE_INFOS_HOST ) );
             }
-            if( objectNode.path( BASE_INFOS_SCHEMES ).isMissingNode( ) )
+            if ( objectNode.path( BASE_INFOS_SCHEMES ).isMissingNode( ) )
             {
                 objectNode.putArray( BASE_INFOS_SCHEMES ).add( mapBaseInfos.get( BASE_INFOS_SCHEMES ) );
             }
-            if( objectNode.path( BASE_INFOS_BASE_PATH ).isMissingNode( ) )
+            if ( objectNode.path( BASE_INFOS_BASE_PATH ).isMissingNode( ) )
             {
                 objectNode.put( BASE_INFOS_BASE_PATH, mapBaseInfos.get( BASE_INFOS_BASE_PATH ) );
             }
             String strSwaggerJson = mapper.writerWithDefaultPrettyPrinter( ).writeValueAsString( objectNode );
-            return Response.status( Response.Status.OK )
-                    .entity( strSwaggerJson )
-                    .build( );
+            return Response.status( Response.Status.OK ).entity( strSwaggerJson ).build( );
         }
         _logger.error( Constants.ERROR_NOT_FOUND_RESOURCE );
         return Response.status( Response.Status.NOT_FOUND )
-                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) )
-                .build( );
+                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) ).build( );
     }
-    
+
     /**
      * Get the swagger.json file path
+     * 
      * @param strVersion
-     * @return 
+     * @return
      */
     private String getJsonFilePath( String strVersion )
     {
-        return AppPathService.getWebAppPath( )
-                + Constants.SWAGGER_DIRECTORY_PATH
-                + Constants.API_PATH
-                + Constants.SWAGGER_PATH
-                + Constants.SWAGGER_VERSION_PATH + strVersion
-                + Constants.SWAGGER_JSON;
+        return AppPathService.getWebAppPath( ) + Constants.SWAGGER_DIRECTORY_PATH + Constants.API_PATH + Constants.SWAGGER_PATH
+                + Constants.SWAGGER_VERSION_PATH + strVersion + Constants.SWAGGER_JSON;
     }
-    
+
     /**
      * Get the base informations (host, scheme, baseUrl)
+     * 
      * @param strBaseUrl
      * @param strVersion
      * @return
-     * @throws MalformedURLException 
+     * @throws MalformedURLException
      */
     private Map<String, String> getBaseInfos( String strBaseUrl, String strVersion ) throws MalformedURLException
     {
-        Map<String, String> map = new HashMap<>();
-        URL url = new URL( strBaseUrl );   
-        
+        Map<String, String> map = new HashMap<>( );
+        URL url = new URL( strBaseUrl );
+
         String strScheme = url.getProtocol( );
         String strHost = url.getHost( );
         String strBasePath = url.getPath( );
         int nPort = url.getPort( );
-        
-        if( nPort != -1 )
+
+        if ( nPort != -1 )
         {
             strHost += ":" + nPort;
         }
-        
-        strBasePath = strBasePath
-                    + Constants.SWAGGER_REST_PATH
-                    + Constants.API_PATH
-                    + Constants.SWAGGER_VERSION_PATH
-                    + strVersion;
-        
+
+        strBasePath = strBasePath + Constants.SWAGGER_REST_PATH + Constants.API_PATH + Constants.SWAGGER_VERSION_PATH + strVersion;
+
         map.put( BASE_INFOS_SCHEMES, strScheme );
         map.put( BASE_INFOS_HOST, strHost );
         map.put( BASE_INFOS_BASE_PATH, strBasePath );
-        
+
         return map;
     }
 }

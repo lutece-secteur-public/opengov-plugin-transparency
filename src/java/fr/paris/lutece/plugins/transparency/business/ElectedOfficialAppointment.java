@@ -30,21 +30,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import java.io.Serializable;
 
 /**
  * This is the business class for the object ElectedOfficialAppointment
- */ 
+ */
 public class ElectedOfficialAppointment implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nIdElectedOfficial;
-    
+
     private int _nIdAppointment;
 
     public ElectedOfficialAppointment( int idElectedOfficial, int idAppointment )
@@ -52,9 +52,10 @@ public class ElectedOfficialAppointment implements Serializable
         _nIdElectedOfficial = idElectedOfficial;
         _nIdAppointment = idAppointment;
     }
-    
+
     /**
      * Returns the Id
+     * 
      * @return The Id
      */
     public int getIdElectedOfficial( )
@@ -64,15 +65,18 @@ public class ElectedOfficialAppointment implements Serializable
 
     /**
      * Sets the Id
-     * @param nId The Id
-     */ 
+     * 
+     * @param nId
+     *            The Id
+     */
     public void setIdElectedOfficial( int nId )
     {
         _nIdElectedOfficial = nId;
     }
-    
+
     /**
      * Returns the IdAppointment
+     * 
      * @return The IdAppointment
      */
     public int getIdAppointment( )
@@ -82,8 +86,10 @@ public class ElectedOfficialAppointment implements Serializable
 
     /**
      * Sets the IdAppointment
-     * @param nIdAppointment The IdAppointment
-     */ 
+     * 
+     * @param nIdAppointment
+     *            The IdAppointment
+     */
     public void setIdAppointment( int nIdAppointment )
     {
         _nIdAppointment = nIdAppointment;

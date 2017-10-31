@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 
+
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,53 +45,71 @@ public interface IDelegationDAO
 {
     /**
      * Insert a new record in the table.
-     * @param delegation instance of the Delegation object to insert
-     * @param plugin the Plugin
+     * 
+     * @param delegation
+     *            instance of the Delegation object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( Delegation delegation, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param delegation the reference of the Delegation
-     * @param plugin the Plugin
+     * 
+     * @param delegation
+     *            the reference of the Delegation
+     * @param plugin
+     *            the Plugin
      */
     void store( Delegation delegation, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the Delegation to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the Delegation to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
-     * @param nKey The identifier of the delegation
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the delegation
+     * @param plugin
+     *            the Plugin
      * @return The instance of the delegation
      */
     Delegation load( int nKey, Plugin plugin );
 
     /**
      * Load the data of all the delegation objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the delegation objects
      */
     List<Delegation> selectDelegationsList( Plugin plugin );
-    
+
     /**
      * Load the id of all the delegation objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the delegation objects
      */
     List<Integer> selectIdDelegationsList( Plugin plugin );
-    
+
     /**
      * Load the data of all the delegation objects and returns them as a referenceList
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The referenceList which contains the data of all the delegation objects
      */
     ReferenceList selectDelegationsReferenceList( Plugin plugin );

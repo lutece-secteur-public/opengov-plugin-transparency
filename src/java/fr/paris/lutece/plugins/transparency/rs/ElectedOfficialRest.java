@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (c) 2002-2017, Mairie de Paris
  * All rights reserved.
  *
@@ -62,10 +62,12 @@ public class ElectedOfficialRest
 {
     private static final int VERSION_1 = 1;
     private final Logger _logger = Logger.getLogger( RestConstants.REST_LOGGER );
-    
+
     /**
      * Get ElectedOfficial List
-     * @param nVersion the API version
+     * 
+     * @param nVersion
+     *            the API version
      * @return the ElectedOfficial List
      */
     @GET
@@ -73,7 +75,7 @@ public class ElectedOfficialRest
     @Produces( MediaType.APPLICATION_JSON )
     public Response getElectedOfficialList( @PathParam( Constants.VERSION ) Integer nVersion )
     {
-        switch ( nVersion )
+        switch( nVersion )
         {
             case VERSION_1:
                 return getElectedOfficialListV1( );
@@ -82,44 +84,40 @@ public class ElectedOfficialRest
         }
         _logger.error( Constants.ERROR_NOT_FOUND_VERSION );
         return Response.status( Response.Status.NOT_FOUND )
-                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
-                .build( );
+                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) ).build( );
     }
-    
+
     /**
      * Get ElectedOfficial List V1
+     * 
      * @return the ElectedOfficial List for the version 1
      */
     private Response getElectedOfficialListV1( )
     {
         List<ElectedOfficial> _listElectedOfficials = ElectedOfficialHome.getElectedOfficialsList( );
-        
-        if( _listElectedOfficials.isEmpty( ) )
+
+        if ( _listElectedOfficials.isEmpty( ) )
         {
-            return Response.status( Response.Status.NO_CONTENT )
-                .entity( JsonUtil.buildJsonResponse( new JsonResponse( Constants.EMPTY_OBJECT ) ) )
-                .build( );
+            return Response.status( Response.Status.NO_CONTENT ).entity( JsonUtil.buildJsonResponse( new JsonResponse( Constants.EMPTY_OBJECT ) ) ).build( );
         }
-        return Response.status( Response.Status.OK )
-                .entity( JsonUtil.buildJsonResponse( new JsonResponse( _listElectedOfficials ) ) )
-                .build( );
+        return Response.status( Response.Status.OK ).entity( JsonUtil.buildJsonResponse( new JsonResponse( _listElectedOfficials ) ) ).build( );
     }
-    
-    
+
     /**
      * Get ElectedOfficial
-     * @param nVersion the API version
-     * @param id the id
+     * 
+     * @param nVersion
+     *            the API version
+     * @param id
+     *            the id
      * @return the ElectedOfficial
      */
     @GET
     @Path( Constants.ID_PATH )
     @Produces( MediaType.APPLICATION_JSON )
-    public Response getElectedOfficial(
-    @PathParam( Constants.VERSION ) Integer nVersion,
-    @PathParam( Constants.ID ) Integer id )
+    public Response getElectedOfficial( @PathParam( Constants.VERSION ) Integer nVersion, @PathParam( Constants.ID ) Integer id )
     {
-        switch ( nVersion )
+        switch( nVersion )
         {
             case VERSION_1:
                 return getElectedOfficialV1( id );
@@ -128,13 +126,14 @@ public class ElectedOfficialRest
         }
         _logger.error( Constants.ERROR_NOT_FOUND_VERSION );
         return Response.status( Response.Status.NOT_FOUND )
-                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) )
-                .build( );
+                .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_VERSION ) ) ).build( );
     }
-    
+
     /**
      * Get ElectedOfficial V1
-     * @param id the id
+     * 
+     * @param id
+     *            the id
      * @return the ElectedOfficial for the version 1
      */
     private Response getElectedOfficialV1( Integer id )
@@ -147,9 +146,7 @@ public class ElectedOfficialRest
                     .entity( JsonUtil.buildJsonResponse( new ErrorJsonResponse( Response.Status.NOT_FOUND.name( ), Constants.ERROR_NOT_FOUND_RESOURCE ) ) )
                     .build( );
         }
-        
-        return Response.status( Response.Status.OK )
-                .entity( JsonUtil.buildJsonResponse( new JsonResponse( _electedofficial ) ) )
-                .build( );
+
+        return Response.status( Response.Status.OK ).entity( JsonUtil.buildJsonResponse( new JsonResponse( _electedofficial ) ) ).build( );
     }
 }

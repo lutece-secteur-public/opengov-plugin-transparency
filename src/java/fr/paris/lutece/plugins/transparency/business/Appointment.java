@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import javax.validation.constraints.*;
@@ -42,39 +42,40 @@ import java.util.List;
 
 /**
  * This is the business class for the object Appointment
- */ 
+ */
 public class Appointment implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nId;
-    
+
     @NotEmpty( message = "#i18n{transparency.validation.appointment.Title.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{transparency.validation.appointment.Title.size}" ) 
+    @Size( max = 255, message = "#i18n{transparency.validation.appointment.Title.size}" )
     private String _strTitle;
-    
+
     private String _strDescription;
-    
+
     private Date _dateStartDate;
-    
+
     private Date _dateEndDate;
-    
+
     private int _nTypeId;
-    
-    @Size( max = 255 , message = "#i18n{transparency.validation.appointment.TypeLabel.size}" ) 
+
+    @Size( max = 255, message = "#i18n{transparency.validation.appointment.TypeLabel.size}" )
     private String _strTypeLabel;
-    @URL(message = "#i18n{portal.validation.message.url}")
-    @Size( max = 255 , message = "#i18n{transparency.validation.appointment.Url.size}" ) 
+    @URL( message = "#i18n{portal.validation.message.url}" )
+    @Size( max = 255, message = "#i18n{transparency.validation.appointment.Url.size}" )
     private String _strUrl;
 
     private List<ElectedOfficial> electedOfficialList = new ArrayList<>( );
     private List<Lobby> lobbyList = new ArrayList<>( );
-    
-    private String _strContacts ;
-    
+
+    private String _strContacts;
+
     /**
      * Returns the Id
+     * 
      * @return The Id
      */
     public int getId( )
@@ -84,15 +85,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the Id
-     * @param nId The Id
-     */ 
+     * 
+     * @param nId
+     *            The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
+
     /**
      * Returns the Title
+     * 
      * @return The Title
      */
     public String getTitle( )
@@ -102,15 +106,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the Title
-     * @param strTitle The Title
-     */ 
+     * 
+     * @param strTitle
+     *            The Title
+     */
     public void setTitle( String strTitle )
     {
         _strTitle = strTitle;
     }
-    
+
     /**
      * Returns the Description
+     * 
      * @return The Description
      */
     public String getDescription( )
@@ -120,15 +127,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the Description
-     * @param strDescription The Description
-     */ 
+     * 
+     * @param strDescription
+     *            The Description
+     */
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
     }
-    
+
     /**
      * Returns the StartDate
+     * 
      * @return The StartDate
      */
     public Date getStartDate( )
@@ -138,15 +148,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the StartDate
-     * @param dateStartDate The StartDate
-     */ 
+     * 
+     * @param dateStartDate
+     *            The StartDate
+     */
     public void setStartDate( Date dateStartDate )
     {
         _dateStartDate = dateStartDate;
     }
-    
+
     /**
      * Returns the EndDate
+     * 
      * @return The EndDate
      */
     public Date getEndDate( )
@@ -156,15 +169,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the EndDate
-     * @param dateEndDate The EndDate
-     */ 
+     * 
+     * @param dateEndDate
+     *            The EndDate
+     */
     public void setEndDate( Date dateEndDate )
     {
         _dateEndDate = dateEndDate;
     }
-    
+
     /**
      * Returns the TypeId
+     * 
      * @return The TypeId
      */
     public int getTypeId( )
@@ -174,15 +190,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the TypeId
-     * @param nTypeId The TypeId
-     */ 
+     * 
+     * @param nTypeId
+     *            The TypeId
+     */
     public void setTypeId( int nTypeId )
     {
         _nTypeId = nTypeId;
     }
-    
+
     /**
      * Returns the TypeLabel
+     * 
      * @return The TypeLabel
      */
     public String getTypeLabel( )
@@ -192,15 +211,18 @@ public class Appointment implements Serializable
 
     /**
      * Sets the TypeLabel
-     * @param strTypeLabel The TypeLabel
-     */ 
+     * 
+     * @param strTypeLabel
+     *            The TypeLabel
+     */
     public void setTypeLabel( String strTypeLabel )
     {
         _strTypeLabel = strTypeLabel;
     }
-    
+
     /**
      * Returns the Url
+     * 
      * @return The Url
      */
     public String getUrl( )
@@ -210,8 +232,10 @@ public class Appointment implements Serializable
 
     /**
      * Sets the Url
-     * @param strUrl The Url
-     */ 
+     * 
+     * @param strUrl
+     *            The Url
+     */
     public void setUrl( String strUrl )
     {
         _strUrl = strUrl;
@@ -220,9 +244,9 @@ public class Appointment implements Serializable
     /**
      * get Elected Official List
      * 
-     * @return  Elected Official List
+     * @return Elected Official List
      */
-    public List<ElectedOfficial> getElectedOfficialList( ) 
+    public List<ElectedOfficial> getElectedOfficialList( )
     {
         return electedOfficialList;
     }
@@ -230,18 +254,19 @@ public class Appointment implements Serializable
     /**
      * set Elected Official List
      * 
-     * @param electedOfficialList 
+     * @param electedOfficialList
      */
-    public void setElectedOfficialList( List<ElectedOfficial> electedOfficialList) 
+    public void setElectedOfficialList( List<ElectedOfficial> electedOfficialList )
     {
         this.electedOfficialList = electedOfficialList;
     }
 
     /**
      * get Lobby List
+     * 
      * @return lobby List
      */
-    public List<Lobby> getLobbyList( ) 
+    public List<Lobby> getLobbyList( )
     {
         return lobbyList;
     }
@@ -249,9 +274,9 @@ public class Appointment implements Serializable
     /**
      * set Lobby List
      * 
-     * @param lobbyList 
+     * @param lobbyList
      */
-    public void setLobbyList( List<Lobby> lobbyList) 
+    public void setLobbyList( List<Lobby> lobbyList )
     {
         this.lobbyList = lobbyList;
     }
@@ -261,20 +286,19 @@ public class Appointment implements Serializable
      * 
      * @return the contacts
      */
-    public String getContacts() {
+    public String getContacts( )
+    {
         return _strContacts;
     }
 
     /**
      * set Contacts
      * 
-     * @param _strContacts 
+     * @param _strContacts
      */
-    public void setContacts(String _strContacts) {
+    public void setContacts( String _strContacts )
+    {
         this._strContacts = _strContacts;
     }
-    
-    
-    
-    
+
 }

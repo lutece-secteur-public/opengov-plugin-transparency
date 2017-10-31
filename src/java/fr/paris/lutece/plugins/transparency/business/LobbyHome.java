@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -52,14 +52,16 @@ public final class LobbyHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private LobbyHome(  )
+    private LobbyHome( )
     {
     }
 
     /**
      * Create an instance of the lobby class
-     * @param lobby The instance of the Lobby which contains the informations to store
-     * @return The  instance of lobby which has been created with its primary key.
+     * 
+     * @param lobby
+     *            The instance of the Lobby which contains the informations to store
+     * @return The instance of lobby which has been created with its primary key.
      */
     public static Lobby create( Lobby lobby )
     {
@@ -70,8 +72,10 @@ public final class LobbyHome
 
     /**
      * Update of the lobby which is specified in parameter
-     * @param lobby The instance of the Lobby which contains the data to store
-     * @return The instance of the  lobby which has been updated
+     * 
+     * @param lobby
+     *            The instance of the Lobby which contains the data to store
+     * @return The instance of the lobby which has been updated
      */
     public static Lobby update( Lobby lobby )
     {
@@ -82,7 +86,9 @@ public final class LobbyHome
 
     /**
      * Remove the lobby whose identifier is specified in parameter
-     * @param nKey The lobby Id
+     * 
+     * @param nKey
+     *            The lobby Id
      */
     public static void remove( int nKey )
     {
@@ -91,26 +97,30 @@ public final class LobbyHome
 
     /**
      * Returns an instance of a lobby whose identifier is specified in parameter
-     * @param nKey The lobby primary key
+     * 
+     * @param nKey
+     *            The lobby primary key
      * @return an instance of Lobby
      */
     public static Lobby findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
 
     /**
      * Returns an instance of a lobby whose identifier is specified in parameter
+     * 
      * @param strNationalId
      * @return an instance of Lobby
      */
     public static Lobby getByNationalId( String strNationalId )
     {
-        return _dao.loadByNationalId( strNationalId, _plugin);
+        return _dao.loadByNationalId( strNationalId, _plugin );
     }
 
     /**
      * Load the data of all the lobby objects and returns them as a list
+     * 
      * @return the list which contains the data of all the lobby objects
      */
     public static List<Lobby> getLobbiesList( )
@@ -120,6 +130,7 @@ public final class LobbyHome
 
     /**
      * Load the data of all the lobby objects with Name like %strLikeName% and returns them as a list
+     * 
      * @return the list which contains the data of all the lobby objects
      */
     public static List<Lobby> getLobbiesListNamedLike( String strLikeName )
@@ -129,6 +140,7 @@ public final class LobbyHome
 
     /**
      * Load the data of all the lobby objects and returns them as a list
+     * 
      * @param idAppointment
      * @return the list which contains the data of all the lobby objects
      */
@@ -136,23 +148,24 @@ public final class LobbyHome
     {
         return _dao.selectLobbiesListByAppointment( idAppointment, _plugin );
     }
-    
+
     /**
      * Load the id of all the lobby objects and returns them as a list
+     * 
      * @return the list which contains the id of all the lobby objects
      */
     public static List<Integer> getIdLobbieslist( )
     {
         return _dao.selectIdLobbiesList( _plugin );
     }
-    
+
     /**
      * Load the data of all the lobby objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the lobby objects
      */
     public static ReferenceList getLobbiesReferenceList( )
     {
-        return _dao.selectLobbiesReferenceList(_plugin );
+        return _dao.selectLobbiesReferenceList( _plugin );
     }
 }
-

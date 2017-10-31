@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 
+
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -45,77 +45,92 @@ public interface ILobbyDAO
 {
     /**
      * Insert a new record in the table.
-     * @param lobby instance of the Lobby object to insert
-     * @param plugin the Plugin
+     * 
+     * @param lobby
+     *            instance of the Lobby object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( Lobby lobby, Plugin plugin );
 
     /**
      * Update the record in the table
-     * @param lobby the reference of the Lobby
-     * @param plugin the Plugin
+     * 
+     * @param lobby
+     *            the reference of the Lobby
+     * @param plugin
+     *            the Plugin
      */
     void store( Lobby lobby, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the Lobby to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the Lobby to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( int nKey, Plugin plugin );
 
-    ///////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////
     // Finders
 
     /**
      * Load the data from the table
-     * @param nKey The identifier of the lobby
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the lobby
+     * @param plugin
+     *            the Plugin
      * @return The instance of the lobby
      */
     Lobby load( int nKey, Plugin plugin );
 
-    
     /**
      * find the data by national Id from the table
      * 
      * @param strNationalId
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The instance of the lobby
      */
     Lobby loadByNationalId( String strNationalId, Plugin plugin );
-
 
     /**
      * Load the data of all the lobby objects with a name like %strLikeText% (if not null) and returns them as a list
      * 
      * @param strLikeText
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the lobby objects
      */
-    List<Lobby> selectLobbiesList( String strLikeText , Plugin plugin );
-    
-    
+    List<Lobby> selectLobbiesList( String strLikeText, Plugin plugin );
+
     /**
      * Load the data of all the lobby objects and returns them as a list
+     * 
      * @param idAppointment
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the data of all the lobby objects
      */
     List<Lobby> selectLobbiesListByAppointment( int idAppointment, Plugin plugin );
-    
-            
-            
+
     /**
      * Load the id of all the lobby objects and returns them as a list
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The list which contains the id of all the lobby objects
      */
     List<Integer> selectIdLobbiesList( Plugin plugin );
-    
+
     /**
      * Load the data of all the lobby objects and returns them as a referenceList
-     * @param plugin the Plugin
+     * 
+     * @param plugin
+     *            the Plugin
      * @return The referenceList which contains the data of all the lobby objects
      */
     ReferenceList selectLobbiesReferenceList( Plugin plugin );

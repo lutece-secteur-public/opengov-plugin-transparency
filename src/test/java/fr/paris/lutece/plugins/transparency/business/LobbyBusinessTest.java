@@ -50,13 +50,13 @@ public class LobbyBusinessTest extends LuteceTestCase
     private final static String URL2 = "Url2";
     private final static String JSONDATA1 = "JsonData1";
     private final static String JSONDATA2 = "JsonData2";
-	private final static Date VERSIONDATE1 = new Date( 1000000l );
+    private final static Date VERSIONDATE1 = new Date( 1000000l );
     private final static Date VERSIONDATE2 = new Date( 2000000l );
 
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        Lobby lobby = new Lobby();
+        Lobby lobby = new Lobby( );
         lobby.setName( NAME1 );
         lobby.setNationalId( NATIONALID1 );
         lobby.setNationalIdType( NATIONALIDTYPE1 );
@@ -67,12 +67,12 @@ public class LobbyBusinessTest extends LuteceTestCase
         // Create test
         LobbyHome.create( lobby );
         Lobby lobbyStored = LobbyHome.findByPrimaryKey( lobby.getId( ) );
-        assertEquals( lobbyStored.getName() , lobby.getName( ) );
-        assertEquals( lobbyStored.getNationalId() , lobby.getNationalId( ) );
-        assertEquals( lobbyStored.getNationalIdType() , lobby.getNationalIdType( ) );
-        assertEquals( lobbyStored.getUrl() , lobby.getUrl( ) );
-        assertEquals( lobbyStored.getJsonData() , lobby.getJsonData( ) );
-        assertEquals( lobbyStored.getVersionDate() , lobby.getVersionDate( ) );
+        assertEquals( lobbyStored.getName( ), lobby.getName( ) );
+        assertEquals( lobbyStored.getNationalId( ), lobby.getNationalId( ) );
+        assertEquals( lobbyStored.getNationalIdType( ), lobby.getNationalIdType( ) );
+        assertEquals( lobbyStored.getUrl( ), lobby.getUrl( ) );
+        assertEquals( lobbyStored.getJsonData( ), lobby.getJsonData( ) );
+        assertEquals( lobbyStored.getVersionDate( ), lobby.getVersionDate( ) );
 
         // Update test
         lobby.setName( NAME2 );
@@ -83,21 +83,21 @@ public class LobbyBusinessTest extends LuteceTestCase
         lobby.setVersionDate( VERSIONDATE2 );
         LobbyHome.update( lobby );
         lobbyStored = LobbyHome.findByPrimaryKey( lobby.getId( ) );
-        assertEquals( lobbyStored.getName() , lobby.getName( ) );
-        assertEquals( lobbyStored.getNationalId() , lobby.getNationalId( ) );
-        assertEquals( lobbyStored.getNationalIdType() , lobby.getNationalIdType( ) );
-        assertEquals( lobbyStored.getUrl() , lobby.getUrl( ) );
-        assertEquals( lobbyStored.getJsonData() , lobby.getJsonData( ) );
-        assertEquals( lobbyStored.getVersionDate() , lobby.getVersionDate( ) );
+        assertEquals( lobbyStored.getName( ), lobby.getName( ) );
+        assertEquals( lobbyStored.getNationalId( ), lobby.getNationalId( ) );
+        assertEquals( lobbyStored.getNationalIdType( ), lobby.getNationalIdType( ) );
+        assertEquals( lobbyStored.getUrl( ), lobby.getUrl( ) );
+        assertEquals( lobbyStored.getJsonData( ), lobby.getJsonData( ) );
+        assertEquals( lobbyStored.getVersionDate( ), lobby.getVersionDate( ) );
 
         // List test
-        LobbyHome.getLobbiesList();
+        LobbyHome.getLobbiesList( );
 
         // Delete test
         LobbyHome.remove( lobby.getId( ) );
         lobbyStored = LobbyHome.findByPrimaryKey( lobby.getId( ) );
         assertNull( lobbyStored );
-        
+
     }
 
 }

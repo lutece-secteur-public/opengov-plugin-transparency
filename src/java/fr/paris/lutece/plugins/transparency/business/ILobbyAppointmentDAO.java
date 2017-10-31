@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 
+
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -43,24 +43,32 @@ public interface ILobbyAppointmentDAO
 {
     /**
      * Insert a new record in the table.
-     * @param lobbyAppointment instance of the LobbyAppointment object to insert
-     * @param plugin the Plugin
+     * 
+     * @param lobbyAppointment
+     *            instance of the LobbyAppointment object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( LobbyAppointment lobbyAppointment, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the LobbyAppointment to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the LobbyAppointment to delete
+     * @param plugin
+     *            the Plugin
      */
     void delete( LobbyAppointment lobbyAppointment, Plugin plugin );
 
     /**
      * Delete a record from the table
-     * @param nKey The identifier of the LobbyAppointment to delete
-     * @param plugin the Plugin
+     * 
+     * @param nKey
+     *            The identifier of the LobbyAppointment to delete
+     * @param plugin
+     *            the Plugin
      */
     void deleteByAppointmentId( int nIdAppointment, Plugin plugin );
 
-    
 }

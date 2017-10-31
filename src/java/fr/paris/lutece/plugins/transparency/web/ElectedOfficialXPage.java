@@ -31,10 +31,9 @@
  *
  * License 1.0
  */
- 	
 
 package fr.paris.lutece.plugins.transparency.web;
- 
+
 import fr.paris.lutece.plugins.transparency.business.ElectedOfficial;
 import fr.paris.lutece.plugins.transparency.business.ElectedOfficialHome;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -48,34 +47,34 @@ import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.message.SiteMessageException;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage ElectedOfficial xpages ( manage, create, modify, remove )
  */
-@Controller( xpageName = "electedofficial" , pageTitleI18nKey = "transparency.xpage.electedofficial.pageTitle" , pagePathI18nKey = "transparency.xpage.electedofficial.pagePathLabel" )
+@Controller( xpageName = "electedofficial", pageTitleI18nKey = "transparency.xpage.electedofficial.pageTitle", pagePathI18nKey = "transparency.xpage.electedofficial.pagePathLabel" )
 public class ElectedOfficialXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_ELECTEDOFFICIALS="/skin/plugins/transparency/manage_electedofficials.html";
-    private static final String TEMPLATE_CREATE_ELECTEDOFFICIAL="/skin/plugins/transparency/create_electedofficial.html";
-    private static final String TEMPLATE_MODIFY_ELECTEDOFFICIAL="/skin/plugins/transparency/modify_electedofficial.html";
-    
+    private static final String TEMPLATE_MANAGE_ELECTEDOFFICIALS = "/skin/plugins/transparency/manage_electedofficials.html";
+    private static final String TEMPLATE_CREATE_ELECTEDOFFICIAL = "/skin/plugins/transparency/create_electedofficial.html";
+    private static final String TEMPLATE_MODIFY_ELECTEDOFFICIAL = "/skin/plugins/transparency/modify_electedofficial.html";
+
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
-    
+
     // Parameters
-    private static final String PARAMETER_ID_ELECTEDOFFICIAL="id";
+    private static final String PARAMETER_ID_ELECTEDOFFICIAL = "id";
     private static final String PARAM_ACTION = "action";
     private static final String PARAM_PAGE = "page";
-    
+
     // Markers
     private static final String MARK_ELECTEDOFFICIAL_LIST = "electedofficial_list";
     private static final String MARK_ELECTEDOFFICIAL = "electedofficial";
-    
+
     // Message
     private static final String MESSAGE_CONFIRM_REMOVE_ELECTEDOFFICIAL = "transparency.message.confirmRemoveElectedOfficial";
-    
+
     // Views
     private static final String VIEW_MANAGE_ELECTEDOFFICIALS = "manageElectedOfficials";
     private static final String VIEW_CREATE_ELECTEDOFFICIAL = "createElectedOfficial";
@@ -83,7 +82,7 @@ public class ElectedOfficialXPage extends MVCApplication
 
     // Actions
     private static final String ACTION_CREATE_ELECTEDOFFICIAL = "createElectedOfficial";
-    private static final String ACTION_MODIFY_ELECTEDOFFICIAL= "modifyElectedOfficial";
+    private static final String ACTION_MODIFY_ELECTEDOFFICIAL = "modifyElectedOfficial";
     private static final String ACTION_REMOVE_ELECTEDOFFICIAL = "removeElectedOfficial";
     private static final String ACTION_CONFIRM_REMOVE_ELECTEDOFFICIAL = "confirmRemoveElectedOfficial";
 
@@ -91,47 +90,50 @@ public class ElectedOfficialXPage extends MVCApplication
     private static final String INFO_ELECTEDOFFICIAL_CREATED = "transparency.info.electedofficial.created";
     private static final String INFO_ELECTEDOFFICIAL_UPDATED = "transparency.info.electedofficial.updated";
     private static final String INFO_ELECTEDOFFICIAL_REMOVED = "transparency.info.electedofficial.removed";
-    
+
     // Session variable to store working values
     private ElectedOfficial _electedofficial;
-    
+
     /**
      * Build the Manage View
      *
-     * @param request The HTTP request
+     * @param request
+     *            The HTTP request
      * @return The Xpage
      */
     @View( value = VIEW_MANAGE_ELECTEDOFFICIALS, defaultView = true )
     public XPage getManageElectedOfficials( HttpServletRequest request )
     {
         _electedofficial = null;
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_ELECTEDOFFICIAL_LIST, ElectedOfficialHome.getElectedOfficialsList(  ) );
+        Map<String, Object> model = getModel( );
+        model.put( MARK_ELECTEDOFFICIAL_LIST, ElectedOfficialHome.getElectedOfficialsList( ) );
 
-        return getXPage( TEMPLATE_MANAGE_ELECTEDOFFICIALS, request.getLocale(  ), model );
+        return getXPage( TEMPLATE_MANAGE_ELECTEDOFFICIALS, request.getLocale( ), model );
     }
 
     /**
      * Returns the form to create a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the electedofficial form
      */
     @View( VIEW_CREATE_ELECTEDOFFICIAL )
     public XPage getCreateElectedOfficial( HttpServletRequest request )
     {
-        _electedofficial = ( _electedofficial != null ) ? _electedofficial : new ElectedOfficial(  );
+        _electedofficial = ( _electedofficial != null ) ? _electedofficial : new ElectedOfficial( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_ELECTEDOFFICIAL, _electedofficial );
-           
-        return getXPage( TEMPLATE_CREATE_ELECTEDOFFICIAL, request.getLocale(  ), model );
+
+        return getXPage( TEMPLATE_CREATE_ELECTEDOFFICIAL, request.getLocale( ), model );
     }
 
     /**
      * Process the data capture form of a new electedofficial
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_ELECTEDOFFICIAL )
@@ -152,10 +154,10 @@ public class ElectedOfficialXPage extends MVCApplication
     }
 
     /**
-     * Manages the removal form of a electedofficial whose identifier is in the http
-     * request
+     * Manages the removal form of a electedofficial whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      * @throws fr.paris.lutece.portal.service.message.SiteMessageException
      */
@@ -167,15 +169,16 @@ public class ElectedOfficialXPage extends MVCApplication
         url.addParameter( PARAM_PAGE, MARK_ELECTEDOFFICIAL );
         url.addParameter( PARAM_ACTION, ACTION_REMOVE_ELECTEDOFFICIAL );
         url.addParameter( PARAMETER_ID_ELECTEDOFFICIAL, nId );
-        
-        SiteMessageService.setMessage(request, MESSAGE_CONFIRM_REMOVE_ELECTEDOFFICIAL, SiteMessage.TYPE_CONFIRMATION, url.getUrl(  ));
+
+        SiteMessageService.setMessage( request, MESSAGE_CONFIRM_REMOVE_ELECTEDOFFICIAL, SiteMessage.TYPE_CONFIRMATION, url.getUrl( ) );
         return null;
     }
 
     /**
      * Handles the removal form of a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage electedofficials
      */
     @Action( ACTION_REMOVE_ELECTEDOFFICIAL )
@@ -191,7 +194,8 @@ public class ElectedOfficialXPage extends MVCApplication
     /**
      * Returns the form to update info about a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_ELECTEDOFFICIAL )
@@ -199,21 +203,22 @@ public class ElectedOfficialXPage extends MVCApplication
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ELECTEDOFFICIAL ) );
 
-        if ( _electedofficial == null  || ( _electedofficial.getId( ) != nId ))
+        if ( _electedofficial == null || ( _electedofficial.getId( ) != nId ) )
         {
             _electedofficial = ElectedOfficialHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_ELECTEDOFFICIAL, _electedofficial );
-        
-        return getXPage( TEMPLATE_MODIFY_ELECTEDOFFICIAL, request.getLocale(  ), model );
+
+        return getXPage( TEMPLATE_MODIFY_ELECTEDOFFICIAL, request.getLocale( ), model );
     }
 
     /**
      * Process the change form of a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_ELECTEDOFFICIAL )

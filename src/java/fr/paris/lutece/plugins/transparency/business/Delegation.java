@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import javax.validation.constraints.*;
@@ -40,24 +40,25 @@ import java.sql.Date;
 
 /**
  * This is the business class for the object Delegation
- */ 
+ */
 public class Delegation implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nId;
-    
+
     private int _nIdAdminUser;
     private String _strAdminUserName;
-    
+
     private int _nIdElectedOfficial;
     private String _strElectedOfficialName;
-    
+
     private Date _dateDateCreation;
 
     /**
      * Returns the Id
+     * 
      * @return The Id
      */
     public int getId( )
@@ -67,15 +68,18 @@ public class Delegation implements Serializable
 
     /**
      * Sets the Id
-     * @param nId The Id
-     */ 
+     * 
+     * @param nId
+     *            The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
+
     /**
      * Returns the IdAdminuser
+     * 
      * @return The IdAdminuser
      */
     public int getIdAdminUser( )
@@ -85,15 +89,18 @@ public class Delegation implements Serializable
 
     /**
      * Sets the IdAdminuser
-     * @param nIdAdminuser The IdAdminuser
-     */ 
+     * 
+     * @param nIdAdminuser
+     *            The IdAdminuser
+     */
     public void setIdAdminUser( int nIdAdminuser )
     {
         _nIdAdminUser = nIdAdminuser;
     }
-    
+
     /**
      * Returns the IdElectedofficial
+     * 
      * @return The IdElectedofficial
      */
     public int getIdElectedOfficial( )
@@ -103,15 +110,17 @@ public class Delegation implements Serializable
 
     /**
      * Sets the IdElectedofficial
+     * 
      * @param nIdElectedOfficial
-     */ 
+     */
     public void setIdElectedOfficial( int nIdElectedOfficial )
     {
         _nIdElectedOfficial = nIdElectedOfficial;
     }
-    
+
     /**
      * Returns the DateCreation
+     * 
      * @return The DateCreation
      */
     public Date getDateCreation( )
@@ -121,8 +130,10 @@ public class Delegation implements Serializable
 
     /**
      * Sets the DateCreation
-     * @param dateDateCreation The DateCreation
-     */ 
+     * 
+     * @param dateDateCreation
+     *            The DateCreation
+     */
     public void setDateCreation( Date dateDateCreation )
     {
         _dateDateCreation = dateDateCreation;
@@ -133,35 +144,39 @@ public class Delegation implements Serializable
      * 
      * @return the name
      */
-    public String getAdminUserName() {
+    public String getAdminUserName( )
+    {
         return _strAdminUserName;
     }
 
     /**
      * set Admin User Name
      * 
-     * @param _strAdminUserName 
+     * @param _strAdminUserName
      */
-    public void setAdminUserName(String _strAdminUserName) {
+    public void setAdminUserName( String _strAdminUserName )
+    {
         this._strAdminUserName = _strAdminUserName;
     }
 
     /**
      * get Elected Official Name
+     * 
      * @return the name
      */
-    public String getElectedOfficialName() {
+    public String getElectedOfficialName( )
+    {
         return _strElectedOfficialName;
     }
 
     /**
      * set Elected Official Name
      * 
-     * @param _strElectedOfficialName 
+     * @param _strElectedOfficialName
      */
-    public void setElectedOfficialName(String _strElectedOfficialName) {
+    public void setElectedOfficialName( String _strElectedOfficialName )
+    {
         this._strElectedOfficialName = _strElectedOfficialName;
     }
-    
-    
+
 }

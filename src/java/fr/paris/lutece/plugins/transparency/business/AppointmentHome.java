@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -52,14 +52,16 @@ public final class AppointmentHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private AppointmentHome(  )
+    private AppointmentHome( )
     {
     }
 
     /**
      * Create an instance of the appointment class
-     * @param appointment The instance of the Appointment which contains the informations to store
-     * @return The  instance of appointment which has been created with its primary key.
+     * 
+     * @param appointment
+     *            The instance of the Appointment which contains the informations to store
+     * @return The instance of appointment which has been created with its primary key.
      */
     public static Appointment create( Appointment appointment )
     {
@@ -70,8 +72,10 @@ public final class AppointmentHome
 
     /**
      * Update of the appointment which is specified in parameter
-     * @param appointment The instance of the Appointment which contains the data to store
-     * @return The instance of the  appointment which has been updated
+     * 
+     * @param appointment
+     *            The instance of the Appointment which contains the data to store
+     * @return The instance of the appointment which has been updated
      */
     public static Appointment update( Appointment appointment )
     {
@@ -82,7 +86,9 @@ public final class AppointmentHome
 
     /**
      * Remove the appointment whose identifier is specified in parameter
-     * @param nKey The appointment Id
+     * 
+     * @param nKey
+     *            The appointment Id
      */
     public static void remove( int nKey )
     {
@@ -91,103 +97,109 @@ public final class AppointmentHome
 
     /**
      * Returns an instance of a appointment whose identifier is specified in parameter
-     * @param nKey The appointment primary key
+     * 
+     * @param nKey
+     *            The appointment primary key
      * @return an instance of Appointment
      */
     public static Appointment findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
-    
+
     /**
      * Returns an instance of a appointment whose identifier is specified in parameter
+     * 
      * @param nId
      * @return an instance of Appointment
      */
     public static Appointment getFullAppointmentById( int nId )
     {
-        Appointment appointment = _dao.load( nId , _plugin ) ;
-                
-        if ( appointment != null ) 
+        Appointment appointment = _dao.load( nId, _plugin );
+
+        if ( appointment != null )
         {
             // get lobbies and elected officials
-            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
-            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
-            
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) );
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) );
+
         }
-            
-        return appointment ;       
+
+        return appointment;
     }
 
     /**
      * Load the data of all the appointment objects and returns them as a list
+     * 
      * @return the list which contains the data of all the appointment objects
      */
     public static List<Appointment> getAppointmentsList( )
     {
         return _dao.selectAppointmentsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the appointment objects and returns them as a list
+     * 
      * @return the list which contains the data of all the appointment objects
      */
     public static List<Appointment> getFullAppointmentsList( )
     {
-        return getFullAppointmentsList( null ) ;
+        return getFullAppointmentsList( null );
     }
 
     /**
      * Load the data of all the filtred appointment objects and returns them as a list
+     * 
      * @param filter
      * @return the list which contains the data of all the appointment objects
      */
     public static List<Appointment> getFullAppointmentsList( AppointmentFilter filter )
     {
         List<Appointment> list = _dao.selectAppointmentsList( filter, _plugin );
-        for (Appointment appointment : list) 
+        for ( Appointment appointment : list )
         {
-            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
-            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
-            
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) );
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) );
+
         }
         return list;
     }
 
-    
     /**
-     * Load the data of all the appointment objects associated to the delegation of the user 
-     * and returns them as a list
+     * Load the data of all the appointment objects associated to the delegation of the user and returns them as a list
+     * 
      * @return the list which contains the data of all the appointment objects
      */
     public static List<Appointment> getFullAppointmentsListByDelegation( int idUser )
     {
         List<Appointment> list = _dao.selectAppointmentsListByDelegation( idUser, _plugin );
-        for (Appointment appointment : list) 
+        for ( Appointment appointment : list )
         {
-            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) ) ;
-            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) ) ;
-            
+            appointment.setElectedOfficialList( ElectedOfficialHome.getElectedOfficialsListByAppointment( appointment.getId( ) ) );
+            appointment.setLobbyList( LobbyHome.getLobbiesListByAppointment( appointment.getId( ) ) );
+
         }
         return list;
     }
-    
+
     /**
      * Load the id of all the appointment objects and returns them as a list
+     * 
      * @return the list which contains the id of all the appointment objects
      */
     public static List<Integer> getIdAppointmentsList( )
     {
         return _dao.selectIdAppointmentsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the appointment objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the appointment objects
      */
     public static ReferenceList getAppointmentsReferenceList( )
     {
-        return _dao.selectAppointmentsReferenceList(_plugin );
+        return _dao.selectAppointmentsReferenceList( _plugin );
     }
 }
-

@@ -57,8 +57,9 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     private static final String SQL_WHERECLAUSE_BY_APPOINTMENT = " LEFT JOIN transparency_elected_official_appointment on transparency_elected_official_appointment.id_elected_official = transparency_elected_official.id_elected_official WHERE id_appointment = ? ";
     private static final String SQL_WHERECLAUSE_BY_DELEGATION = " LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official.id_elected_official WHERE id_user = ? ";
     private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_elected_official = ? ";
-    
+
     private static final String SQL_ORDER_BY = " ORDER BY last_name ";
+
     /**
      * {@inheritDoc }
      */
@@ -69,12 +70,12 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         try
         {
             int nIndex = 1;
-            daoUtil.setString( nIndex++ , electedOfficial.getFirstName( ) );
-            daoUtil.setString( nIndex++ , electedOfficial.getLastName( ) );
-            daoUtil.setString( nIndex++ , electedOfficial.getTitle( ) );
-            
+            daoUtil.setString( nIndex++, electedOfficial.getFirstName( ) );
+            daoUtil.setString( nIndex++, electedOfficial.getLastName( ) );
+            daoUtil.setString( nIndex++, electedOfficial.getTitle( ) );
+
             daoUtil.executeUpdate( );
-            if ( daoUtil.nextGeneratedKey( ) ) 
+            if ( daoUtil.nextGeneratedKey( ) )
             {
                 electedOfficial.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
@@ -91,16 +92,16 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     @Override
     public ElectedOfficial load( int nKey, Plugin plugin )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_ID , plugin );
-        daoUtil.setInt( 1 , nKey );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_ID, plugin );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeQuery( );
         ElectedOfficial electedOfficial = null;
 
         if ( daoUtil.next( ) )
         {
-            electedOfficial = new ElectedOfficial();
+            electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
-            
+
             electedOfficial.setId( daoUtil.getInt( nIndex++ ) );
             electedOfficial.setFirstName( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
@@ -118,7 +119,7 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     public void delete( int nKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1 , nKey );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
@@ -131,12 +132,12 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-        
-        daoUtil.setInt( nIndex++ , electedOfficial.getId( ) );
-        daoUtil.setString( nIndex++ , electedOfficial.getFirstName( ) );
-        daoUtil.setString( nIndex++ , electedOfficial.getLastName( ) );
-        daoUtil.setString( nIndex++ , electedOfficial.getTitle( ) );
-        daoUtil.setInt( nIndex , electedOfficial.getId( ) );
+
+        daoUtil.setInt( nIndex++, electedOfficial.getId( ) );
+        daoUtil.setString( nIndex++, electedOfficial.getFirstName( ) );
+        daoUtil.setString( nIndex++, electedOfficial.getLastName( ) );
+        daoUtil.setString( nIndex++, electedOfficial.getTitle( ) );
+        daoUtil.setInt( nIndex, electedOfficial.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -148,15 +149,15 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     @Override
     public List<ElectedOfficial> selectElectedOfficialsList( Plugin plugin )
     {
-        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>(  );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY , plugin );
-        daoUtil.executeQuery(  );
+        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>( );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY, plugin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ElectedOfficial electedOfficial = new ElectedOfficial(  );
+            ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
-            
+
             electedOfficial.setId( daoUtil.getInt( nIndex++ ) );
             electedOfficial.setFirstName( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
@@ -168,23 +169,23 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         daoUtil.free( );
         return electedOfficialList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public List<ElectedOfficial>  selectElectedOfficialsListByAppointment( int idAppointment, Plugin plugin )
+    public List<ElectedOfficial> selectElectedOfficialsListByAppointment( int idAppointment, Plugin plugin )
     {
-        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>(  );
+        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_APPOINTMENT + SQL_ORDER_BY, plugin );
-        daoUtil.setInt( 1 , idAppointment );
-        daoUtil.executeQuery(  );
+        daoUtil.setInt( 1, idAppointment );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ElectedOfficial electedOfficial = new ElectedOfficial(  );
+            ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
-            
+
             electedOfficial.setId( daoUtil.getInt( nIndex++ ) );
             electedOfficial.setFirstName( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
@@ -196,24 +197,23 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         daoUtil.free( );
         return electedOfficialList;
     }
-              
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public List<ElectedOfficial>  selectElectedOfficialsListByDelegation( int idAdminUser, Plugin plugin )
+    public List<ElectedOfficial> selectElectedOfficialsListByDelegation( int idAdminUser, Plugin plugin )
     {
-        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>(  );
+        List<ElectedOfficial> electedOfficialList = new ArrayList<ElectedOfficial>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY, plugin );
-        daoUtil.setInt( 1 , idAdminUser );
-        daoUtil.executeQuery(  );
+        daoUtil.setInt( 1, idAdminUser );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            ElectedOfficial electedOfficial = new ElectedOfficial(  );
+            ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
-            
+
             electedOfficial.setId( daoUtil.getInt( nIndex++ ) );
             electedOfficial.setFirstName( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
@@ -225,8 +225,7 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         daoUtil.free( );
         return electedOfficialList;
     }
-              
-    
+
     /**
      * {@inheritDoc }
      */
@@ -234,10 +233,10 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     public List<Integer> selectIdElectedOfficialsList( Plugin plugin )
     {
         List<Integer> electedOfficialList = new ArrayList<Integer>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_ORDER_BY , plugin );
-        daoUtil.executeQuery(  );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_ORDER_BY, plugin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             electedOfficialList.add( daoUtil.getInt( 1 ) );
         }
@@ -245,20 +244,20 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         daoUtil.free( );
         return electedOfficialList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public ReferenceList selectElectedOfficialsReferenceList( Plugin plugin )
     {
-        ReferenceList electedOfficialList = new ReferenceList();
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY , plugin );
-        daoUtil.executeQuery(  );
+        ReferenceList electedOfficialList = new ReferenceList( );
+        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_ORDER_BY, plugin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            electedOfficialList.addItem( daoUtil.getInt( 1 ) , daoUtil.getString( 3 ) );
+            electedOfficialList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 3 ) );
         }
 
         daoUtil.free( );
@@ -271,19 +270,18 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
     @Override
     public ReferenceList selectElectedOfficialsReferenceListByDelegation( int idUserAdmin, Plugin plugin )
     {
-        ReferenceList electedOfficialList = new ReferenceList();
+        ReferenceList electedOfficialList = new ReferenceList( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY, plugin );
-        daoUtil.setInt( 1, idUserAdmin);
-        daoUtil.executeQuery(  );
+        daoUtil.setInt( 1, idUserAdmin );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            electedOfficialList.addItem( String.valueOf( daoUtil.getInt( 1 ) ) , daoUtil.getString( 3 ) );
+            electedOfficialList.addItem( String.valueOf( daoUtil.getInt( 1 ) ), daoUtil.getString( 3 ) );
         }
 
         daoUtil.free( );
         return electedOfficialList;
     }
-
 
 }

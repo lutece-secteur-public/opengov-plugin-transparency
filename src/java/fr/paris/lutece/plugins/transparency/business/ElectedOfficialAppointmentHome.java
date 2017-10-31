@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -49,14 +49,16 @@ public final class ElectedOfficialAppointmentHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ElectedOfficialAppointmentHome(  )
+    private ElectedOfficialAppointmentHome( )
     {
     }
 
     /**
      * Create an instance of the electedOfficialAppointment class
-     * @param electedOfficialAppointment The instance of the ElectedOfficialAppointment which contains the informations to store
-     * @return The  instance of electedOfficialAppointment which has been created with its primary key.
+     * 
+     * @param electedOfficialAppointment
+     *            The instance of the ElectedOfficialAppointment which contains the informations to store
+     * @return The instance of electedOfficialAppointment which has been created with its primary key.
      */
     public static ElectedOfficialAppointment create( ElectedOfficialAppointment electedOfficialAppointment )
     {
@@ -65,9 +67,9 @@ public final class ElectedOfficialAppointmentHome
         return electedOfficialAppointment;
     }
 
-
     /**
      * Remove the electedOfficialAppointment whose identifier is specified in parameter
+     * 
      * @param electedOfficialAppointment
      */
     public static void remove( ElectedOfficialAppointment electedOfficialAppointment )
@@ -75,6 +77,4 @@ public final class ElectedOfficialAppointmentHome
         _dao.delete( electedOfficialAppointment, _plugin );
     }
 
- 
 }
-

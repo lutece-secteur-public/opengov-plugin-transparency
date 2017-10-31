@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.test.LuteceTestCase;
 
-
 public class ElectedOfficialBusinessTest extends LuteceTestCase
 {
     private final static String FIRSTNAME1 = "FirstName1";
@@ -46,10 +45,10 @@ public class ElectedOfficialBusinessTest extends LuteceTestCase
     private final static String TITLE1 = "Title1";
     private final static String TITLE2 = "Title2";
 
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        ElectedOfficial electedOfficial = new ElectedOfficial();
+        ElectedOfficial electedOfficial = new ElectedOfficial( );
         electedOfficial.setFirstName( FIRSTNAME1 );
         electedOfficial.setLastName( LASTNAME1 );
         electedOfficial.setTitle( TITLE1 );
@@ -57,9 +56,9 @@ public class ElectedOfficialBusinessTest extends LuteceTestCase
         // Create test
         ElectedOfficialHome.create( electedOfficial );
         ElectedOfficial electedOfficialStored = ElectedOfficialHome.findByPrimaryKey( electedOfficial.getId( ) );
-        assertEquals( electedOfficialStored.getFirstName() , electedOfficial.getFirstName( ) );
-        assertEquals( electedOfficialStored.getLastName() , electedOfficial.getLastName( ) );
-        assertEquals( electedOfficialStored.getTitle() , electedOfficial.getTitle( ) );
+        assertEquals( electedOfficialStored.getFirstName( ), electedOfficial.getFirstName( ) );
+        assertEquals( electedOfficialStored.getLastName( ), electedOfficial.getLastName( ) );
+        assertEquals( electedOfficialStored.getTitle( ), electedOfficial.getTitle( ) );
 
         // Update test
         electedOfficial.setFirstName( FIRSTNAME2 );
@@ -67,18 +66,18 @@ public class ElectedOfficialBusinessTest extends LuteceTestCase
         electedOfficial.setTitle( TITLE2 );
         ElectedOfficialHome.update( electedOfficial );
         electedOfficialStored = ElectedOfficialHome.findByPrimaryKey( electedOfficial.getId( ) );
-        assertEquals( electedOfficialStored.getFirstName() , electedOfficial.getFirstName( ) );
-        assertEquals( electedOfficialStored.getLastName() , electedOfficial.getLastName( ) );
-        assertEquals( electedOfficialStored.getTitle() , electedOfficial.getTitle( ) );
+        assertEquals( electedOfficialStored.getFirstName( ), electedOfficial.getFirstName( ) );
+        assertEquals( electedOfficialStored.getLastName( ), electedOfficial.getLastName( ) );
+        assertEquals( electedOfficialStored.getTitle( ), electedOfficial.getTitle( ) );
 
         // List test
-        ElectedOfficialHome.getElectedOfficialsList();
+        ElectedOfficialHome.getElectedOfficialsList( );
 
         // Delete test
         ElectedOfficialHome.remove( electedOfficial.getId( ) );
         electedOfficialStored = ElectedOfficialHome.findByPrimaryKey( electedOfficial.getId( ) );
         assertNull( electedOfficialStored );
-        
+
     }
 
 }

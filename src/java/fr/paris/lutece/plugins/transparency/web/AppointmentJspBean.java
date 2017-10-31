@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 	
+
 package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.Appointment;
@@ -79,9 +79,9 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     // Parameters
     private static final String PARAMETER_ID_APPOINTMENT = "id";
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
-    private static final String PARAMETER_ID_LOBBY = "lobby_id" ;
-    private static final String PARAMETER_SEARCH_LOBBY = "lobby_search" ;
-    
+    private static final String PARAMETER_ID_LOBBY = "lobby_id";
+    private static final String PARAMETER_SEARCH_LOBBY = "lobby_search";
+
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_APPOINTMENTS = "transparency.manage_appointments.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_MODIFY_APPOINTMENT = "transparency.modify_appointment.pageTitle";
@@ -92,7 +92,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     private static final String MARK_APPOINTMENT = "appointment";
     private static final String MARK_ELECTEDOFFICIALS_LIST = "electedofficials_list";
     private static final String MARK_BASE_URL = "base_url";
-    
+
     // Jsp
     private static final String JSP_MANAGE_APPOINTMENTS = "jsp/admin/plugins/transparency/ManageAppointments.jsp";
 
@@ -117,13 +117,15 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     private static final String INFO_APPOINTMENT_CREATED = "transparency.info.appointment.created";
     private static final String INFO_APPOINTMENT_UPDATED = "transparency.info.appointment.updated";
     private static final String INFO_APPOINTMENT_REMOVED = "transparency.info.appointment.removed";
-    
+
     // Session variable to store working values
     private Appointment _appointment;
-    
+
     /**
      * Build the Manage View
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_MANAGE_APPOINTMENTS, defaultView = true )
@@ -131,16 +133,17 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     {
         _appointment = null;
         AdminUser user = getUser( );
-        List<Appointment> listAppointments ;
-        
-        if ( user.isAdmin( ) ) {
+        List<Appointment> listAppointments;
+
+        if ( user.isAdmin( ) )
+        {
             listAppointments = AppointmentHome.getFullAppointmentsList( );
-        } 
+        }
         else
         {
             listAppointments = AppointmentHome.getFullAppointmentsListByDelegation( user.getUserId( ) );
         }
-        
+
         Map<String, Object> model = getPaginatedListModel( request, MARK_APPOINTMENT_LIST, listAppointments, JSP_MANAGE_APPOINTMENTS );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_APPOINTMENTS, TEMPLATE_MANAGE_APPOINTMENTS, model );
@@ -149,28 +152,30 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     /**
      * Returns the form to create a appointment
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the appointment form
      */
     @View( VIEW_CREATE_APPOINTMENT )
     public String getCreateAppointment( HttpServletRequest request )
     {
-        _appointment = ( _appointment != null ) ? _appointment : new Appointment(  );
+        _appointment = ( _appointment != null ) ? _appointment : new Appointment( );
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
-        
-        Map<String, Object> model = getModel(  );
+
+        Map<String, Object> model = getModel( );
         model.put( MARK_APPOINTMENT, _appointment );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
-        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) ) ;
-        
+        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
+
         return getPage( PROPERTY_PAGE_TITLE_CREATE_APPOINTMENT, TEMPLATE_CREATE_APPOINTMENT, model );
     }
 
     /**
      * Process the data capture form of a new appointment
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_APPOINTMENT )
@@ -179,8 +184,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         // add a date format converter
         DateConverter converter = new DateConverter( null );
         converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class ) ;
-                                
+        ConvertUtils.register( converter, Date.class );
+
         populate( _appointment, request );
 
         // Check constraints
@@ -191,53 +196,53 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         // create appointment
         AppointmentHome.create( _appointment );
-        
+
         // add elected Official to the appointment
         String strIdElectedOfficial = request.getParameter( PARAMETER_ID_ELECTED_OFFICIAL );
-        int idElectedOfficial = StringUtil.getIntValue( strIdElectedOfficial, -1) ;
+        int idElectedOfficial = StringUtil.getIntValue( strIdElectedOfficial, -1 );
 
-        ElectedOfficial electedOfficial = ElectedOfficialHome.findByPrimaryKey( idElectedOfficial ) ;
-        if ( electedOfficial != null ) 
+        ElectedOfficial electedOfficial = ElectedOfficialHome.findByPrimaryKey( idElectedOfficial );
+        if ( electedOfficial != null )
         {
-            ElectedOfficialAppointmentHome.create( new ElectedOfficialAppointment( idElectedOfficial , _appointment.getId( ) ) ) ;
-            _appointment.getElectedOfficialList( ).add( electedOfficial ) ;
+            ElectedOfficialAppointmentHome.create( new ElectedOfficialAppointment( idElectedOfficial, _appointment.getId( ) ) );
+            _appointment.getElectedOfficialList( ).add( electedOfficial );
         }
-        
+
         // add Lobby to the appointment
         String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
         String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
-        
-        int idLobby = StringUtil.getIntValue( strIdLobby, -1) ;
 
-        Lobby lobby = LobbyHome.findByPrimaryKey( idLobby ) ;
-        if ( idLobby > 0 && lobby != null ) 
+        int idLobby = StringUtil.getIntValue( strIdLobby, -1 );
+
+        Lobby lobby = LobbyHome.findByPrimaryKey( idLobby );
+        if ( idLobby > 0 && lobby != null )
         {
-            LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ) , _appointment.getId( ) ) ) ;
-            _appointment.getLobbyList( ).add( lobby ) ;
-        } 
-        else if ( !StringUtils.isBlank( strSearchLobby ) )
-        {
-            Lobby newLobby = new Lobby( );
-            newLobby.setName( strSearchLobby );
-            newLobby.setVersionDate( new Date( (new java.util.Date( )).getTime( ) ) ) ; 
-            newLobby = LobbyHome.create( newLobby );
-            
-            LobbyAppointmentHome.create( new LobbyAppointment( newLobby.getId( ) , _appointment.getId( ) ) ) ;
-            _appointment.getLobbyList( ).add( newLobby ) ;
-            
+            LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ), _appointment.getId( ) ) );
+            _appointment.getLobbyList( ).add( lobby );
         }
-        
+        else
+            if ( !StringUtils.isBlank( strSearchLobby ) )
+            {
+                Lobby newLobby = new Lobby( );
+                newLobby.setName( strSearchLobby );
+                newLobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
+                newLobby = LobbyHome.create( newLobby );
 
-        addInfo( INFO_APPOINTMENT_CREATED, getLocale(  ) );
+                LobbyAppointmentHome.create( new LobbyAppointment( newLobby.getId( ), _appointment.getId( ) ) );
+                _appointment.getLobbyList( ).add( newLobby );
+
+            }
+
+        addInfo( INFO_APPOINTMENT_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
     }
 
     /**
-     * Manages the removal form of a appointment whose identifier is in the http
-     * request
+     * Manages the removal form of a appointment whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     @Action( ACTION_CONFIRM_REMOVE_APPOINTMENT )
@@ -247,7 +252,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_APPOINTMENT ) );
         url.addParameter( PARAMETER_ID_APPOINTMENT, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_APPOINTMENT, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_APPOINTMENT, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }
@@ -255,7 +260,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     /**
      * Handles the removal form of a appointment
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage appointments
      */
     @Action( ACTION_REMOVE_APPOINTMENT )
@@ -263,7 +269,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_APPOINTMENT ) );
         AppointmentHome.remove( nId );
-        addInfo( INFO_APPOINTMENT_REMOVED, getLocale(  ) );
+        addInfo( INFO_APPOINTMENT_REMOVED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
     }
@@ -271,7 +277,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     /**
      * Returns the form to update info about a appointment
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_APPOINTMENT )
@@ -279,26 +286,26 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_APPOINTMENT ) );
 
-        if ( _appointment == null || ( _appointment.getId(  ) != nId ))
+        if ( _appointment == null || ( _appointment.getId( ) != nId ) )
         {
             _appointment = AppointmentHome.getFullAppointmentById( nId );
         }
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
-        
-        Map<String, Object> model = getModel(  );
+
+        Map<String, Object> model = getModel( );
         model.put( MARK_APPOINTMENT, _appointment );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
-        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) ) ;
-        
-        
+        model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_APPOINTMENT, TEMPLATE_MODIFY_APPOINTMENT, model );
     }
 
     /**
      * Process the change form of a appointment
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_APPOINTMENT )
@@ -307,9 +314,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         // add a date format converter
         DateConverter converter = new DateConverter( null );
         converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class ) ;
-        
-        
+        ConvertUtils.register( converter, Date.class );
+
         populate( _appointment, request );
 
         // Check constraints
@@ -319,35 +325,35 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         }
 
         AppointmentHome.update( _appointment );
-        
+
         // change Lobby to the appointment
         String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
         String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
-        
-        int idLobby = StringUtil.getIntValue( strIdLobby, -1) ;
 
-        Lobby lobby = LobbyHome.findByPrimaryKey( idLobby ) ;
-        if ( idLobby > 0 && lobby != null ) 
+        int idLobby = StringUtil.getIntValue( strIdLobby, -1 );
+
+        Lobby lobby = LobbyHome.findByPrimaryKey( idLobby );
+        if ( idLobby > 0 && lobby != null )
         {
             LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
-            LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ) , _appointment.getId( ) ) ) ;
-            _appointment.getLobbyList( ).add( lobby ) ;
-        } 
-        else if ( !StringUtils.isBlank( strSearchLobby ) )
-        {
-            Lobby newLobby = new Lobby( );
-            newLobby.setName( strSearchLobby );
-            newLobby.setVersionDate( new Date( (new java.util.Date( )).getTime( ) ) ) ; 
-            newLobby = LobbyHome.create( newLobby );
-            
-            LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
-            LobbyAppointmentHome.create( new LobbyAppointment( newLobby.getId( ) , _appointment.getId( ) ) ) ;
-            _appointment.getLobbyList( ).add( newLobby ) ;
-            
+            LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ), _appointment.getId( ) ) );
+            _appointment.getLobbyList( ).add( lobby );
         }
-        
-        
-        addInfo( INFO_APPOINTMENT_UPDATED, getLocale(  ) );
+        else
+            if ( !StringUtils.isBlank( strSearchLobby ) )
+            {
+                Lobby newLobby = new Lobby( );
+                newLobby.setName( strSearchLobby );
+                newLobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
+                newLobby = LobbyHome.create( newLobby );
+
+                LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
+                LobbyAppointmentHome.create( new LobbyAppointment( newLobby.getId( ), _appointment.getId( ) ) );
+                _appointment.getLobbyList( ).add( newLobby );
+
+            }
+
+        addInfo( INFO_APPOINTMENT_UPDATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
     }

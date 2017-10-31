@@ -30,37 +30,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import java.io.Serializable;
 
 /**
  * This is the business class for the object LobbyAppointment
- */ 
+ */
 public class LobbyAppointment implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nIdLobby;
-    
+
     private int _nIdAppointment;
 
     /**
      * Constructor
      * 
      * @param nIdLobby
-     * @param nIdAppointment 
+     * @param nIdAppointment
      */
     public LobbyAppointment( int nIdLobby, int nIdAppointment )
     {
-        _nIdLobby = nIdLobby ;
-        _nIdAppointment = nIdAppointment ;
+        _nIdLobby = nIdLobby;
+        _nIdAppointment = nIdAppointment;
     }
-    
+
     /**
      * Returns the Id Lobby
+     * 
      * @return The Id Lobby
      */
     public int getIdLobby( )
@@ -70,15 +71,18 @@ public class LobbyAppointment implements Serializable
 
     /**
      * Sets the Id Lobby
-     * @param nIdLobby The Id
-     */ 
+     * 
+     * @param nIdLobby
+     *            The Id
+     */
     public void setIdLobby( int nIdLobby )
     {
         _nIdLobby = nIdLobby;
     }
-    
+
     /**
      * Returns the IdAppointment
+     * 
      * @return The IdAppointment
      */
     public int getIdAppointment( )
@@ -88,8 +92,10 @@ public class LobbyAppointment implements Serializable
 
     /**
      * Sets the IdAppointment
-     * @param nIdAppointment The IdAppointment
-     */ 
+     * 
+     * @param nIdAppointment
+     *            The IdAppointment
+     */
     public void setIdAppointment( int nIdAppointment )
     {
         _nIdAppointment = nIdAppointment;

@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -52,14 +52,16 @@ public final class DelegationHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private DelegationHome(  )
+    private DelegationHome( )
     {
     }
 
     /**
      * Create an instance of the delegation class
-     * @param delegation The instance of the Delegation which contains the informations to store
-     * @return The  instance of delegation which has been created with its primary key.
+     * 
+     * @param delegation
+     *            The instance of the Delegation which contains the informations to store
+     * @return The instance of delegation which has been created with its primary key.
      */
     public static Delegation create( Delegation delegation )
     {
@@ -70,8 +72,10 @@ public final class DelegationHome
 
     /**
      * Update of the delegation which is specified in parameter
-     * @param delegation The instance of the Delegation which contains the data to store
-     * @return The instance of the  delegation which has been updated
+     * 
+     * @param delegation
+     *            The instance of the Delegation which contains the data to store
+     * @return The instance of the delegation which has been updated
      */
     public static Delegation update( Delegation delegation )
     {
@@ -82,7 +86,9 @@ public final class DelegationHome
 
     /**
      * Remove the delegation whose identifier is specified in parameter
-     * @param nKey The delegation Id
+     * 
+     * @param nKey
+     *            The delegation Id
      */
     public static void remove( int nKey )
     {
@@ -91,39 +97,43 @@ public final class DelegationHome
 
     /**
      * Returns an instance of a delegation whose identifier is specified in parameter
-     * @param nKey The delegation primary key
+     * 
+     * @param nKey
+     *            The delegation primary key
      * @return an instance of Delegation
      */
     public static Delegation findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
 
     /**
      * Load the data of all the delegation objects and returns them as a list
+     * 
      * @return the list which contains the data of all the delegation objects
      */
     public static List<Delegation> getDelegationsList( )
     {
         return _dao.selectDelegationsList( _plugin );
     }
-    
+
     /**
      * Load the id of all the delegation objects and returns them as a list
+     * 
      * @return the list which contains the id of all the delegation objects
      */
     public static List<Integer> getIdDelegationsList( )
     {
         return _dao.selectIdDelegationsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the delegation objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the delegation objects
      */
     public static ReferenceList getDelegationsReferenceList( )
     {
-        return _dao.selectDelegationsReferenceList(_plugin );
+        return _dao.selectDelegationsReferenceList( _plugin );
     }
 }
-

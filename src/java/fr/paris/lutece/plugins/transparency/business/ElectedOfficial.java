@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import javax.validation.constraints.*;
@@ -39,28 +39,29 @@ import java.io.Serializable;
 
 /**
  * This is the business class for the object ElectedOfficial
- */ 
+ */
 public class ElectedOfficial implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nId;
-    
+
     @NotEmpty( message = "#i18n{transparency.validation.electedofficial.FirstName.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{transparency.validation.electedofficial.FirstName.size}" ) 
+    @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.FirstName.size}" )
     private String _strFirstName;
-    
+
     @NotEmpty( message = "#i18n{transparency.validation.electedofficial.LastName.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{transparency.validation.electedofficial.LastName.size}" ) 
+    @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.LastName.size}" )
     private String _strLastName;
-    
+
     @NotEmpty( message = "#i18n{transparency.validation.electedofficial.Title.notEmpty}" )
-    @Size( max = 50 , message = "#i18n{transparency.validation.electedofficial.Title.size}" ) 
+    @Size( max = 50, message = "#i18n{transparency.validation.electedofficial.Title.size}" )
     private String _strTitle;
 
     /**
      * Returns the Id
+     * 
      * @return The Id
      */
     public int getId( )
@@ -70,15 +71,18 @@ public class ElectedOfficial implements Serializable
 
     /**
      * Sets the Id
-     * @param nId The Id
-     */ 
+     * 
+     * @param nId
+     *            The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
+
     /**
      * Returns the FirstName
+     * 
      * @return The FirstName
      */
     public String getFirstName( )
@@ -88,15 +92,18 @@ public class ElectedOfficial implements Serializable
 
     /**
      * Sets the FirstName
-     * @param strFirstName The FirstName
-     */ 
+     * 
+     * @param strFirstName
+     *            The FirstName
+     */
     public void setFirstName( String strFirstName )
     {
         _strFirstName = strFirstName;
     }
-    
+
     /**
      * Returns the LastName
+     * 
      * @return The LastName
      */
     public String getLastName( )
@@ -106,15 +113,18 @@ public class ElectedOfficial implements Serializable
 
     /**
      * Sets the LastName
-     * @param strLastName The LastName
-     */ 
+     * 
+     * @param strLastName
+     *            The LastName
+     */
     public void setLastName( String strLastName )
     {
         _strLastName = strLastName;
     }
-    
+
     /**
      * Returns the Title
+     * 
      * @return The Title
      */
     public String getTitle( )
@@ -124,8 +134,10 @@ public class ElectedOfficial implements Serializable
 
     /**
      * Sets the Title
-     * @param strTitle The Title
-     */ 
+     * 
+     * @param strTitle
+     *            The Title
+     */
     public void setTitle( String strTitle )
     {
         _strTitle = strTitle;

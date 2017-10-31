@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 	
+
 package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.Delegation;
@@ -96,20 +96,22 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     private static final String INFO_DELEGATION_CREATED = "transparency.info.delegation.created";
     private static final String INFO_DELEGATION_UPDATED = "transparency.info.delegation.updated";
     private static final String INFO_DELEGATION_REMOVED = "transparency.info.delegation.removed";
-    
+
     // Session variable to store working values
     private Delegation _delegation;
-    
+
     /**
      * Build the Manage View
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_MANAGE_DELEGATIONS, defaultView = true )
     public String getManageDelegations( HttpServletRequest request )
     {
         _delegation = null;
-        List<Delegation> listDelegations = DelegationHome.getDelegationsList(  );
+        List<Delegation> listDelegations = DelegationHome.getDelegationsList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_DELEGATION_LIST, listDelegations, JSP_MANAGE_DELEGATIONS );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_DELEGATIONS, TEMPLATE_MANAGE_DELEGATIONS, model );
@@ -118,17 +120,18 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     /**
      * Returns the form to create a delegation
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the delegation form
      */
     @View( VIEW_CREATE_DELEGATION )
     public String getCreateDelegation( HttpServletRequest request )
     {
-        _delegation = ( _delegation != null ) ? _delegation : new Delegation(  );
+        _delegation = ( _delegation != null ) ? _delegation : new Delegation( );
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceList( );
-        
-        Map<String, Object> model = getModel(  );
+
+        Map<String, Object> model = getModel( );
         model.put( MARK_DELEGATION, _delegation );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
 
@@ -138,7 +141,8 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     /**
      * Process the data capture form of a new delegation
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_DELEGATION )
@@ -153,16 +157,16 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
         }
 
         DelegationHome.create( _delegation );
-        addInfo( INFO_DELEGATION_CREATED, getLocale(  ) );
+        addInfo( INFO_DELEGATION_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_DELEGATIONS );
     }
 
     /**
-     * Manages the removal form of a delegation whose identifier is in the http
-     * request
+     * Manages the removal form of a delegation whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     @Action( ACTION_CONFIRM_REMOVE_DELEGATION )
@@ -172,7 +176,7 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_DELEGATION ) );
         url.addParameter( PARAMETER_ID_DELEGATION, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DELEGATION, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_DELEGATION, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }
@@ -180,7 +184,8 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     /**
      * Handles the removal form of a delegation
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage delegations
      */
     @Action( ACTION_REMOVE_DELEGATION )
@@ -188,7 +193,7 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_DELEGATION ) );
         DelegationHome.remove( nId );
-        addInfo( INFO_DELEGATION_REMOVED, getLocale(  ) );
+        addInfo( INFO_DELEGATION_REMOVED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_DELEGATIONS );
     }
@@ -196,7 +201,8 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     /**
      * Returns the form to update info about a delegation
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_DELEGATION )
@@ -204,25 +210,25 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_DELEGATION ) );
 
-        if ( _delegation == null || ( _delegation.getId(  ) != nId ))
+        if ( _delegation == null || ( _delegation.getId( ) != nId ) )
         {
             _delegation = DelegationHome.findByPrimaryKey( nId );
         }
 
         ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceList( );
-        
-        
-        Map<String, Object> model = getModel(  );
+
+        Map<String, Object> model = getModel( );
         model.put( MARK_DELEGATION, _delegation );
         model.put( MARK_ELECTEDOFFICIALS_LIST, electedOfficialsList );
-        
+
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_DELEGATION, TEMPLATE_MODIFY_DELEGATION, model );
     }
 
     /**
      * Process the change form of a delegation
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_DELEGATION )
@@ -237,7 +243,7 @@ public class DelegationJspBean extends AbstractManageDelegationJspBean
         }
 
         DelegationHome.update( _delegation );
-        addInfo( INFO_DELEGATION_UPDATED, getLocale(  ) );
+        addInfo( INFO_DELEGATION_UPDATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_DELEGATIONS );
     }

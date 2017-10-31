@@ -30,7 +30,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * License 1.0
- */ 
+ */
 package fr.paris.lutece.plugins.transparency.business;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,32 +45,33 @@ import org.json.JSONObject;
 
 /**
  * This is the business class for the object Lobby
- */ 
+ */
 public class Lobby implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private int _nId;
-    
+
     @NotEmpty( message = "#i18n{transparency.validation.lobby.Name.notEmpty}" )
-    @Size( max = 255 , message = "#i18n{transparency.validation.lobby.Name.size}" ) 
+    @Size( max = 255, message = "#i18n{transparency.validation.lobby.Name.size}" )
     private String _strName;
-    
+
     private String _strNationalId;
-    
-    @Size( max = 50 , message = "#i18n{transparency.validation.lobby.NationalIdType.size}" ) 
+
+    @Size( max = 50, message = "#i18n{transparency.validation.lobby.NationalIdType.size}" )
     private String _strNationalIdType;
-    @URL(message = "#i18n{portal.validation.message.url}")
-    @Size( max = 255 , message = "#i18n{transparency.validation.lobby.Url.size}" ) 
+    @URL( message = "#i18n{portal.validation.message.url}" )
+    @Size( max = 255, message = "#i18n{transparency.validation.lobby.Url.size}" )
     private String _strUrl;
-    
+
     private String _strJsonData;
-    
+
     private Date _dateVersionDate;
 
     /**
      * Returns the Id
+     * 
      * @return The Id
      */
     public int getId( )
@@ -80,15 +81,18 @@ public class Lobby implements Serializable
 
     /**
      * Sets the Id
-     * @param nId The Id
-     */ 
+     * 
+     * @param nId
+     *            The Id
+     */
     public void setId( int nId )
     {
         _nId = nId;
     }
-    
+
     /**
      * Returns the Name
+     * 
      * @return The Name
      */
     public String getName( )
@@ -98,15 +102,18 @@ public class Lobby implements Serializable
 
     /**
      * Sets the Name
-     * @param strName The Name
-     */ 
+     * 
+     * @param strName
+     *            The Name
+     */
     public void setName( String strName )
     {
         _strName = strName;
     }
-    
+
     /**
      * Returns the NationalId
+     * 
      * @return The NationalId
      */
     public String getNationalId( )
@@ -116,15 +123,18 @@ public class Lobby implements Serializable
 
     /**
      * Sets the NationalId
-     * @param strNationalId The NationalId
-     */ 
+     * 
+     * @param strNationalId
+     *            The NationalId
+     */
     public void setNationalId( String strNationalId )
     {
         _strNationalId = strNationalId;
     }
-    
+
     /**
      * Returns the NationalIdType
+     * 
      * @return The NationalIdType
      */
     public String getNationalIdType( )
@@ -134,15 +144,18 @@ public class Lobby implements Serializable
 
     /**
      * Sets the NationalIdType
-     * @param strNationalIdType The NationalIdType
-     */ 
+     * 
+     * @param strNationalIdType
+     *            The NationalIdType
+     */
     public void setNationalIdType( String strNationalIdType )
     {
         _strNationalIdType = strNationalIdType;
     }
-    
+
     /**
      * Returns the Url
+     * 
      * @return The Url
      */
     @JsonIgnore
@@ -153,18 +166,21 @@ public class Lobby implements Serializable
 
     /**
      * Sets the Url
-     * @param strUrl The Url
-     */ 
+     * 
+     * @param strUrl
+     *            The Url
+     */
     public void setUrl( String strUrl )
     {
         _strUrl = strUrl;
     }
-    
+
     /**
      * Returns the JsonData
+     * 
      * @return The JsonData
      */
-    @JsonIgnore    
+    @JsonIgnore
     public String getJsonData( )
     {
         return _strJsonData;
@@ -172,18 +188,21 @@ public class Lobby implements Serializable
 
     /**
      * Sets the JsonData
-     * @param strJsonData The JsonData
-     */ 
+     * 
+     * @param strJsonData
+     *            The JsonData
+     */
     public void setJsonData( String strJsonData )
     {
         _strJsonData = strJsonData;
     }
-    
+
     /**
      * Returns the VersionDate
+     * 
      * @return The VersionDate
      */
-    @JsonIgnore    
+    @JsonIgnore
     public Date getVersionDate( )
     {
         return _dateVersionDate;
@@ -191,22 +210,23 @@ public class Lobby implements Serializable
 
     /**
      * Sets the VersionDate
-     * @param dateVersionDate The VersionDate
-     */ 
+     * 
+     * @param dateVersionDate
+     *            The VersionDate
+     */
     public void setVersionDate( Date dateVersionDate )
     {
         _dateVersionDate = dateVersionDate;
     }
-    
-    
+
     /**
      * Get the JSON data formated in HTML
      * 
      */
-    @JsonIgnore    
+    @JsonIgnore
     public String getHtmlData( )
     {
-        if ( !StringUtils.isBlank(_strJsonData ) ) 
+        if ( !StringUtils.isBlank( _strJsonData ) )
         {
             return jsonToHtml( new JSONObject( _strJsonData ) );
         }
@@ -214,11 +234,9 @@ public class Lobby implements Serializable
         {
             return "";
         }
-            
+
     }
- 
-    
-    
+
     /**
      * convert json Data to structured Html text
      * 
@@ -228,56 +246,57 @@ public class Lobby implements Serializable
     private String jsonToHtml( Object obj )
     {
         StringBuilder html = new StringBuilder( );
-        
-        try 
+
+        try
         {
-            if (obj instanceof JSONObject) 
+            if ( obj instanceof JSONObject )
             {
-                JSONObject jsonObject = (JSONObject)obj;
-                String[] keys = JSONObject.getNames( jsonObject );
-                
-                html.append("<div class=\"json_object\">");
-                        
-                if (keys.length > 0) {
-                    for (String key : keys)
+                JSONObject jsonObject = (JSONObject) obj;
+                String [ ] keys = JSONObject.getNames( jsonObject );
+
+                html.append( "<div class=\"json_object\">" );
+
+                if ( keys.length > 0 )
+                {
+                    for ( String key : keys )
                     {
                         // print the key and open a DIV
-                        html.append("<div><span class=\"json_title\">")
-                            .append(key).append("</span> : ");
+                        html.append( "<div><span class=\"json_title\">" ).append( key ).append( "</span> : " );
 
-                        Object val = jsonObject.get(key);
+                        Object val = jsonObject.get( key );
                         // recursive call
                         html.append( jsonToHtml( val ) );
                         // close the div
-                        html.append("</div>");
+                        html.append( "</div>" );
                     }
                 }
-                
-                html.append("</div>");
+
+                html.append( "</div>" );
             }
-            else if (obj instanceof JSONArray) 
-            {
-                JSONArray array = (JSONArray)obj;
-                for ( int i=0; i < array.length( ); i++)
+            else
+                if ( obj instanceof JSONArray )
                 {
-                    // recursive call
-                    html.append( jsonToHtml( array.get(i) ) );
-                    
+                    JSONArray array = (JSONArray) obj;
+                    for ( int i = 0; i < array.length( ); i++ )
+                    {
+                        // recursive call
+                        html.append( jsonToHtml( array.get( i ) ) );
+
+                    }
+
+                }
+                else
+                {
+                    // print the value
+                    html.append( obj );
                 }
 
-            }
-            else 
-            {
-                // print the value
-                html.append( obj );
-            }
-                
         }
-        catch (JSONException e) 
+        catch( JSONException e )
         {
-            return e.getLocalizedMessage( ) ;
+            return e.getLocalizedMessage( );
         }
-         
+
         return html.toString( );
     }
 }

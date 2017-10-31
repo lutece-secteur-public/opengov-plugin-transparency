@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -52,14 +52,16 @@ public final class ElectedOfficialHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private ElectedOfficialHome(  )
+    private ElectedOfficialHome( )
     {
     }
 
     /**
      * Create an instance of the electedOfficial class
-     * @param electedOfficial The instance of the ElectedOfficial which contains the informations to store
-     * @return The  instance of electedOfficial which has been created with its primary key.
+     * 
+     * @param electedOfficial
+     *            The instance of the ElectedOfficial which contains the informations to store
+     * @return The instance of electedOfficial which has been created with its primary key.
      */
     public static ElectedOfficial create( ElectedOfficial electedOfficial )
     {
@@ -70,8 +72,10 @@ public final class ElectedOfficialHome
 
     /**
      * Update of the electedOfficial which is specified in parameter
-     * @param electedOfficial The instance of the ElectedOfficial which contains the data to store
-     * @return The instance of the  electedOfficial which has been updated
+     * 
+     * @param electedOfficial
+     *            The instance of the ElectedOfficial which contains the data to store
+     * @return The instance of the electedOfficial which has been updated
      */
     public static ElectedOfficial update( ElectedOfficial electedOfficial )
     {
@@ -82,7 +86,9 @@ public final class ElectedOfficialHome
 
     /**
      * Remove the electedOfficial whose identifier is specified in parameter
-     * @param nKey The electedOfficial Id
+     * 
+     * @param nKey
+     *            The electedOfficial Id
      */
     public static void remove( int nKey )
     {
@@ -91,16 +97,19 @@ public final class ElectedOfficialHome
 
     /**
      * Returns an instance of a electedOfficial whose identifier is specified in parameter
-     * @param nKey The electedOfficial primary key
+     * 
+     * @param nKey
+     *            The electedOfficial primary key
      * @return an instance of ElectedOfficial
      */
     public static ElectedOfficial findByPrimaryKey( int nKey )
     {
-        return _dao.load( nKey, _plugin);
+        return _dao.load( nKey, _plugin );
     }
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
+     * 
      * @return the list which contains the data of all the electedOfficial objects
      */
     public static List<ElectedOfficial> getElectedOfficialsList( )
@@ -110,45 +119,48 @@ public final class ElectedOfficialHome
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
+     * 
      * @param idAdminUser
      * @return the list which contains the data of all the electedOfficial objects
      */
-    public static List<ElectedOfficial> getElectedOfficialsListByDelegation( int idAdminUser)
+    public static List<ElectedOfficial> getElectedOfficialsListByDelegation( int idAdminUser )
     {
         return _dao.selectElectedOfficialsListByDelegation( idAdminUser, _plugin );
     }
 
-    
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
+     * 
      * @return the list which contains the data of all the electedOfficial objects
      */
     public static List<ElectedOfficial> getElectedOfficialsListByAppointment( int idAppointment )
     {
         return _dao.selectElectedOfficialsListByAppointment( idAppointment, _plugin );
     }
-    
-    
+
     /**
      * Load the id of all the electedOfficial objects and returns them as a list
+     * 
      * @return the list which contains the id of all the electedOfficial objects
      */
     public static List<Integer> getIdElectedOfficialsList( )
     {
         return _dao.selectIdElectedOfficialsList( _plugin );
     }
-    
+
     /**
      * Load the data of all the electedOfficial objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the electedOfficial objects
      */
     public static ReferenceList getElectedOfficialsReferenceList( )
     {
-        return _dao.selectElectedOfficialsReferenceList(_plugin );
+        return _dao.selectElectedOfficialsReferenceList( _plugin );
     }
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a referenceList
+     * 
      * @return the referenceList which contains the data of all the electedOfficial objects
      */
     public static ReferenceList getElectedOfficialsReferenceListByDelegation( int idAdminUser )
@@ -157,4 +169,3 @@ public final class ElectedOfficialHome
     }
 
 }
-

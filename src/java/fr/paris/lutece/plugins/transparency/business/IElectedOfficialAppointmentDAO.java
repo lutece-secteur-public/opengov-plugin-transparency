@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 
+
 package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
@@ -43,18 +43,21 @@ public interface IElectedOfficialAppointmentDAO
 {
     /**
      * Insert a new record in the table.
-     * @param electedOfficialAppointment instance of the ElectedOfficialAppointment object to insert
-     * @param plugin the Plugin
+     * 
+     * @param electedOfficialAppointment
+     *            instance of the ElectedOfficialAppointment object to insert
+     * @param plugin
+     *            the Plugin
      */
     void insert( ElectedOfficialAppointment electedOfficialAppointment, Plugin plugin );
 
-
     /**
      * Delete a record from the table
+     * 
      * @param electedOfficialAppointment
-     * @param plugin the Plugin
+     * @param plugin
+     *            the Plugin
      */
     void delete( ElectedOfficialAppointment electedOfficialAppointment, Plugin plugin );
 
- 
 }

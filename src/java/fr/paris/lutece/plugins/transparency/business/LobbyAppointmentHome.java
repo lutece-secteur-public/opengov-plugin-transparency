@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- package fr.paris.lutece.plugins.transparency.business;
+package fr.paris.lutece.plugins.transparency.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -49,14 +49,16 @@ public final class LobbyAppointmentHome
     /**
      * Private constructor - this class need not be instantiated
      */
-    private LobbyAppointmentHome(  )
+    private LobbyAppointmentHome( )
     {
     }
 
     /**
      * Create an instance of the lobbyAppointment class
-     * @param lobbyAppointment The instance of the LobbyAppointment which contains the informations to store
-     * @return The  instance of lobbyAppointment which has been created with its primary key.
+     * 
+     * @param lobbyAppointment
+     *            The instance of the LobbyAppointment which contains the informations to store
+     * @return The instance of lobbyAppointment which has been created with its primary key.
      */
     public static LobbyAppointment create( LobbyAppointment lobbyAppointment )
     {
@@ -65,8 +67,9 @@ public final class LobbyAppointmentHome
         return lobbyAppointment;
     }
 
-   /**
+    /**
      * Remove the lobby associations of the appointment
+     * 
      * @param nIdAppointment
      */
     public static void removeByAppointmentId( int nIdAppointment )
@@ -75,4 +78,3 @@ public final class LobbyAppointmentHome
     }
 
 }
-

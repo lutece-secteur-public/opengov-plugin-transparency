@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 	
+
 package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.ElectedOfficial;
@@ -93,20 +93,22 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     private static final String INFO_ELECTEDOFFICIAL_CREATED = "transparency.info.electedofficial.created";
     private static final String INFO_ELECTEDOFFICIAL_UPDATED = "transparency.info.electedofficial.updated";
     private static final String INFO_ELECTEDOFFICIAL_REMOVED = "transparency.info.electedofficial.removed";
-    
+
     // Session variable to store working values
     private ElectedOfficial _electedofficial;
-    
+
     /**
      * Build the Manage View
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_MANAGE_ELECTEDOFFICIALS, defaultView = true )
     public String getManageElectedOfficials( HttpServletRequest request )
     {
         _electedofficial = null;
-        List<ElectedOfficial> listElectedOfficials = ElectedOfficialHome.getElectedOfficialsList(  );
+        List<ElectedOfficial> listElectedOfficials = ElectedOfficialHome.getElectedOfficialsList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_ELECTEDOFFICIAL_LIST, listElectedOfficials, JSP_MANAGE_ELECTEDOFFICIALS );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_ELECTEDOFFICIALS, TEMPLATE_MANAGE_ELECTEDOFFICIALS, model );
@@ -115,15 +117,16 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     /**
      * Returns the form to create a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the electedofficial form
      */
     @View( VIEW_CREATE_ELECTEDOFFICIAL )
     public String getCreateElectedOfficial( HttpServletRequest request )
     {
-        _electedofficial = ( _electedofficial != null ) ? _electedofficial : new ElectedOfficial(  );
+        _electedofficial = ( _electedofficial != null ) ? _electedofficial : new ElectedOfficial( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_ELECTEDOFFICIAL, _electedofficial );
 
         return getPage( PROPERTY_PAGE_TITLE_CREATE_ELECTEDOFFICIAL, TEMPLATE_CREATE_ELECTEDOFFICIAL, model );
@@ -132,7 +135,8 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     /**
      * Process the data capture form of a new electedofficial
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_ELECTEDOFFICIAL )
@@ -147,16 +151,16 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
         }
 
         ElectedOfficialHome.create( _electedofficial );
-        addInfo( INFO_ELECTEDOFFICIAL_CREATED, getLocale(  ) );
+        addInfo( INFO_ELECTEDOFFICIAL_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_ELECTEDOFFICIALS );
     }
 
     /**
-     * Manages the removal form of a electedofficial whose identifier is in the http
-     * request
+     * Manages the removal form of a electedofficial whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     @Action( ACTION_CONFIRM_REMOVE_ELECTEDOFFICIAL )
@@ -166,7 +170,8 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_ELECTEDOFFICIAL ) );
         url.addParameter( PARAMETER_ID_ELECTEDOFFICIAL, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_ELECTEDOFFICIAL, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_ELECTEDOFFICIAL, url.getUrl( ),
+                AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }
@@ -174,7 +179,8 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     /**
      * Handles the removal form of a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage electedofficials
      */
     @Action( ACTION_REMOVE_ELECTEDOFFICIAL )
@@ -182,7 +188,7 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ELECTEDOFFICIAL ) );
         ElectedOfficialHome.remove( nId );
-        addInfo( INFO_ELECTEDOFFICIAL_REMOVED, getLocale(  ) );
+        addInfo( INFO_ELECTEDOFFICIAL_REMOVED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_ELECTEDOFFICIALS );
     }
@@ -190,7 +196,8 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     /**
      * Returns the form to update info about a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_ELECTEDOFFICIAL )
@@ -198,12 +205,12 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_ELECTEDOFFICIAL ) );
 
-        if ( _electedofficial == null || ( _electedofficial.getId(  ) != nId ))
+        if ( _electedofficial == null || ( _electedofficial.getId( ) != nId ) )
         {
             _electedofficial = ElectedOfficialHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_ELECTEDOFFICIAL, _electedofficial );
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_ELECTEDOFFICIAL, TEMPLATE_MODIFY_ELECTEDOFFICIAL, model );
@@ -212,7 +219,8 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
     /**
      * Process the change form of a electedofficial
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_ELECTEDOFFICIAL )
@@ -227,7 +235,7 @@ public class ElectedOfficialJspBean extends AbstractManageElectedOfficialsJspBea
         }
 
         ElectedOfficialHome.update( _electedofficial );
-        addInfo( INFO_ELECTEDOFFICIAL_UPDATED, getLocale(  ) );
+        addInfo( INFO_ELECTEDOFFICIAL_UPDATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_ELECTEDOFFICIALS );
     }

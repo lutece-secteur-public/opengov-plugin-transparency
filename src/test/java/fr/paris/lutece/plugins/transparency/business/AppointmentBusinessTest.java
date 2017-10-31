@@ -44,9 +44,9 @@ public class AppointmentBusinessTest extends LuteceTestCase
     private final static String TITLE2 = "Title2";
     private final static String DESCRIPTION1 = "Description1";
     private final static String DESCRIPTION2 = "Description2";
-	private final static Date STARTDATE1 = new Date( 1000000l );
+    private final static Date STARTDATE1 = new Date( 1000000l );
     private final static Date STARTDATE2 = new Date( 2000000l );
-	private final static Date ENDDATE1 = new Date( 1000000l );
+    private final static Date ENDDATE1 = new Date( 1000000l );
     private final static Date ENDDATE2 = new Date( 2000000l );
     private final static int TYPEID1 = 1;
     private final static int TYPEID2 = 2;
@@ -55,10 +55,10 @@ public class AppointmentBusinessTest extends LuteceTestCase
     private final static String URL1 = "Url1";
     private final static String URL2 = "Url2";
 
-    public void testBusiness(  )
+    public void testBusiness( )
     {
         // Initialize an object
-        Appointment appointment = new Appointment();
+        Appointment appointment = new Appointment( );
         appointment.setTitle( TITLE1 );
         appointment.setDescription( DESCRIPTION1 );
         appointment.setStartDate( STARTDATE1 );
@@ -70,13 +70,13 @@ public class AppointmentBusinessTest extends LuteceTestCase
         // Create test
         AppointmentHome.create( appointment );
         Appointment appointmentStored = AppointmentHome.findByPrimaryKey( appointment.getId( ) );
-        assertEquals( appointmentStored.getTitle() , appointment.getTitle( ) );
-        assertEquals( appointmentStored.getDescription() , appointment.getDescription( ) );
-        assertEquals( appointmentStored.getStartDate() , appointment.getStartDate( ) );
-        assertEquals( appointmentStored.getEndDate() , appointment.getEndDate( ) );
-        assertEquals( appointmentStored.getTypeId() , appointment.getTypeId( ) );
-        assertEquals( appointmentStored.getTypeLabel() , appointment.getTypeLabel( ) );
-        assertEquals( appointmentStored.getUrl() , appointment.getUrl( ) );
+        assertEquals( appointmentStored.getTitle( ), appointment.getTitle( ) );
+        assertEquals( appointmentStored.getDescription( ), appointment.getDescription( ) );
+        assertEquals( appointmentStored.getStartDate( ), appointment.getStartDate( ) );
+        assertEquals( appointmentStored.getEndDate( ), appointment.getEndDate( ) );
+        assertEquals( appointmentStored.getTypeId( ), appointment.getTypeId( ) );
+        assertEquals( appointmentStored.getTypeLabel( ), appointment.getTypeLabel( ) );
+        assertEquals( appointmentStored.getUrl( ), appointment.getUrl( ) );
 
         // Update test
         appointment.setTitle( TITLE2 );
@@ -88,22 +88,22 @@ public class AppointmentBusinessTest extends LuteceTestCase
         appointment.setUrl( URL2 );
         AppointmentHome.update( appointment );
         appointmentStored = AppointmentHome.findByPrimaryKey( appointment.getId( ) );
-        assertEquals( appointmentStored.getTitle() , appointment.getTitle( ) );
-        assertEquals( appointmentStored.getDescription() , appointment.getDescription( ) );
-        assertEquals( appointmentStored.getStartDate() , appointment.getStartDate( ) );
-        assertEquals( appointmentStored.getEndDate() , appointment.getEndDate( ) );
-        assertEquals( appointmentStored.getTypeId() , appointment.getTypeId( ) );
-        assertEquals( appointmentStored.getTypeLabel() , appointment.getTypeLabel( ) );
-        assertEquals( appointmentStored.getUrl() , appointment.getUrl( ) );
+        assertEquals( appointmentStored.getTitle( ), appointment.getTitle( ) );
+        assertEquals( appointmentStored.getDescription( ), appointment.getDescription( ) );
+        assertEquals( appointmentStored.getStartDate( ), appointment.getStartDate( ) );
+        assertEquals( appointmentStored.getEndDate( ), appointment.getEndDate( ) );
+        assertEquals( appointmentStored.getTypeId( ), appointment.getTypeId( ) );
+        assertEquals( appointmentStored.getTypeLabel( ), appointment.getTypeLabel( ) );
+        assertEquals( appointmentStored.getUrl( ), appointment.getUrl( ) );
 
         // List test
-        AppointmentHome.getAppointmentsList();
+        AppointmentHome.getAppointmentsList( );
 
         // Delete test
         AppointmentHome.remove( appointment.getId( ) );
         appointmentStored = AppointmentHome.findByPrimaryKey( appointment.getId( ) );
         assertNull( appointmentStored );
-        
+
     }
 
 }

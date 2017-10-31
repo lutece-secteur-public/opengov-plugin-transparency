@@ -31,10 +31,9 @@
  *
  * License 1.0
  */
- 	
 
 package fr.paris.lutece.plugins.transparency.web;
- 
+
 import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
 import fr.paris.lutece.portal.web.xpages.XPage;
@@ -44,61 +43,61 @@ import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Lobby xpages ( manage, create, modify, remove )
  */
-@Controller( xpageName = "lobby" , pageTitleI18nKey = "transparency.xpage.lobby.pageTitle" , pagePathI18nKey = "transparency.xpage.lobby.pagePathLabel" )
+@Controller( xpageName = "lobby", pageTitleI18nKey = "transparency.xpage.lobby.pageTitle", pagePathI18nKey = "transparency.xpage.lobby.pagePathLabel" )
 public class LobbyXPage extends MVCApplication
 {
     // Templates
-    private static final String TEMPLATE_MANAGE_LOBBIES="/skin/plugins/transparency/manage_lobbies.html";
-    private static final String TEMPLATE_DETAIL_LOBBY="/skin/plugins/transparency/detail_lobby.html";
-    
+    private static final String TEMPLATE_MANAGE_LOBBIES = "/skin/plugins/transparency/manage_lobbies.html";
+    private static final String TEMPLATE_DETAIL_LOBBY = "/skin/plugins/transparency/detail_lobby.html";
+
     // JSP
     private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
-    
+
     // Parameters
-    private static final String PARAMETER_ID_LOBBY="id";
-    
+    private static final String PARAMETER_ID_LOBBY = "id";
+
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
     private static final String MARK_LOBBY_REFERENCE_START_URL = "lobbyReferenceStartUrl";
-    
+
     // Views
     private static final String VIEW_MANAGE_LOBBIES = "manageLobbies";
     private static final String VIEW_DETAIL_LOBBY = "detailLobby";
 
     // Properties
-    private static final String PROPERTY_LOBBY_REFERENCE_START_URL_KEY = "lobby.json.detail.startUrl" ;
+    private static final String PROPERTY_LOBBY_REFERENCE_START_URL_KEY = "lobby.json.detail.startUrl";
 
     // Session variable to store working values
     private Lobby _lobby;
-    
+
     /**
      * Build the Manage View
      *
-     * @param request The HTTP request
+     * @param request
+     *            The HTTP request
      * @return The Xpage
      */
     @View( value = VIEW_MANAGE_LOBBIES, defaultView = true )
     public XPage getManageLobbies( HttpServletRequest request )
     {
         _lobby = null;
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_LOBBY_LIST, LobbyHome.getLobbiesList(  ) );
+        Map<String, Object> model = getModel( );
+        model.put( MARK_LOBBY_LIST, LobbyHome.getLobbiesList( ) );
 
-        return getXPage( TEMPLATE_MANAGE_LOBBIES, request.getLocale(  ), model );
+        return getXPage( TEMPLATE_MANAGE_LOBBIES, request.getLocale( ), model );
     }
-
-
 
     /**
      * Returns the form to update info about a lobby
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_DETAIL_LOBBY )
@@ -106,19 +105,17 @@ public class LobbyXPage extends MVCApplication
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
 
-        if ( _lobby == null  || ( _lobby.getId( ) != nId ))
+        if ( _lobby == null || ( _lobby.getId( ) != nId ) )
         {
             _lobby = LobbyHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_LOBBY, _lobby );
-        
-        model.put(MARK_LOBBY_REFERENCE_START_URL, AppPropertiesService.getProperty( PROPERTY_LOBBY_REFERENCE_START_URL_KEY ) );
-        
-        return getXPage( TEMPLATE_DETAIL_LOBBY, request.getLocale(  ), model );
+
+        model.put( MARK_LOBBY_REFERENCE_START_URL, AppPropertiesService.getProperty( PROPERTY_LOBBY_REFERENCE_START_URL_KEY ) );
+
+        return getXPage( TEMPLATE_DETAIL_LOBBY, request.getLocale( ), model );
     }
-    
-    
 
 }

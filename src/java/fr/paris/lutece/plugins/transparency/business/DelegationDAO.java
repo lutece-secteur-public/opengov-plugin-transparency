@@ -57,6 +57,7 @@ public final class DelegationDAO implements IDelegationDAO
 
     private static final String SQL_WHERE_CLAUSE_BY_ID = " WHERE id_delegation = ? ";
     private static final String SQL_DEFAULT_ORDER_BY = " ORDER BY admin_user_name ";
+
     /**
      * {@inheritDoc }
      */
@@ -67,12 +68,12 @@ public final class DelegationDAO implements IDelegationDAO
         try
         {
             int nIndex = 1;
-            daoUtil.setInt( nIndex++ , delegation.getIdAdminUser( ) );
-            daoUtil.setInt( nIndex++ , delegation.getIdElectedOfficial( ) );
-            daoUtil.setDate( nIndex++ , new Date( (new java.util.Date( ) ).getTime( ) ) ) ;
-            
+            daoUtil.setInt( nIndex++, delegation.getIdAdminUser( ) );
+            daoUtil.setInt( nIndex++, delegation.getIdElectedOfficial( ) );
+            daoUtil.setDate( nIndex++, new Date( ( new java.util.Date( ) ).getTime( ) ) );
+
             daoUtil.executeUpdate( );
-            if ( daoUtil.nextGeneratedKey( ) ) 
+            if ( daoUtil.nextGeneratedKey( ) )
             {
                 delegation.setId( daoUtil.getGeneratedKeyInt( 1 ) );
             }
@@ -90,21 +91,21 @@ public final class DelegationDAO implements IDelegationDAO
     public Delegation load( int nKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERE_CLAUSE_BY_ID, plugin );
-        daoUtil.setInt( 1 , nKey );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeQuery( );
         Delegation delegation = null;
 
         if ( daoUtil.next( ) )
         {
-            delegation = new Delegation();
+            delegation = new Delegation( );
             int nIndex = 1;
-            
+
             delegation.setId( daoUtil.getInt( nIndex++ ) );
             delegation.setIdAdminUser( daoUtil.getInt( nIndex++ ) );
             delegation.setIdElectedOfficial( daoUtil.getInt( nIndex++ ) );
             delegation.setDateCreation( daoUtil.getDate( nIndex++ ) );
-            delegation.setAdminUserName( daoUtil.getString( nIndex ++ ) );
-            delegation.setElectedOfficialName( daoUtil.getString( nIndex ++ ) );
+            delegation.setAdminUserName( daoUtil.getString( nIndex++ ) );
+            delegation.setElectedOfficialName( daoUtil.getString( nIndex++ ) );
         }
 
         daoUtil.free( );
@@ -118,7 +119,7 @@ public final class DelegationDAO implements IDelegationDAO
     public void delete( int nKey, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1 , nKey );
+        daoUtil.setInt( 1, nKey );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
@@ -131,11 +132,11 @@ public final class DelegationDAO implements IDelegationDAO
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin );
         int nIndex = 1;
-        
-        daoUtil.setInt( nIndex++ , delegation.getId( ) );
-        daoUtil.setInt( nIndex++ , delegation.getIdAdminUser( ) );
-        daoUtil.setInt( nIndex++ , delegation.getIdElectedOfficial( ) );
-        daoUtil.setInt( nIndex , delegation.getId( ) );
+
+        daoUtil.setInt( nIndex++, delegation.getId( ) );
+        daoUtil.setInt( nIndex++, delegation.getIdAdminUser( ) );
+        daoUtil.setInt( nIndex++, delegation.getIdElectedOfficial( ) );
+        daoUtil.setInt( nIndex, delegation.getId( ) );
 
         daoUtil.executeUpdate( );
         daoUtil.free( );
@@ -147,21 +148,21 @@ public final class DelegationDAO implements IDelegationDAO
     @Override
     public List<Delegation> selectDelegationsList( Plugin plugin )
     {
-        List<Delegation> delegationList = new ArrayList<Delegation>(  );
+        List<Delegation> delegationList = new ArrayList<Delegation>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            Delegation delegation = new Delegation(  );
+            Delegation delegation = new Delegation( );
             int nIndex = 1;
-            
+
             delegation.setId( daoUtil.getInt( nIndex++ ) );
             delegation.setIdAdminUser( daoUtil.getInt( nIndex++ ) );
             delegation.setIdElectedOfficial( daoUtil.getInt( nIndex++ ) );
             delegation.setDateCreation( daoUtil.getDate( nIndex++ ) );
-            delegation.setAdminUserName( daoUtil.getString( nIndex ++ ) );
-            delegation.setElectedOfficialName( daoUtil.getString( nIndex ++ ) );
+            delegation.setAdminUserName( daoUtil.getString( nIndex++ ) );
+            delegation.setElectedOfficialName( daoUtil.getString( nIndex++ ) );
 
             delegationList.add( delegation );
         }
@@ -169,7 +170,7 @@ public final class DelegationDAO implements IDelegationDAO
         daoUtil.free( );
         return delegationList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
@@ -178,9 +179,9 @@ public final class DelegationDAO implements IDelegationDAO
     {
         List<Integer> delegationList = new ArrayList<Integer>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
             delegationList.add( daoUtil.getInt( 1 ) );
         }
@@ -188,20 +189,20 @@ public final class DelegationDAO implements IDelegationDAO
         daoUtil.free( );
         return delegationList;
     }
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
     public ReferenceList selectDelegationsReferenceList( Plugin plugin )
     {
-        ReferenceList delegationList = new ReferenceList();
+        ReferenceList delegationList = new ReferenceList( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.executeQuery(  );
+        daoUtil.executeQuery( );
 
-        while ( daoUtil.next(  ) )
+        while ( daoUtil.next( ) )
         {
-            delegationList.addItem( daoUtil.getInt( 1 ) , daoUtil.getString( 2 ) );
+            delegationList.addItem( daoUtil.getInt( 1 ), daoUtil.getString( 2 ) );
         }
 
         daoUtil.free( );

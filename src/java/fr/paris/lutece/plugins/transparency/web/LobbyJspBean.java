@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
- 	
+
 package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.Lobby;
@@ -80,8 +80,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String PROPERTY_PAGE_TITLE_CREATE_LOBBY = "transparency.create_lobby.pageTitle";
 
     // Plugin properties
-    private static final String PROPERTY_URL_LOBBY_LIST_REFERENCE = "lobby.json.list.url" ;
-    
+    private static final String PROPERTY_URL_LOBBY_LIST_REFERENCE = "lobby.json.list.url";
+
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
@@ -90,8 +90,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
 
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
-    private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro" ;
-    
+    private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro";
+
     // Validations
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
 
@@ -104,34 +104,36 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String ACTION_CREATE_LOBBY = "createLobby";
     private static final String ACTION_MODIFY_LOBBY = "modifyLobby";
     private static final String ACTION_REMOVE_LOBBY = "removeLobby";
-    private static final String ACTION_CONFIRM_REMOVE_LOBBY = "confirmRemoveLobby" ;
-    private static final String ACTION_SYNCHRONIZE_LOBBIES = "synchronizeLobbies" ;
+    private static final String ACTION_CONFIRM_REMOVE_LOBBY = "confirmRemoveLobby";
+    private static final String ACTION_SYNCHRONIZE_LOBBIES = "synchronizeLobbies";
 
     // Infos
     private static final String INFO_LOBBY_CREATED = "transparency.info.lobby.created";
     private static final String INFO_LOBBY_UPDATED = "transparency.info.lobby.updated";
     private static final String INFO_LOBBY_REMOVED = "transparency.info.lobby.removed";
-    
+
     // constants (for synchro)
-    private static final String CONSTANT_KEY_PUBLICATIONS ="publications";
-    private static final String CONSTANT_KEY_DENOMINATION ="denomination";
-    private static final String CONSTANT_KEY_IDENTIFIANTNATIONAL = "identifiantNational" ;
-    private static final String CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ="typeIdentifiantNational" ;
-    private static final String CONSTANT_KEY_LIENSITEWEB = "lienSiteWeb" ;
-    
+    private static final String CONSTANT_KEY_PUBLICATIONS = "publications";
+    private static final String CONSTANT_KEY_DENOMINATION = "denomination";
+    private static final String CONSTANT_KEY_IDENTIFIANTNATIONAL = "identifiantNational";
+    private static final String CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL = "typeIdentifiantNational";
+    private static final String CONSTANT_KEY_LIENSITEWEB = "lienSiteWeb";
+
     // Session variable to store working values
     private Lobby _lobby;
-    
+
     /**
      * Build the Manage View
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_MANAGE_LOBBIES, defaultView = true )
     public String getManageLobbies( HttpServletRequest request )
     {
         _lobby = null;
-        List<Lobby> listLobbies = LobbyHome.getLobbiesList(  );
+        List<Lobby> listLobbies = LobbyHome.getLobbiesList( );
         Map<String, Object> model = getPaginatedListModel( request, MARK_LOBBY_LIST, listLobbies, JSP_MANAGE_LOBBIES );
 
         return getPage( PROPERTY_PAGE_TITLE_MANAGE_LOBBIES, TEMPLATE_MANAGE_LOBBIES, model );
@@ -140,15 +142,16 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     /**
      * Returns the form to create a lobby
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code of the lobby form
      */
     @View( VIEW_CREATE_LOBBY )
     public String getCreateLobby( HttpServletRequest request )
     {
-        _lobby = ( _lobby != null ) ? _lobby : new Lobby(  );
+        _lobby = ( _lobby != null ) ? _lobby : new Lobby( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_LOBBY, _lobby );
 
         return getPage( PROPERTY_PAGE_TITLE_CREATE_LOBBY, TEMPLATE_CREATE_LOBBY, model );
@@ -157,7 +160,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     /**
      * Process the data capture form of a new lobby
      *
-     * @param request The Http Request
+     * @param request
+     *            The Http Request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_CREATE_LOBBY )
@@ -166,8 +170,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         // add a date format converter
         DateConverter converter = new DateConverter( null );
         converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class ) ;
-         
+        ConvertUtils.register( converter, Date.class );
+
         populate( _lobby, request );
 
         // Check constraints
@@ -177,16 +181,16 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         }
 
         LobbyHome.create( _lobby );
-        addInfo( INFO_LOBBY_CREATED, getLocale(  ) );
+        addInfo( INFO_LOBBY_CREATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 
     /**
-     * Manages the removal form of a lobby whose identifier is in the http
-     * request
+     * Manages the removal form of a lobby whose identifier is in the http request
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the html code to confirm
      */
     @Action( ACTION_CONFIRM_REMOVE_LOBBY )
@@ -196,7 +200,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         UrlItem url = new UrlItem( getActionUrl( ACTION_REMOVE_LOBBY ) );
         url.addParameter( PARAMETER_ID_LOBBY, nId );
 
-        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_LOBBY, url.getUrl(  ), AdminMessage.TYPE_CONFIRMATION );
+        String strMessageUrl = AdminMessageService.getMessageUrl( request, MESSAGE_CONFIRM_REMOVE_LOBBY, url.getUrl( ), AdminMessage.TYPE_CONFIRMATION );
 
         return redirect( request, strMessageUrl );
     }
@@ -204,7 +208,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     /**
      * Handles the removal form of a lobby
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return the jsp URL to display the form to manage lobbies
      */
     @Action( ACTION_REMOVE_LOBBY )
@@ -212,7 +217,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
         LobbyHome.remove( nId );
-        addInfo( INFO_LOBBY_REMOVED, getLocale(  ) );
+        addInfo( INFO_LOBBY_REMOVED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
@@ -220,7 +225,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     /**
      * Returns the form to update info about a lobby
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The HTML form to update info
      */
     @View( VIEW_MODIFY_LOBBY )
@@ -228,12 +234,12 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_LOBBY ) );
 
-        if ( _lobby == null || ( _lobby.getId(  ) != nId ))
+        if ( _lobby == null || ( _lobby.getId( ) != nId ) )
         {
             _lobby = LobbyHome.findByPrimaryKey( nId );
         }
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_LOBBY, _lobby );
 
         return getPage( PROPERTY_PAGE_TITLE_MODIFY_LOBBY, TEMPLATE_MODIFY_LOBBY, model );
@@ -242,7 +248,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     /**
      * Process the change form of a lobby
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_MODIFY_LOBBY )
@@ -251,8 +258,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         // add a date format converter
         DateConverter converter = new DateConverter( null );
         converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class ) ;
-         
+        ConvertUtils.register( converter, Date.class );
+
         populate( _lobby, request );
 
         // Check constraints
@@ -262,82 +269,79 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         }
 
         LobbyHome.update( _lobby );
-        addInfo( INFO_LOBBY_UPDATED, getLocale(  ) );
+        addInfo( INFO_LOBBY_UPDATED, getLocale( ) );
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
-    
+
     /**
      * Refresh the lobby data base
      *
-     * @param request The Http request
+     * @param request
+     *            The Http request
      * @return The Jsp URL of the process result
      */
     @Action( ACTION_SYNCHRONIZE_LOBBIES )
-    public String synchronizeLobbies( HttpServletRequest request ) 
-    {    
-             
-        int nbLobbyCreated = 0 ;
-        int nbLobbyUpdated = 0 ;
-        
-        try 
-        {  
+    public String synchronizeLobbies( HttpServletRequest request )
+    {
+
+        int nbLobbyCreated = 0;
+        int nbLobbyUpdated = 0;
+
+        try
+        {
             URI uri = new URI( AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE ) );
 
-            JSONTokener tokener = new JSONTokener(uri.toURL( ).openStream( ));
-            JSONObject root = new JSONObject(tokener);
-            
-            JSONArray lobbyList = (JSONArray)root.get(CONSTANT_KEY_PUBLICATIONS);
-                
-            
-            for (int i=0; i < lobbyList.length( ) ; i++) 
+            JSONTokener tokener = new JSONTokener( uri.toURL( ).openStream( ) );
+            JSONObject root = new JSONObject( tokener );
+
+            JSONArray lobbyList = (JSONArray) root.get( CONSTANT_KEY_PUBLICATIONS );
+
+            for ( int i = 0; i < lobbyList.length( ); i++ )
             {
-                JSONObject jsonLobby = lobbyList.getJSONObject(i);
+                JSONObject jsonLobby = lobbyList.getJSONObject( i );
                 Lobby lobby = new Lobby( );
-                
-                lobby.setName( jsonLobby.getString( CONSTANT_KEY_DENOMINATION ) ) ;
-                lobby.setNationalId( jsonLobby.getString( CONSTANT_KEY_IDENTIFIANTNATIONAL) ) ;
-                if (jsonLobby.has( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) )
-                        lobby.setNationalIdType( jsonLobby.getString( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) ) ;
+
+                lobby.setName( jsonLobby.getString( CONSTANT_KEY_DENOMINATION ) );
+                lobby.setNationalId( jsonLobby.getString( CONSTANT_KEY_IDENTIFIANTNATIONAL ) );
+                if ( jsonLobby.has( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) )
+                    lobby.setNationalIdType( jsonLobby.getString( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) );
                 if ( jsonLobby.has( CONSTANT_KEY_LIENSITEWEB ) )
-                         lobby.setUrl( jsonLobby.getString( CONSTANT_KEY_LIENSITEWEB ) ) ;
-                
-                lobby.setVersionDate( new Date( (new java.util.Date( )).getTime( ) ) ) ;       
-                
+                    lobby.setUrl( jsonLobby.getString( CONSTANT_KEY_LIENSITEWEB ) );
+
+                lobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
+
                 lobby.setJsonData( jsonLobby.toString( ) );
-                
+
                 Lobby existingLobby = LobbyHome.getByNationalId( lobby.getNationalId( ) );
-                
-                if ( existingLobby != null  )
+
+                if ( existingLobby != null )
                 {
                     lobby.setId( existingLobby.getId( ) );
                     LobbyHome.update( lobby );
-                    nbLobbyUpdated ++ ;
+                    nbLobbyUpdated++;
                 }
                 else
                 {
                     LobbyHome.create( lobby );
-                    nbLobbyCreated ++ ;
+                    nbLobbyCreated++;
                 }
-            }    
-            
+            }
+
             String msg = I18nService.getLocalizedString( MSG_SYNCHRO_KEY, getLocale( ) );
-            msg = MessageFormat.format( msg , lobbyList.length( ) , nbLobbyCreated, nbLobbyUpdated );
-                    
+            msg = MessageFormat.format( msg, lobbyList.length( ), nbLobbyCreated, nbLobbyUpdated );
+
             addInfo( msg );
 
-        } 
-        catch (MalformedURLException e)
-        {
-              addError( e.getLocalizedMessage( ) );
         }
-        catch (IOException | URISyntaxException e)
+        catch( MalformedURLException e )
         {
-              addError( e.getLocalizedMessage( ) );
+            addError( e.getLocalizedMessage( ) );
         }
-
-       
-       
+        catch( IOException | URISyntaxException e )
+        {
+            addError( e.getLocalizedMessage( ) );
+        }
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }

@@ -38,7 +38,6 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
 import java.sql.Statement;
 
-
 /**
  * This class provides Data Access methods for ElectedOfficialAppointment objects
  */
@@ -47,7 +46,7 @@ public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppo
     // Constants
     private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_elected_official_appointment ( id_elected_official, id_appointment ) VALUES ( ? , ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_elected_official_appointment WHERE id_elected_official = ? and id_appointment = ? ";
-    
+
     /**
      * {@inheritDoc }
      */
@@ -58,10 +57,10 @@ public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppo
         try
         {
             int nIndex = 1;
-            daoUtil.setInt( nIndex++ , electedOfficialAppointment.getIdElectedOfficial( ) );
-            daoUtil.setInt( nIndex++ , electedOfficialAppointment.getIdAppointment( ) );
-            
-            daoUtil.executeUpdate( );            
+            daoUtil.setInt( nIndex++, electedOfficialAppointment.getIdElectedOfficial( ) );
+            daoUtil.setInt( nIndex++, electedOfficialAppointment.getIdAppointment( ) );
+
+            daoUtil.executeUpdate( );
         }
         finally
         {
@@ -69,19 +68,17 @@ public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppo
         }
     }
 
-
     /**
      * {@inheritDoc }
      */
     @Override
-    public void delete( ElectedOfficialAppointment electedOfficialAppointment,  Plugin plugin )
+    public void delete( ElectedOfficialAppointment electedOfficialAppointment, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1 , electedOfficialAppointment.getIdElectedOfficial( ) );
-        daoUtil.setInt( 2 , electedOfficialAppointment.getIdAppointment( ) );
+        daoUtil.setInt( 1, electedOfficialAppointment.getIdElectedOfficial( ) );
+        daoUtil.setInt( 2, electedOfficialAppointment.getIdAppointment( ) );
         daoUtil.executeUpdate( );
         daoUtil.free( );
     }
 
- 
 }
