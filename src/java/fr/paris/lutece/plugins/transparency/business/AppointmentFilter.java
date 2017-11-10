@@ -48,6 +48,7 @@ public class AppointmentFilter
     private String _strLobbyName;
     private String _strElectedOfficialName;
     private String _strUserId;
+    private String _strTitle;
     private int _nNumberOfDays; // appointments of the last N days
     private String _strOrderBy; // sort records
     private int _nIdAppointment = -1;
@@ -193,4 +194,23 @@ public class AppointmentFilter
         this._nIdAppointment = _nIdAppointment;
     }
 
+    /**
+     * get title
+     * 
+     * @return title
+     */
+    public String getTitle() {
+        return _strTitle;
+    }
+
+    /**
+     * set title
+     * 
+     * @param _strTitle 
+     */
+    public void setTitle(String _strTitle) {
+        this._strTitle = _strTitle;
+    }
+
+    
 }

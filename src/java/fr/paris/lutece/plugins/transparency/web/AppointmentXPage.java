@@ -86,6 +86,7 @@ public class AppointmentXPage extends MVCApplication
     private static final String PARAMETER_SEARCH_PERIOD = "search_period";
     private static final String PARAMETER_SEARCH_ELECTED_OFFICIAL = "search_elected_official";
     private static final String PARAMETER_SEARCH_LOBBY = "search_lobby";
+    private static final String PARAMETER_SEARCH_TITLE = "search_title";
     private static final String PARAM_ACTION = "action";
     private static final String PARAM_PAGE = "page";
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
@@ -138,6 +139,7 @@ public class AppointmentXPage extends MVCApplication
         String strSearchPeriod = request.getParameter( PARAMETER_SEARCH_PERIOD );
         String strSearchElectedOfficial = request.getParameter( PARAMETER_SEARCH_ELECTED_OFFICIAL );
         String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+        String strSearchTitle = request.getParameter( PARAMETER_SEARCH_TITLE );
 
         // check authentification or public mode
         String idUser = null;
@@ -159,9 +161,10 @@ public class AppointmentXPage extends MVCApplication
         filter.setLobbyName( strSearchLobby );
         filter.setElectedOfficialName( strSearchElectedOfficial );
         filter.setUserId( idUser );
+        filter.setTitle( strSearchTitle );
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) );
+        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); //search
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_IS_AUTHENTICATED, isAuthenticated );
 

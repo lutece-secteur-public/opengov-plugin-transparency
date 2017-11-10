@@ -69,6 +69,7 @@ public final class AppointmentDAO implements IAppointmentDAO
     private static final String SQL_WHERECLAUSE_FILTER_BY_LOBBY = " transparency_lobby.name like ? ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_DELEGATION = " transparency_delegation.id_user = ?  ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_ID = " transparency_appointment.id_appointment = ? ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_TITLE = " transparency_appointment.title like ? ";
 
     private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_appointment = ?";
     private static final String SQL_ORDER_BY = " ORDER BY ";
@@ -195,6 +196,7 @@ public final class AppointmentDAO implements IAppointmentDAO
 
         boolean appointmentJoinAdded = false;
 
+        // FILTER by ...
         if ( filter != null )
         {
             where.append( SQL_WHERE_BASE );
@@ -229,11 +231,19 @@ public final class AppointmentDAO implements IAppointmentDAO
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_DELEGATION ).append( SQL_END_ADD_CLAUSE );
             }
 
+            // appointment ID
             if ( filter.getIdAppointment( ) > 0 )
             {
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_ID ).append( SQL_END_ADD_CLAUSE );
             }
 
+            // title
+            if ( !StringUtils.isBlank( filter.getTitle( ) )  )
+            {
+                where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_TITLE ).append( SQL_END_ADD_CLAUSE );
+            }
+
+            
             // order by
             if ( !StringUtils.isBlank( filter.getOrderBy( ) ) )
             {
@@ -268,6 +278,8 @@ public final class AppointmentDAO implements IAppointmentDAO
                 daoUtil.setString( i++, filter.getUserId( ) );
             if ( filter.getIdAppointment( ) > 0 )
                 daoUtil.setInt( i++, filter.getIdAppointment( ) );
+            if ( !StringUtils.isBlank( filter.getTitle( ) ) )
+                daoUtil.setString( i++, "%" + filter.getTitle( ) + "%" );
         }
 
         // execute

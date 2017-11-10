@@ -12,8 +12,12 @@
 
             <@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=appointment">
 			<@messages errors=errors />
-                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
                         
+			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}' helpKey='#i18n{transparency.manage_appointments.searchByTitleLabel.help}' >
+                            <@input type='text' name='search_title' id='search_title' value='' />
+			</@formGroup>
+
+                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
                             <select id="search_period" name="search_period" class="form-control ">
                                 <option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
                                 <option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
