@@ -1,36 +1,37 @@
 
-<@box>
-	<@boxHeader title='#i18n{transparency.modify_appointment.title}' />
-	<@boxBody>
-                <@tform class="form-horizontal" method="post" name="modify_appointment" action="jsp/admin/plugins/transparency/ManageAppointments.jsp">
-			<@messages errors=errors />
-			<input type="hidden" id="id" name="id" value="${appointment.id}"/>
-			
+<@row>
+	<@columns>
+		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=appointment'>
+			<fieldset>
+				<legend>#i18n{transparency.modify_appointment.title}</legend>
+				<@messages errors=errors />
+				<input type="hidden" id="id" name="id" value="${appointment.id}"/>
+				
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelElectedOfficial}' mandatory=false >
                                         <#list appointment.electedOfficialList as electedOfficial>
                                             ${electedOfficial.firstName} ${electedOfficial.lastName}<br>
                                         </#list>
                                 </@formGroup>
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTitle}' helpKey='#i18n{transparency.modify_appointment.labelTitle.help}' mandatory=true>
-					<@input type='text' name='title' value='${appointment.title}' />
-				</@formGroup>
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelDescription}' helpKey='#i18n{transparency.modify_appointment.labelDescription.help}' >
-					<@input type='text' name='description' value='${appointment.description}' />
-				</@formGroup>
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelStartDate}' helpKey='#i18n{transparency.modify_appointment.labelStartDate.help}' mandatory=true>
-					<@input type='text' name='start_date' id='start_date' value='${appointment.startDate}' />
-				</@formGroup>
 
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' helpKey='#i18n{transparency.modify_appointment.labelTypeLabel.help}' >
-					<@input type='text' name='type_label' value='${appointment.typeLabel}' />
+				<@formGroup labelFor='title' labelKey='#i18n{transparency.modify_appointment.labelTitle}' mandatory=true>
+                                    <@input type='text' id='title' name='title'  maxlength=255 value='${appointment.title}' tabIndex='0' />
+				</@formGroup>
+				<@formGroup labelFor='description' labelKey='#i18n{transparency.modify_appointment.labelDescription}' mandatory=true>
+                                    <@input type='text' id='description' name='description'  value='${appointment.description}' tabIndex='1' />
+				</@formGroup>
+				<@formGroup labelFor='start_date' labelKey='#i18n{transparency.modify_appointment.labelStartDate}' mandatory=true>
+                                    <@input type='text' id='start_date' name='start_date'  maxlength=20 value='${appointment.startDate}' tabIndex='2' />
+				</@formGroup>
+				
+				<@formGroup labelFor='type_label' labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' mandatory=false>
+                                    <@input type='text' id='type_label' name='type_label'  maxlength=255 value='${appointment.typeLabel}' tabIndex='5' />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
 					<@input type="text" name="contacts" value="${appointment.contacts!''}" />
 				</@formGroup>
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelUrl}' helpKey='#i18n{transparency.modify_appointment.labelUrl.help}' >
-					<@input type='text' name='url' value='${appointment.url}' />
+				<@formGroup labelFor='url' labelKey='#i18n{transparency.modify_appointment.labelUrl}' mandatory=false>
+                                    <@input type="text" id="url" name="url"  maxlength=255 value="${appointment.url!''}" tabIndex="6" />
 				</@formGroup>
-                                
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelLobby}' mandatory=false >
 				    <#list appointment.lobbyList as lobby>
                                         ${lobby.name}  <br>
@@ -46,11 +47,17 @@
                                     <#assign idFirstLobby = appointment.lobbyList[0].id />
                                 </#if>
                                 <input type='hidden' name='lobby_id' id='lobby_id' value=${idFirstLobby} />
-                        <@actionButtons button1Name="action_modifyAppointment" button2Name="view_manageAppointment"/>
-                </@tform>
-	</@boxBody>
-</@box>
 
+				<@formGroup>
+                                    <@button name='action_modifyAppointment' type='submit' tabIndex='7' title='#i18n{portal.util.labelModify}' buttonIcon='plus' />
+                                    <@button name='view_manageAppointments' type='submit' title='#i18n{portal.util.labelCancel}' buttonIcon='close' color='btn-secondary' />
+				</@formGroup>
+                        </fieldset>
+		</@tform>
+	</@columns>
+</@row>
+
+<script src="js/jquery/jquery-ui.min.js"></script>  
 
 <script  type="text/javascript" >
     /**
@@ -89,6 +96,6 @@
      * add date pickers 
      */
     $( function() {
-            $("#start_date").datepicker({language: 'fr', orientation: 'bottom', maxDate: '0'});
+            $("#start_date").datepicker({language: 'fr', orientation: 'bottom', maxDate: new Date()});
     });
 </script>

@@ -268,11 +268,11 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
      * {@inheritDoc }
      */
     @Override
-    public ReferenceList selectElectedOfficialsReferenceListByDelegation( int idUserAdmin, Plugin plugin )
+    public ReferenceList selectElectedOfficialsReferenceListByDelegation( String idUser, Plugin plugin )
     {
         ReferenceList electedOfficialList = new ReferenceList( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY, plugin );
-        daoUtil.setInt( 1, idUserAdmin );
+        daoUtil.setString( 1, idUser );
         daoUtil.executeQuery( );
 
         while ( daoUtil.next( ) )

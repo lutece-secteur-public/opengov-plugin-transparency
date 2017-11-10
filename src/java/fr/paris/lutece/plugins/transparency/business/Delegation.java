@@ -48,7 +48,7 @@ public class Delegation implements Serializable
     // Variables declarations
     private int _nId;
 
-    private int _nIdAdminUser;
+    private String _strIdUser;
     private String _strAdminUserName;
 
     private int _nIdElectedOfficial;
@@ -78,24 +78,24 @@ public class Delegation implements Serializable
     }
 
     /**
-     * Returns the IdAdminuser
+     * Returns the Id user
      * 
-     * @return The IdAdminuser
+     * @return The Iduser
      */
-    public int getIdAdminUser( )
+    public String getIdUser( )
     {
-        return _nIdAdminUser;
+        return _strIdUser;
     }
 
     /**
-     * Sets the IdAdminuser
+     * Sets the Id user
      * 
-     * @param nIdAdminuser
-     *            The IdAdminuser
+     * @param strIdUser
+     *            The Id user
      */
-    public void setIdAdminUser( int nIdAdminuser )
+    public void setIdUser( String strIdUser )
     {
-        _nIdAdminUser = nIdAdminuser;
+        _strIdUser = strIdUser;
     }
 
     /**

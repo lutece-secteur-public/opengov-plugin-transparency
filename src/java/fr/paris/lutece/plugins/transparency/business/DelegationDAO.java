@@ -68,7 +68,7 @@ public final class DelegationDAO implements IDelegationDAO
         try
         {
             int nIndex = 1;
-            daoUtil.setInt( nIndex++, delegation.getIdAdminUser( ) );
+            daoUtil.setString( nIndex++, delegation.getIdUser( ) );
             daoUtil.setInt( nIndex++, delegation.getIdElectedOfficial( ) );
             daoUtil.setDate( nIndex++, new Date( ( new java.util.Date( ) ).getTime( ) ) );
 
@@ -101,7 +101,7 @@ public final class DelegationDAO implements IDelegationDAO
             int nIndex = 1;
 
             delegation.setId( daoUtil.getInt( nIndex++ ) );
-            delegation.setIdAdminUser( daoUtil.getInt( nIndex++ ) );
+            delegation.setIdUser( daoUtil.getString( nIndex++ ) );
             delegation.setIdElectedOfficial( daoUtil.getInt( nIndex++ ) );
             delegation.setDateCreation( daoUtil.getDate( nIndex++ ) );
             delegation.setAdminUserName( daoUtil.getString( nIndex++ ) );
@@ -134,7 +134,7 @@ public final class DelegationDAO implements IDelegationDAO
         int nIndex = 1;
 
         daoUtil.setInt( nIndex++, delegation.getId( ) );
-        daoUtil.setInt( nIndex++, delegation.getIdAdminUser( ) );
+        daoUtil.setString( nIndex++, delegation.getIdUser( ) );
         daoUtil.setInt( nIndex++, delegation.getIdElectedOfficial( ) );
         daoUtil.setInt( nIndex, delegation.getId( ) );
 
@@ -148,7 +148,7 @@ public final class DelegationDAO implements IDelegationDAO
     @Override
     public List<Delegation> selectDelegationsList( Plugin plugin )
     {
-        List<Delegation> delegationList = new ArrayList<Delegation>( );
+        List<Delegation> delegationList = new ArrayList<>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery( );
 
@@ -158,7 +158,7 @@ public final class DelegationDAO implements IDelegationDAO
             int nIndex = 1;
 
             delegation.setId( daoUtil.getInt( nIndex++ ) );
-            delegation.setIdAdminUser( daoUtil.getInt( nIndex++ ) );
+            delegation.setIdUser( daoUtil.getString( nIndex++ ) );
             delegation.setIdElectedOfficial( daoUtil.getInt( nIndex++ ) );
             delegation.setDateCreation( daoUtil.getDate( nIndex++ ) );
             delegation.setAdminUserName( daoUtil.getString( nIndex++ ) );
@@ -177,7 +177,7 @@ public final class DelegationDAO implements IDelegationDAO
     @Override
     public List<Integer> selectIdDelegationsList( Plugin plugin )
     {
-        List<Integer> delegationList = new ArrayList<Integer>( );
+        List<Integer> delegationList = new ArrayList<>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery( );
 

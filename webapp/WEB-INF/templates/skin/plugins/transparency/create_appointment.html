@@ -1,0 +1,90 @@
+
+<@row>
+    <@columns>
+        <@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=appointment'>
+            <fieldset>
+                <legend>#i18n{transparency.create_appointment.title}</legend>
+                <@messages errors=errors />
+                <input type="hidden" id="id" name="id"/>  
+
+                <@formGroup labelFor='title' labelKey='#i18n{transparency.create_appointment.labelTitle}' helpKey='#i18n{transparency.create_appointment.labelTitle.help}' mandatory=true>
+                        <@input type="text" id="title" name="title" value="${appointment.title!''}"  maxlength=255 tabIndex="0" />
+                </@formGroup>
+                <@formGroup labelFor='description' labelKey='#i18n{transparency.create_appointment.labelDescription}' helpKey='#i18n{transparency.create_appointment.labelDescription.help}' mandatory=true>
+                        <@input type="text" id="description" name="description" value="${appointment.description!''}"  tabIndex="1" />
+                </@formGroup>
+                <@formGroup labelFor='start_date' labelKey='#i18n{transparency.create_appointment.labelStartDate}' helpKey='#i18n{transparency.create_appointment.labelStartDate.help}' mandatory=true>
+                        <@input type="text" id="start_date" name="start_date" value="${appointment.startDate!''}"  maxlength=20 tabIndex="2" />
+                </@formGroup>
+
+                <@formGroup labelFor='type_label' labelKey='#i18n{transparency.create_appointment.labelTypeLabel}' helpKey='#i18n{transparency.create_appointment.labelTypeLabel.help}' mandatory=false>
+                        <@input type="text" id="type_label" name="type_label" value="${appointment.typeLabel!''}"  maxlength=255 tabIndex="5" />
+                </@formGroup>
+                <@formGroup labelKey='#i18n{transparency.create_appointment.contactsLabel}' helpKey='#i18n{transparency.create_appointment.contactsLabel.help}' >
+                        <@input type="text" name="contacts" value="${appointment.contacts!''}" />
+                </@formGroup>
+                <@formGroup labelFor='url' labelKey='#i18n{transparency.create_appointment.labelUrl}' helpKey='#i18n{transparency.create_appointment.labelUrl.help}' mandatory=false>
+                        <@input type="text" id="url" name="url" value="${appointment.url!''}"  maxlength=255 tabIndex="6" />
+                </@formGroup>
+
+                <@formGroup labelKey='#i18n{transparency.create_appointment.labelElectedOfficials}' helpKey='#i18n{transparency.create_appointment.labelElectedOfficials.help}' >
+                        <@select name='id_elected_official'  default_value="-1" items=electedofficials_list />
+                </@formGroup>	
+
+                <@formGroup labelKey='#i18n{transparency.create_appointment.labelLobby}' helpKey='#i18n{transparency.create_appointment.labelLobby.help}' >
+                        <@input type='text' name='lobby_select' id='lobby_select' value='' />
+                </@formGroup>
+
+                <input type='hidden' name='lobby_id' id='lobby_id' value='' />
+
+                <@formGroup>
+                        <@button name='action_createAppointment' type='submit' tabIndex='7' title='#i18n{portal.util.labelCreate}' buttonIcon='plus' />
+                        <@button name='view_manageAppointments' type='submit' title='#i18n{portal.util.labelCancel}' buttonIcon='close' color='btn-secondary' />
+                </@formGroup>
+            </fieldset>
+        </@tform>
+    </@columns>
+</@row>
+
+<script src="js/jquery/jquery-ui.min.js"></script>  
+
+<script  type="text/javascript" >
+    /**
+     * lobby search by autocompletion
+     */
+    $( function() 
+    {
+
+      var getData = function (request, response) 
+      {
+          $.getJSON(
+              "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+              function (data) 
+              {
+                  response(data);
+              }
+          );
+      };
+
+      $( "#lobby_select" ).autocomplete(
+      {
+        source: getData,
+        minLength: 3,
+        select: function( event, ui ) 
+        {
+          $( "#lobby_id" ).val( ui.item.id  );
+        }
+      });
+    } );
+</script>
+
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/locales/bootstrap-datepicker.fr.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    /**
+     * add date pickers 
+     */
+    $( function() {
+            $("#start_date").datepicker({language: 'fr', orientation: 'bottom', maxDate: new Date()});
+    });
+</script>

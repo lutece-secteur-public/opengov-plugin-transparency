@@ -40,8 +40,8 @@ import java.sql.Date;
 
 public class DelegationBusinessTest extends LuteceTestCase
 {
-    private final static int IDADMINUSER1 = 1;
-    private final static int IDADMINUSER2 = 2;
+    private final static String IDADMINUSER1 = "id1";
+    private final static String IDADMINUSER2 = "id2";
     private final static int IDELECTEDOFFICIAL1 = 1;
     private final static int IDELECTEDOFFICIAL2 = 2;
     private final static Date DATECREATION1 = new Date( 1000000l );
@@ -51,24 +51,24 @@ public class DelegationBusinessTest extends LuteceTestCase
     {
         // Initialize an object
         Delegation delegation = new Delegation( );
-        delegation.setIdAdminUser( IDADMINUSER1 );
+        delegation.setIdUser( IDADMINUSER1 );
         delegation.setIdElectedOfficial( IDELECTEDOFFICIAL1 );
         delegation.setDateCreation( DATECREATION1 );
 
         // Create test
         DelegationHome.create( delegation );
         Delegation delegationStored = DelegationHome.findByPrimaryKey( delegation.getId( ) );
-        assertEquals( delegationStored.getIdAdminUser( ), delegation.getIdAdminUser( ) );
+        assertEquals( delegationStored.getIdUser( ), delegation.getIdUser( ) );
         assertEquals( delegationStored.getIdElectedOfficial( ), delegation.getIdElectedOfficial( ) );
         assertEquals( delegationStored.getDateCreation( ), delegation.getDateCreation( ) );
 
         // Update test
-        delegation.setIdAdminUser( IDADMINUSER2 );
+        delegation.setIdUser( IDADMINUSER2 );
         delegation.setIdElectedOfficial( IDELECTEDOFFICIAL2 );
         delegation.setDateCreation( DATECREATION2 );
         DelegationHome.update( delegation );
         delegationStored = DelegationHome.findByPrimaryKey( delegation.getId( ) );
-        assertEquals( delegationStored.getIdAdminUser( ), delegation.getIdAdminUser( ) );
+        assertEquals( delegationStored.getIdUser( ), delegation.getIdUser( ) );
         assertEquals( delegationStored.getIdElectedOfficial( ), delegation.getIdElectedOfficial( ) );
         assertEquals( delegationStored.getDateCreation( ), delegation.getDateCreation( ) );
 

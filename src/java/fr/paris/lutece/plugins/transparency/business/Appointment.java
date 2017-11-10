@@ -56,6 +56,7 @@ public class Appointment implements Serializable
 
     private String _strDescription;
 
+    @Past( message = "#i18n{transparency.validation.appointment.StartDate.past}" )
     private Date _dateStartDate;
 
     private Date _dateEndDate;

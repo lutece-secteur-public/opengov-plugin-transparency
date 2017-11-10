@@ -7,8 +7,8 @@
         <@messages errors=errors />
         <input type="hidden" id="id" name="id"/>
         
-				<@formGroup labelKey='#i18n{transparency.create_delegation.labelIdAdminuser}' helpKey='#i18n{transparency.create_delegation.labelIdAdminuser.help}' mandatory=true>
-					<@input type='text' name='id_admin_user' value='${delegation.idAdminUser!\'\'}' />
+				<@formGroup labelKey='#i18n{transparency.create_delegation.labelIdUser}' helpKey='#i18n{transparency.create_delegation.labelIdUser.help}' mandatory=true>
+					<@input type='text' name='id_user' value='${delegation.idUser!\'\'}' />
 				</@formGroup>
 				<@formGroup labelKey='#i18n{transparency.create_delegation.labelIdElectedOfficial}' helpKey='#i18n{transparency.create_delegation.labelIdElectedofficial.help}' >
                                         <@select name='id_elected_official'  default_value="-1" items=electedofficials_list />

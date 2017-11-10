@@ -163,9 +163,9 @@ public final class ElectedOfficialHome
      * 
      * @return the referenceList which contains the data of all the electedOfficial objects
      */
-    public static ReferenceList getElectedOfficialsReferenceListByDelegation( int idAdminUser )
+    public static ReferenceList getElectedOfficialsReferenceListByDelegation( String idUser )
     {
-        return _dao.selectElectedOfficialsReferenceListByDelegation( idAdminUser, _plugin );
+        return _dao.selectElectedOfficialsReferenceListByDelegation( idUser, _plugin );
     }
 
 }

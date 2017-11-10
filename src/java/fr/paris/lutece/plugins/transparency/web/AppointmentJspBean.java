@@ -45,7 +45,6 @@ import fr.paris.lutece.plugins.transparency.business.LobbyAppointment;
 import fr.paris.lutece.plugins.transparency.business.LobbyAppointmentHome;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -56,13 +55,10 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
 import java.sql.Date;
-import java.util.Calendar;
 
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.DateConverter;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -80,7 +76,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     private static final String PARAMETER_ID_APPOINTMENT = "id";
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
     private static final String PARAMETER_ID_LOBBY = "lobby_id";
-    private static final String PARAMETER_SEARCH_LOBBY = "lobby_search";
+    private static final String PARAMETER_SELECT_LOBBY = "lobby_select";
 
     // Properties for page titles
     private static final String PROPERTY_PAGE_TITLE_MANAGE_APPOINTMENTS = "transparency.manage_appointments.pageTitle";
@@ -135,14 +131,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
         AdminUser user = getUser( );
         List<Appointment> listAppointments;
 
-        if ( user.isAdmin( ) )
-        {
-            listAppointments = AppointmentHome.getFullAppointmentsList( );
-        }
-        else
-        {
-            listAppointments = AppointmentHome.getFullAppointmentsListByDelegation( user.getUserId( ) );
-        }
+        listAppointments = AppointmentHome.getFullAppointmentsList( );
 
         Map<String, Object> model = getPaginatedListModel( request, MARK_APPOINTMENT_LIST, listAppointments, JSP_MANAGE_APPOINTMENTS );
 
@@ -161,7 +150,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     {
         _appointment = ( _appointment != null ) ? _appointment : new Appointment( );
 
-        ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
+        ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceList( );
 
         Map<String, Object> model = getModel( );
         model.put( MARK_APPOINTMENT, _appointment );
@@ -181,12 +170,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     @Action( ACTION_CREATE_APPOINTMENT )
     public String doCreateAppointment( HttpServletRequest request )
     {
-        // add a date format converter
-        DateConverter converter = new DateConverter( null );
-        converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class );
 
-        populate( _appointment, request );
+        populate( _appointment, request, request.getLocale( ) );
 
         // Check constraints
         if ( !validateBean( _appointment, VALIDATION_ATTRIBUTES_PREFIX ) )
@@ -210,7 +195,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         // add Lobby to the appointment
         String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
-        String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+        String strSelectLobby = request.getParameter( PARAMETER_SELECT_LOBBY );
 
         int idLobby = StringUtil.getIntValue( strIdLobby, -1 );
 
@@ -221,10 +206,10 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
             _appointment.getLobbyList( ).add( lobby );
         }
         else
-            if ( !StringUtils.isBlank( strSearchLobby ) )
+            if ( !StringUtils.isBlank( strSelectLobby ) )
             {
                 Lobby newLobby = new Lobby( );
-                newLobby.setName( strSearchLobby );
+                newLobby.setName( strSelectLobby );
                 newLobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
                 newLobby = LobbyHome.create( newLobby );
 
@@ -291,7 +276,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
             _appointment = AppointmentHome.getFullAppointmentById( nId );
         }
 
-        ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceListByDelegation( getUser( ).getUserId( ) );
+        ReferenceList electedOfficialsList = ElectedOfficialHome.getElectedOfficialsReferenceList( );
 
         Map<String, Object> model = getModel( );
         model.put( MARK_APPOINTMENT, _appointment );
@@ -311,12 +296,8 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     @Action( ACTION_MODIFY_APPOINTMENT )
     public String doModifyAppointment( HttpServletRequest request )
     {
-        // add a date format converter
-        DateConverter converter = new DateConverter( null );
-        converter.setPattern( I18nService.getDateFormatShortPattern( I18nService.getDefaultLocale( ) ) );
-        ConvertUtils.register( converter, Date.class );
 
-        populate( _appointment, request );
+        populate( _appointment, request, request.getLocale( ) );
 
         // Check constraints
         if ( !validateBean( _appointment, VALIDATION_ATTRIBUTES_PREFIX ) )
@@ -328,22 +309,24 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         // change Lobby to the appointment
         String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
-        String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+        String strSelectLobby = request.getParameter( PARAMETER_SELECT_LOBBY );
 
         int idLobby = StringUtil.getIntValue( strIdLobby, -1 );
 
         Lobby lobby = LobbyHome.findByPrimaryKey( idLobby );
-        if ( idLobby > 0 && lobby != null )
+
+        // check if it's not a new lobby to create
+        if ( idLobby > 0 && lobby != null && lobby.getName( ).equals( strSelectLobby ) )
         {
             LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
             LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ), _appointment.getId( ) ) );
             _appointment.getLobbyList( ).add( lobby );
         }
         else
-            if ( !StringUtils.isBlank( strSearchLobby ) )
+            if ( !StringUtils.isBlank( strSelectLobby ) )
             {
                 Lobby newLobby = new Lobby( );
-                newLobby.setName( strSearchLobby );
+                newLobby.setName( strSelectLobby );
                 newLobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
                 newLobby = LobbyHome.create( newLobby );
 

@@ -54,7 +54,7 @@ PRIMARY KEY (id_lobby)
 DROP TABLE IF EXISTS transparency_delegation;
 CREATE TABLE transparency_delegation (
 id_delegation int AUTO_INCREMENT,
-id_user int default '0' NOT NULL,
+id_user varchar(255)  default '' NOT NULL,
 id_elected_official int default '0',
 date_creation date NOT NULL,
 PRIMARY KEY (id_delegation)

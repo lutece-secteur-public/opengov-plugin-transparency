@@ -47,8 +47,10 @@ public class AppointmentFilter
 
     private String _strLobbyName;
     private String _strElectedOfficialName;
+    private String _strUserId;
     private int _nNumberOfDays; // appointments of the last N days
     private String _strOrderBy; // sort records
+    private int _nIdAppointment = -1;
     private boolean _bAsc; // sort records order (ASC = true)
 
     /**
@@ -149,6 +151,46 @@ public class AppointmentFilter
     public void setElectedOfficialName( String _strElectedOfficialName )
     {
         this._strElectedOfficialName = _strElectedOfficialName;
+    }
+
+    /**
+     * get user id
+     * 
+     * @return the user id
+     */
+    public String getUserId( )
+    {
+        return _strUserId;
+    }
+
+    /**
+     * set user id
+     * 
+     * @param _strUserId
+     */
+    public void setUserId( String _strUserId )
+    {
+        this._strUserId = _strUserId;
+    }
+
+    /**
+     * get Id Appointment
+     * 
+     * @return the appointment id
+     */
+    public int getIdAppointment( )
+    {
+        return _nIdAppointment;
+    }
+
+    /**
+     * set the appointment id
+     * 
+     * @param _nIdAppointment
+     */
+    public void setIdAppointment( int _nIdAppointment )
+    {
+        this._nIdAppointment = _nIdAppointment;
     }
 
 }

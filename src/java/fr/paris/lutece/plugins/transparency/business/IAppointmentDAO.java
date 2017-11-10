@@ -107,15 +107,6 @@ public interface IAppointmentDAO
     List<Appointment> selectAppointmentsList( AppointmentFilter filter, Plugin plugin );
 
     /**
-     * Load the data of all the appointment objects and returns them as a list
-     * 
-     * @param plugin
-     *            the Plugin
-     * @return The list which contains the data of all the appointment objects
-     */
-    List<Appointment> selectAppointmentsListByDelegation( int idUser, Plugin plugin );
-
-    /**
      * Load the id of all the appointment objects and returns them as a list
      * 
      * @param plugin

@@ -141,5 +141,5 @@ public interface IElectedOfficialDAO
      *            the Plugin
      * @return The referenceList which contains the data of all the electedOfficial objects
      */
-    ReferenceList selectElectedOfficialsReferenceListByDelegation( int idAdminUser, Plugin plugin );
+    ReferenceList selectElectedOfficialsReferenceListByDelegation( String idUser, Plugin plugin );
 }

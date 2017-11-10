@@ -16,9 +16,7 @@
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelStartDate}' helpKey='#i18n{transparency.create_appointment.labelStartDate.help}' mandatory=true>
                             <@input type='text' name='start_date' id='start_date' value='${appointment.startDate!\'\'}' />
                     </@formGroup>
-                    <@formGroup labelKey='#i18n{transparency.create_appointment.labelEndDate}' helpKey='#i18n{transparency.create_appointment.labelEndDate.help}' >
-                            <@input type='text' name='end_date' id='end_date' value='${appointment.endDate!\'\'}' />
-                    </@formGroup>
+
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelTypeLabel}' helpKey='#i18n{transparency.create_appointment.labelTypeLabel.help}' >
                             <@input type='text' name='type_label' value='${appointment.typeLabel!\'\'}' />
                     </@formGroup>
@@ -34,7 +32,7 @@
                     </@formGroup>	
 
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelLobby}' helpKey='#i18n{transparency.create_appointment.labelLobby.help}' >
-                            <@input type='text' name='lobby_search' id='lobby_search' value='' />
+                            <@input type='text' name='lobby_select' id='lobby_select' value='' />
                     </@formGroup>
 
                     <input type='hidden' name='lobby_id' id='lobby_id' value='' />
@@ -45,32 +43,42 @@
 </@box>
 
 <script  type="text/javascript" >
-  $( function() {
+    /**
+     * lobby search by autocompletion
+     */
+    $( function() 
+    {
 
-    var getData = function (request, response) {
-        $.getJSON(
-            "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
-            function (data) {
-                response(data);
-            }
-        );
-    };
+      var getData = function (request, response) 
+      {
+          $.getJSON(
+              "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+              function (data) 
+              {
+                  response(data);
+              }
+          );
+      };
 
-    $( "#lobby_search" ).autocomplete({
-      source: getData,
-      minLength: 3,
-      select: function( event, ui ) {
-        $( "#lobby_id" ).val( ui.item.id  );
-      }
-    });
-  } );
+      $( "#lobby_select" ).autocomplete(
+      {
+        source: getData,
+        minLength: 3,
+        select: function( event, ui ) 
+        {
+          $( "#lobby_id" ).val( ui.item.id  );
+        }
+      });
+    } );
 </script>
 
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/locales/bootstrap-datepicker.fr.js" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
-$( function() {
-        $("#start_date").datepicker({language: 'fr', orientation: 'bottom'});
-        $("#end_date").datepicker({language: 'fr', orientation: 'bottom'});
-});
+    /**
+     * add date pickers 
+     */
+    $( function() {
+            $("#start_date").datepicker({language: 'fr', orientation: 'bottom', maxDate: '0'});
+    });
 </script>

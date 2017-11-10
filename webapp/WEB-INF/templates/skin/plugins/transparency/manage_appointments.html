@@ -35,6 +35,12 @@
                         </@formGroup>
 
             </@tform>
+<#if is_authenticated  = true >
+            <@tform action='jsp/site/Portal.jsp?page=appointment'>
+                    <@button type='submit' name='view_createAppointment' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_appointments.buttonAdd}' />
+            </@tform>
+</#if>
+
 	</@columns>
 </@row>
 <@row>
@@ -47,6 +53,9 @@
             <th>#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
             <th>#i18n{transparency.manage_appointments.columnLobbies}</th>
             <th>#i18n{transparency.manage_appointments.columnContacts}</th>
+<#if is_authenticated = true >
+            <th>#i18n{portal.util.labelActions}</th>
+</#if>
         </tr>
     <#list appointment_list as appointment >
         <tr>
@@ -77,7 +86,13 @@
             </td>    
             <td>
 		${appointment.contacts!''}
-            </td>    
+            </td>   
+<#if is_authenticated  = true > 
+            <td>
+                <@aButton href='jsp/site/Portal.jsp?page=appointment&view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
+                <@aButton href='jsp/site/Portal.jsp?page=appointment&action=confirmRemoveAppointment&id=${appointment.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
+            </td>
+</#if>
 
         </tr>
         </#list>

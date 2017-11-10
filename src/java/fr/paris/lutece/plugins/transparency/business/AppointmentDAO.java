@@ -59,14 +59,17 @@ public final class AppointmentDAO implements IAppointmentDAO
     private static final String SQL_ADD_CLAUSE = " AND ( ";
     private static final String SQL_END_ADD_CLAUSE = " ) ";
 
-    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN transparency_elected_official_appointment on transparency_elected_official_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_elected_official on transparency_elected_official.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
+    private static final String SQL_FROM_FITLER_BY_APPOINTMENT_AND = " LEFT JOIN transparency_elected_official_appointment ON transparency_elected_official_appointment.id_appointment = transparency_appointment.id_appointment ";
+    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN transparency_elected_official on transparency_elected_official.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
+    private static final String SQL_FROM_FILTER_BY_DELEGATION = " LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
     private static final String SQL_FROM_FITLER_BY_LOBBY = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_lobby on transparency_lobby.id_lobby = transparency_lobby_appointment.id_lobby ";
 
     private static final String SQL_WHERECLAUSE_FILTER_BY_PERIOD = " start_date  >= date_add( current_timestamp , INTERVAL -? DAY) ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL = " transparency_elected_official.last_name like ? ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_LOBBY = " transparency_lobby.name like ? ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_DELEGATION = " transparency_delegation.id_user = ?  ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_ID = " transparency_appointment.id_appointment = ? ";
 
-    private static final String SQL_WHERECLAUSE_BY_DELEGATION = " LEFT JOIN transparency_elected_official_appointment ON transparency_elected_official_appointment.id_appointment = transparency_appointment.id_appointment LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official_appointment.id_elected_official WHERE transparency_delegation.id_user = ?  ";
     private static final String SQL_WHERECLAUSE_BY_ID = " WHERE id_appointment = ?";
     private static final String SQL_ORDER_BY = " ORDER BY ";
     private static final String SQL_DEFAULT_ORDER_BY = " start_date ";
@@ -190,6 +193,8 @@ public final class AppointmentDAO implements IAppointmentDAO
         StringBuilder where = new StringBuilder( );
         StringBuilder orderBy = new StringBuilder( );
 
+        boolean appointmentJoinAdded = false;
+
         if ( filter != null )
         {
             where.append( SQL_WHERE_BASE );
@@ -203,7 +208,8 @@ public final class AppointmentDAO implements IAppointmentDAO
             // elected official name
             if ( !StringUtils.isBlank( filter.getElectedOfficialName( ) ) )
             {
-                sql.append( SQL_FROM_FITLER_BY_ELECTED_OFFICIAL );
+                sql.append( SQL_FROM_FITLER_BY_APPOINTMENT_AND ).append( SQL_FROM_FITLER_BY_ELECTED_OFFICIAL );
+                appointmentJoinAdded = true;
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL ).append( SQL_END_ADD_CLAUSE );
             }
 
@@ -212,6 +218,20 @@ public final class AppointmentDAO implements IAppointmentDAO
             {
                 sql.append( SQL_FROM_FITLER_BY_LOBBY );
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_LOBBY ).append( SQL_END_ADD_CLAUSE );
+            }
+
+            // user delegation
+            if ( !StringUtils.isBlank( filter.getUserId( ) ) )
+            {
+                if ( !appointmentJoinAdded )
+                    sql.append( SQL_FROM_FITLER_BY_APPOINTMENT_AND );
+                sql.append( SQL_FROM_FILTER_BY_DELEGATION );
+                where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_DELEGATION ).append( SQL_END_ADD_CLAUSE );
+            }
+
+            if ( filter.getIdAppointment( ) > 0 )
+            {
+                where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_ID ).append( SQL_END_ADD_CLAUSE );
             }
 
             // order by
@@ -235,12 +255,20 @@ public final class AppointmentDAO implements IAppointmentDAO
 
         DAOUtil daoUtil = new DAOUtil( sql.toString( ), plugin );
         int i = 1;
-        if ( filter != null && filter.getNumberOfDays( ) > 0 )
-            daoUtil.setInt( i++, filter.getNumberOfDays( ) );
-        if ( filter != null && !StringUtils.isBlank( filter.getElectedOfficialName( ) ) )
-            daoUtil.setString( i++, "%" + filter.getElectedOfficialName( ) + "%" );
-        if ( filter != null && !StringUtils.isBlank( filter.getLobbyName( ) ) )
-            daoUtil.setString( i++, "%" + filter.getLobbyName( ) + "%" );
+
+        if ( filter != null )
+        {
+            if ( filter.getNumberOfDays( ) > 0 )
+                daoUtil.setInt( i++, filter.getNumberOfDays( ) );
+            if ( !StringUtils.isBlank( filter.getElectedOfficialName( ) ) )
+                daoUtil.setString( i++, "%" + filter.getElectedOfficialName( ) + "%" );
+            if ( !StringUtils.isBlank( filter.getLobbyName( ) ) )
+                daoUtil.setString( i++, "%" + filter.getLobbyName( ) + "%" );
+            if ( !StringUtils.isBlank( filter.getUserId( ) ) )
+                daoUtil.setString( i++, filter.getUserId( ) );
+            if ( filter.getIdAppointment( ) > 0 )
+                daoUtil.setInt( i++, filter.getIdAppointment( ) );
+        }
 
         // execute
         daoUtil.executeQuery( );
@@ -271,42 +299,9 @@ public final class AppointmentDAO implements IAppointmentDAO
      * {@inheritDoc }
      */
     @Override
-    public List<Appointment> selectAppointmentsListByDelegation( int idUser, Plugin plugin )
-    {
-        List<Appointment> appointmentList = new ArrayList<Appointment>( );
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT + SQL_WHERECLAUSE_BY_DELEGATION + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
-        daoUtil.setInt( 1, idUser );
-        daoUtil.executeQuery( );
-
-        while ( daoUtil.next( ) )
-        {
-            Appointment appointment = new Appointment( );
-            int nIndex = 1;
-
-            appointment.setId( daoUtil.getInt( nIndex++ ) );
-            appointment.setTitle( daoUtil.getString( nIndex++ ) );
-            appointment.setDescription( daoUtil.getString( nIndex++ ) );
-            appointment.setStartDate( daoUtil.getDate( nIndex++ ) );
-            appointment.setEndDate( daoUtil.getDate( nIndex++ ) );
-            appointment.setTypeId( daoUtil.getInt( nIndex++ ) );
-            appointment.setTypeLabel( daoUtil.getString( nIndex++ ) );
-            appointment.setUrl( daoUtil.getString( nIndex++ ) );
-            appointment.setContacts( daoUtil.getString( nIndex++ ) );
-
-            appointmentList.add( appointment );
-        }
-
-        daoUtil.free( );
-        return appointmentList;
-    }
-
-    /**
-     * {@inheritDoc }
-     */
-    @Override
     public List<Integer> selectIdAppointmentsList( Plugin plugin )
     {
-        List<Integer> appointmentList = new ArrayList<Integer>( );
+        List<Integer> appointmentList = new ArrayList<>( );
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID + SQL_ORDER_BY + SQL_DEFAULT_ORDER_BY, plugin );
         daoUtil.executeQuery( );
 
