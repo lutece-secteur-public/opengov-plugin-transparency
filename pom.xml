@@ -58,10 +58,10 @@
     <properties>
         <componentName>transparency</componentName>
         <jiraProjectName>TRANSPARENCY</jiraProjectName>
-        <jiraComponentId></jiraComponentId>
+        <jiraComponentId>TRANSPRNCY</jiraComponentId>
     </properties>
     
-        <profiles>
+    <profiles>
     <profile>
     <id>copyStaticResources</id>
     <build>
