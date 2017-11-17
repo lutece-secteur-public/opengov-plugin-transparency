@@ -4,13 +4,13 @@
 	<@columns>
 		<@messages infos=infos />
 
-    <h4>#i18n{transparency.manage_appointments.title}</h4>
+                <h4>#i18n{transparency.manage_appointments.title}</h4>
 	</@columns>
 </@row>
 <@row>
 	<@columns>
 
-            <@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=meeting">
+            <@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=publicmeeting">
 			<@messages errors=errors />
                         
 			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}' helpKey='#i18n{transparency.manage_appointments.searchByTitleLabel.help}' >
@@ -36,18 +36,9 @@
 
                         <@formGroup>                        
                             <@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" size="" />
-
-                            <#if is_authenticated  = false >
-                                     <a href="jsp/site/Portal.jsp?page=mylutece" class="btn btn-primary">Authentification</a>
-                            </#if>
                         </@formGroup>
 
             </@tform>
-<#if is_authenticated  = true >
-            <@tform action='jsp/site/Portal.jsp?page=meeting'>
-                    <@button type='submit' name='view_createAppointment' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_appointments.buttonAdd}' />
-            </@tform>
-</#if>
 
 	</@columns>
 </@row>
@@ -61,14 +52,11 @@
             <th>#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
             <th>#i18n{transparency.manage_appointments.columnLobbies}</th>
             <th>#i18n{transparency.manage_appointments.columnContacts}</th>
-<#if is_authenticated = true >
-            <th>#i18n{portal.util.labelActions}</th>
-</#if>
         </tr>
     <#list appointment_list as appointment >
         <tr>
             <td>
-                <a href='jsp/site/Portal.jsp?page=meeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
+                <a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
                     ${appointment.title}
                 </a>
                 <br>
@@ -85,7 +73,7 @@
             </td>    
             <td>
 		<#list appointment.lobbyList as lobby>
-                     <a href='jsp/site/Portal.jsp?page=lobby&view=detailLobby&id=${lobby.id}' title='#i18n{transparency.detail_lobby.title}' >
+                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
                         ${lobby.name} 
                     </a>
 
@@ -95,12 +83,6 @@
             <td>
 		${appointment.contacts!''}
             </td>   
-<#if is_authenticated  = true > 
-            <td>
-                <@aButton href='jsp/site/Portal.jsp?page=meeting&view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' />
-                <@aButton href='jsp/site/Portal.jsp?page=meeting&action=confirmRemoveAppointment&id=${appointment.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' />
-            </td>
-</#if>
 
         </tr>
         </#list>

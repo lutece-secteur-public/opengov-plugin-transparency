@@ -69,7 +69,7 @@ import org.codehaus.plexus.util.StringUtils;
 /**
  * This class provides the user interface to manage Appointment xpages ( manage, create, modify, remove )
  */
-@Controller( xpageName = "appointment", pageTitleI18nKey = "transparency.xpage.appointment.pageTitle", pagePathI18nKey = "transparency.xpage.appointment.pagePathLabel" )
+@Controller( xpageName = "meeting", pageTitleI18nKey = "transparency.xpage.appointment.pageTitle", pagePathI18nKey = "transparency.xpage.appointment.pagePathLabel" )
 public class AppointmentXPage extends MVCApplication
 {
     // Templates

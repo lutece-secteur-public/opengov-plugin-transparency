@@ -55,9 +55,6 @@ public class LobbyXPage extends MVCApplication
     private static final String TEMPLATE_MANAGE_LOBBIES = "/skin/plugins/transparency/manage_lobbies.html";
     private static final String TEMPLATE_DETAIL_LOBBY = "/skin/plugins/transparency/detail_lobby.html";
 
-    // JSP
-    private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
-
     // Parameters
     private static final String PARAMETER_ID_LOBBY = "id";
 

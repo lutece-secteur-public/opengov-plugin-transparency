@@ -25,7 +25,7 @@
                     <strong>#i18n{transparency.modify_appointment.labelStartDate}</strong>
                      : ${appointment.startDate}
                 </p>
-
+                
                 <!-- 
 		<p>
                     <strong>#i18n{transparency.modify_appointment.labelTypeLabel}</strong>
@@ -55,13 +55,12 @@
                     ${electedOfficial.firstName} ${electedOfficial.lastName} <br> 
                 </#list>
                 </p>
-
 		
 		<p>
                     <strong>#i18n{transparency.manage_appointments.columnLobbies}</strong>
                      : 		
 		<#list appointment.lobbyList as lobby>
-                     <a href='jsp/site/Portal.jsp?page=lobby&view=detailLobby&id=${lobby.id}' title='#i18n{transparency.detail_lobby.title}' >
+                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
                         ${lobby.name} 
                     </a>
                     <br>
@@ -70,7 +69,7 @@
 
             </div>
 
-                <a class="btn btn-primary pull-right" href="jsp/site/Portal.jsp?page=meeting" >
+                <a class="btn btn-primary pull-right" href="jsp/site/Portal.jsp?page=publicmeeting" >
                     #i18n{portal.util.labelBack}
                 </a>
           </div>

@@ -1,7 +1,7 @@
 
 <@row>
 	<@columns>
-		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=appointment'>
+		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=meeting'>
 			<fieldset>
 				<legend>#i18n{transparency.modify_appointment.title}</legend>
 				<@messages errors=errors />
@@ -23,15 +23,22 @@
                                     <@input type='text' id='start_date' name='start_date'  maxlength=20 value='${appointment.startDate}' tabIndex='2' />
 				</@formGroup>
 				
+                                <!--
 				<@formGroup labelFor='type_label' labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' mandatory=false>
                                     <@input type='text' id='type_label' name='type_label'  maxlength=255 value='${appointment.typeLabel}' tabIndex='5' />
 				</@formGroup>
+                                -->
+
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
 					<@input type="text" name="contacts" value="${appointment.contacts!''}" />
 				</@formGroup>
+
+                                <!--
 				<@formGroup labelFor='url' labelKey='#i18n{transparency.modify_appointment.labelUrl}' mandatory=false>
                                     <@input type="text" id="url" name="url"  maxlength=255 value="${appointment.url!''}" tabIndex="6" />
 				</@formGroup>
+                                -->
+
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelLobby}' mandatory=false >
 				    <#list appointment.lobbyList as lobby>
                                         ${lobby.name}  <br>
