@@ -96,7 +96,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
     private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro";
-
+    private static final String MSG_ERROR_GET_JSON = "transparency.message.synchro.error" ;
+    
     // Validations
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
 
@@ -300,6 +301,14 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
             HttpAccess ha = new HttpAccess() ;
             
             String json = ha.doGet( strUri );
+            
+            if ( json == null ) {
+                String msg = I18nService.getLocalizedString( MSG_ERROR_GET_JSON, getLocale( ) );
+                msg = MessageFormat.format( msg, strUri  );
+
+                addError( msg );
+                return redirectView( request, VIEW_MANAGE_LOBBIES );
+            }
             JSONObject root = new JSONObject( json );
 
             JSONArray lobbyList = (JSONArray) root.get( CONSTANT_KEY_PUBLICATIONS );
