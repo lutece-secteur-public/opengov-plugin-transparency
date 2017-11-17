@@ -36,6 +36,7 @@ package fr.paris.lutece.plugins.transparency.web;
 
 import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
+import fr.paris.lutece.util.httpaccess.HttpAccess;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -43,8 +44,10 @@ import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.annotations.Controller;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
+import fr.paris.lutece.util.httpaccess.HttpAccessException;
 import fr.paris.lutece.util.url.UrlItem;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,6 +56,8 @@ import java.text.MessageFormat;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
@@ -290,10 +295,12 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
 
         try
         {
-            URI uri = new URI( AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE ) );
+            String strUri =  AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE ) ;
 
-            JSONTokener tokener = new JSONTokener( uri.toURL( ).openStream( ) );
-            JSONObject root = new JSONObject( tokener );
+            HttpAccess ha = new HttpAccess() ;
+            
+            String json = ha.doGet( strUri );
+            JSONObject root = new JSONObject( json );
 
             JSONArray lobbyList = (JSONArray) root.get( CONSTANT_KEY_PUBLICATIONS );
 
@@ -334,11 +341,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
             addInfo( msg );
 
         }
-        catch( MalformedURLException e )
-        {
-            addError( e.getLocalizedMessage( ) );
-        }
-        catch( IOException | URISyntaxException e )
+        catch (HttpAccessException e) 
         {
             addError( e.getLocalizedMessage( ) );
         }
