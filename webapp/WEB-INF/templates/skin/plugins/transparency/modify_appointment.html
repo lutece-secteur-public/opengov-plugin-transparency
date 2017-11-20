@@ -9,7 +9,7 @@
 				
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelElectedOfficial}' mandatory=false >
                                         <#list appointment.electedOfficialList as electedOfficial>
-                                            ${electedOfficial.firstName} ${electedOfficial.lastName}<br>
+                                             ${electedOfficial.lastName}<br>
                                         </#list>
                                 </@formGroup>
 
@@ -25,7 +25,7 @@
 				
                                 <!--
 				<@formGroup labelFor='type_label' labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' mandatory=false>
-                                    <@input type='text' id='type_label' name='type_label'  maxlength=255 value='${appointment.typeLabel}' tabIndex='5' />
+                                    <@input type="text" id="type_label" name="type_label"  maxlength=255 value="${appointment.typeLabel!''}" tabIndex="5" />
 				</@formGroup>
                                 -->
 

@@ -43,35 +43,7 @@ import java.util.List;
  */
 public interface IElectedOfficialDAO
 {
-    /**
-     * Insert a new record in the table.
-     * 
-     * @param electedOfficial
-     *            instance of the ElectedOfficial object to insert
-     * @param plugin
-     *            the Plugin
-     */
-    void insert( ElectedOfficial electedOfficial, Plugin plugin );
 
-    /**
-     * Update the record in the table
-     * 
-     * @param electedOfficial
-     *            the reference of the ElectedOfficial
-     * @param plugin
-     *            the Plugin
-     */
-    void store( ElectedOfficial electedOfficial, Plugin plugin );
-
-    /**
-     * Delete a record from the table
-     * 
-     * @param nKey
-     *            The identifier of the ElectedOfficial to delete
-     * @param plugin
-     *            the Plugin
-     */
-    void delete( int nKey, Plugin plugin );
 
     // /////////////////////////////////////////////////////////////////////////
     // Finders
@@ -79,13 +51,13 @@ public interface IElectedOfficialDAO
     /**
      * Load the data from the table
      * 
-     * @param nKey
+     * @param strKey
      *            The identifier of the electedOfficial
      * @param plugin
      *            the Plugin
      * @return The instance of the electedOfficial
      */
-    ElectedOfficial load( int nKey, Plugin plugin );
+    ElectedOfficial load( String strKey, Plugin plugin );
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a list
@@ -123,7 +95,7 @@ public interface IElectedOfficialDAO
      *            the Plugin
      * @return The list which contains the id of all the electedOfficial objects
      */
-    List<Integer> selectIdElectedOfficialsList( Plugin plugin );
+    List<String> selectIdElectedOfficialsList( Plugin plugin );
 
     /**
      * Load the data of all the electedOfficial objects and returns them as a referenceList

@@ -44,8 +44,8 @@ import java.sql.Statement;
 public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppointmentDAO
 {
     // Constants
-    private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_elected_official_appointment ( id_elected_official, id_appointment ) VALUES ( ? , ? ) ";
-    private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_elected_official_appointment WHERE id_elected_official = ? and id_appointment = ? ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO transparency_elected_official_appointment ( role_key, id_appointment ) VALUES ( ? , ? ) ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM transparency_elected_official_appointment WHERE role_key = ? and id_appointment = ? ";
 
     /**
      * {@inheritDoc }
@@ -57,7 +57,7 @@ public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppo
         try
         {
             int nIndex = 1;
-            daoUtil.setInt( nIndex++, electedOfficialAppointment.getIdElectedOfficial( ) );
+            daoUtil.setString( nIndex++, electedOfficialAppointment.getIdElectedOfficial( ) );
             daoUtil.setInt( nIndex++, electedOfficialAppointment.getIdAppointment( ) );
 
             daoUtil.executeUpdate( );
@@ -75,7 +75,7 @@ public final class ElectedOfficialAppointmentDAO implements IElectedOfficialAppo
     public void delete( ElectedOfficialAppointment electedOfficialAppointment, Plugin plugin )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin );
-        daoUtil.setInt( 1, electedOfficialAppointment.getIdElectedOfficial( ) );
+        daoUtil.setString( 1, electedOfficialAppointment.getIdElectedOfficial( ) );
         daoUtil.setInt( 2, electedOfficialAppointment.getIdAppointment( ) );
         daoUtil.executeUpdate( );
         daoUtil.free( );

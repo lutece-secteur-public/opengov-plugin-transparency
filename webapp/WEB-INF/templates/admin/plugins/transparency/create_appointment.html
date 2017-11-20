@@ -17,15 +17,21 @@
                             <@input type='text' name='start_date' id='start_date' value='${appointment.startDate!\'\'}' />
                     </@formGroup>
 
+                    <!--
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelTypeLabel}' helpKey='#i18n{transparency.create_appointment.labelTypeLabel.help}' >
                             <@input type='text' name='type_label' value='${appointment.typeLabel!\'\'}' />
                     </@formGroup>
+                    -->
+
                     <@formGroup labelKey='#i18n{transparency.create_appointment.contactsLabel}' helpKey='#i18n{transparency.create_appointment.contactsLabel.help}' >
                             <@input type="text" name="contacts" value="${appointment.contacts!''}" />
                     </@formGroup>
+
+                    <!--
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelUrl}' helpKey='#i18n{transparency.create_appointment.labelUrl.help}' >
                             <@input type='text' name='url' value='${appointment.url!\'\'}' />
                     </@formGroup>
+                    -->
 
                     <@formGroup labelKey='#i18n{transparency.create_appointment.labelElectedOfficials}' helpKey='#i18n{transparency.create_appointment.labelElectedOfficials.help}' >
                             <@select name='id_elected_official'  default_value="-1" items=electedofficials_list />

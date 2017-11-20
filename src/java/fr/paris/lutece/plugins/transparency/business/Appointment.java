@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.transparency.business;
 
+import fr.paris.lutece.util.ReferenceList;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;

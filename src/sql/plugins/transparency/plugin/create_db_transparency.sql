@@ -18,19 +18,6 @@ PRIMARY KEY (id_appointment)
 );
 
 --
--- Structure for table transparency_elected_official
---
-
-DROP TABLE IF EXISTS transparency_elected_official;
-CREATE TABLE transparency_elected_official (
-id_elected_official int AUTO_INCREMENT,
-first_name varchar(255) default '' NOT NULL,
-last_name varchar(255) default '' NOT NULL,
-title varchar(50) default '' NOT NULL,
-PRIMARY KEY (id_elected_official)
-);
-
---
 -- Structure for table transparency_lobby
 --
 
@@ -48,27 +35,15 @@ PRIMARY KEY (id_lobby)
 
 
 --
--- Structure for table transparency_delegation
---
-
-DROP TABLE IF EXISTS transparency_delegation;
-CREATE TABLE transparency_delegation (
-id_delegation int AUTO_INCREMENT,
-id_user varchar(255)  default '' NOT NULL,
-id_elected_official int default '0',
-date_creation date NOT NULL,
-PRIMARY KEY (id_delegation)
-);
-
---
 -- Structure for table transparency_elected_official_appointment
 --
 
 DROP TABLE IF EXISTS transparency_elected_official_appointment;
 CREATE TABLE transparency_elected_official_appointment (
-id_elected_official int default '0' NOT NULL,
+role_key varchar(50)  NOT NULL,
 id_appointment int default '0' NOT NULL,
-PRIMARY KEY (id_elected_official, id_appointment)
+PRIMARY KEY (role_key, id_appointment),
+KEY `IDX_ID_APPOINTMENT_ELECTED` (`id_appointment`)
 );
 
 --
@@ -79,5 +54,6 @@ DROP TABLE IF EXISTS transparency_lobby_appointment;
 CREATE TABLE transparency_lobby_appointment (
 id_lobby int default '0' NOT NULL,
 id_appointment int default '0' NOT NULL,
-PRIMARY KEY (id_lobby, id_appointment)
+PRIMARY KEY (id_lobby, id_appointment),
+KEY `IDX_ID_APPOINTMENT_LOBBY` (`id_appointment`)
 );

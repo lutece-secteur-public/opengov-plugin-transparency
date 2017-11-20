@@ -8,10 +8,8 @@
     
     <bean id="transparency.appointmentDAO" class="fr.paris.lutece.plugins.transparency.business.AppointmentDAO" />
     <bean id="transparency.electedOfficialDAO" class="fr.paris.lutece.plugins.transparency.business.ElectedOfficialDAO" />
-    <bean id="transparency.electedOfficialRest" class="fr.paris.lutece.plugins.transparency.rs.ElectedOfficialRest" />
     <bean id="transparency.lobbyDAO" class="fr.paris.lutece.plugins.transparency.business.LobbyDAO" />
     <bean id="transparency.lobbyRest" class="fr.paris.lutece.plugins.transparency.rs.LobbyRest" />
-    <bean id="transparency.delegationDAO" class="fr.paris.lutece.plugins.transparency.business.DelegationDAO" />
     <bean id="transparency.lobbyAppointmentDAO" class="fr.paris.lutece.plugins.transparency.business.LobbyAppointmentDAO" />
     <bean id="transparency.electedOfficialAppointmentDAO" class="fr.paris.lutece.plugins.transparency.business.ElectedOfficialAppointmentDAO" />
     

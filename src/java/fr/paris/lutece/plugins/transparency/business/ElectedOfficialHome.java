@@ -57,54 +57,15 @@ public final class ElectedOfficialHome
     }
 
     /**
-     * Create an instance of the electedOfficial class
-     * 
-     * @param electedOfficial
-     *            The instance of the ElectedOfficial which contains the informations to store
-     * @return The instance of electedOfficial which has been created with its primary key.
-     */
-    public static ElectedOfficial create( ElectedOfficial electedOfficial )
-    {
-        _dao.insert( electedOfficial, _plugin );
-
-        return electedOfficial;
-    }
-
-    /**
-     * Update of the electedOfficial which is specified in parameter
-     * 
-     * @param electedOfficial
-     *            The instance of the ElectedOfficial which contains the data to store
-     * @return The instance of the electedOfficial which has been updated
-     */
-    public static ElectedOfficial update( ElectedOfficial electedOfficial )
-    {
-        _dao.store( electedOfficial, _plugin );
-
-        return electedOfficial;
-    }
-
-    /**
-     * Remove the electedOfficial whose identifier is specified in parameter
-     * 
-     * @param nKey
-     *            The electedOfficial Id
-     */
-    public static void remove( int nKey )
-    {
-        _dao.delete( nKey, _plugin );
-    }
-
-    /**
      * Returns an instance of a electedOfficial whose identifier is specified in parameter
      * 
-     * @param nKey
+     * @param strKey
      *            The electedOfficial primary key
      * @return an instance of ElectedOfficial
      */
-    public static ElectedOfficial findByPrimaryKey( int nKey )
+    public static ElectedOfficial findByPrimaryKey( String strKey )
     {
-        return _dao.load( nKey, _plugin );
+        return _dao.load( strKey, _plugin );
     }
 
     /**
@@ -143,7 +104,7 @@ public final class ElectedOfficialHome
      * 
      * @return the list which contains the id of all the electedOfficial objects
      */
-    public static List<Integer> getIdElectedOfficialsList( )
+    public static List<String> getIdElectedOfficialsList( )
     {
         return _dao.selectIdElectedOfficialsList( _plugin );
     }

@@ -43,13 +43,13 @@ public class ElectedOfficialAppointment implements Serializable
     private static final long serialVersionUID = 1L;
 
     // Variables declarations
-    private int _nIdElectedOfficial;
+    private String _strIdElectedOfficial;
 
     private int _nIdAppointment;
 
-    public ElectedOfficialAppointment( int idElectedOfficial, int idAppointment )
+    public ElectedOfficialAppointment( String idElectedOfficial, int idAppointment )
     {
-        _nIdElectedOfficial = idElectedOfficial;
+        _strIdElectedOfficial = idElectedOfficial;
         _nIdAppointment = idAppointment;
     }
 
@@ -58,20 +58,20 @@ public class ElectedOfficialAppointment implements Serializable
      * 
      * @return The Id
      */
-    public int getIdElectedOfficial( )
+    public String getIdElectedOfficial( )
     {
-        return _nIdElectedOfficial;
+        return _strIdElectedOfficial;
     }
 
     /**
      * Sets the Id
      * 
-     * @param nId
+     * @param strId
      *            The Id
      */
-    public void setIdElectedOfficial( int nId )
+    public void setIdElectedOfficial( String strId )
     {
-        _nIdElectedOfficial = nId;
+        _strIdElectedOfficial = strId;
     }
 
     /**

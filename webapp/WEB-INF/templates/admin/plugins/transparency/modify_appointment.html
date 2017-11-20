@@ -8,7 +8,7 @@
 			
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelElectedOfficial}' mandatory=false >
                                         <#list appointment.electedOfficialList as electedOfficial>
-                                            ${electedOfficial.firstName} ${electedOfficial.lastName}<br>
+                                             ${electedOfficial.lastName}<br>
                                         </#list>
                                 </@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTitle}' helpKey='#i18n{transparency.modify_appointment.labelTitle.help}' mandatory=true>
@@ -21,15 +21,21 @@
 					<@input type='text' name='start_date' id='start_date' value='${appointment.startDate}' />
 				</@formGroup>
 
+                                <!-- 
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelTypeLabel}' helpKey='#i18n{transparency.modify_appointment.labelTypeLabel.help}' >
-					<@input type='text' name='type_label' value='${appointment.typeLabel}' />
+					<@input type="text" name="type_label" value="${appointment.typeLabel!''}" />
 				</@formGroup>
+                                -->
+
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
 					<@input type="text" name="contacts" value="${appointment.contacts!''}" />
 				</@formGroup>
+
+                                <!-- 
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelUrl}' helpKey='#i18n{transparency.modify_appointment.labelUrl.help}' >
-					<@input type='text' name='url' value='${appointment.url}' />
+					<@input type="text" name="url" value="${appointment.url!''}" />
 				</@formGroup>
+                                -->
                                 
                                 <@formGroup labelKey='#i18n{transparency.modify_appointment.labelLobby}' mandatory=false >
 				    <#list appointment.lobbyList as lobby>

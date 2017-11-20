@@ -60,14 +60,14 @@ public final class AppointmentDAO implements IAppointmentDAO
     private static final String SQL_END_ADD_CLAUSE = " ) ";
 
     private static final String SQL_FROM_FITLER_BY_APPOINTMENT_AND = " LEFT JOIN transparency_elected_official_appointment ON transparency_elected_official_appointment.id_appointment = transparency_appointment.id_appointment ";
-    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN transparency_elected_official on transparency_elected_official.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
-    private static final String SQL_FROM_FILTER_BY_DELEGATION = " LEFT JOIN transparency_delegation on transparency_delegation.id_elected_official = transparency_elected_official_appointment.id_elected_official ";
+    private static final String SQL_FROM_FITLER_BY_ELECTED_OFFICIAL = " LEFT JOIN core_role on core_role.role = transparency_elected_official_appointment.role_key ";
+    private static final String SQL_FROM_FILTER_BY_DELEGATION = " LEFT JOIN mylutece_database_user_role ON mylutece_database_user_role.role_key = transparency_elected_official_appointment.role_key LEFT JOIN mylutece_database_user ON mylutece_database_user.mylutece_database_user_id = mylutece_database_user_role.mylutece_database_user_id  ";
     private static final String SQL_FROM_FITLER_BY_LOBBY = " LEFT JOIN transparency_lobby_appointment on transparency_lobby_appointment.id_appointment =  transparency_appointment.id_appointment LEFT JOIN transparency_lobby on transparency_lobby.id_lobby = transparency_lobby_appointment.id_lobby ";
 
     private static final String SQL_WHERECLAUSE_FILTER_BY_PERIOD = " start_date  >= date_add( current_timestamp , INTERVAL -? DAY) ";
-    private static final String SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL = " transparency_elected_official.last_name like ? ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_ELECTED_OFFICIAL = " core_role.role_description like ? ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_LOBBY = " transparency_lobby.name like ? ";
-    private static final String SQL_WHERECLAUSE_FILTER_BY_DELEGATION = " transparency_delegation.id_user = ?  ";
+    private static final String SQL_WHERECLAUSE_FILTER_BY_DELEGATION = " login = ?  ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_ID = " transparency_appointment.id_appointment = ? ";
     private static final String SQL_WHERECLAUSE_FILTER_BY_TITLE = " transparency_appointment.title like ? ";
 

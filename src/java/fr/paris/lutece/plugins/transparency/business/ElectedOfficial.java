@@ -45,9 +45,9 @@ public class ElectedOfficial implements Serializable
     private static final long serialVersionUID = 1L;
 
     // Variables declarations
-    private int _nId;
+    private String _strId;
 
-    @NotEmpty( message = "#i18n{transparency.validation.electedofficial.FirstName.notEmpty}" )
+    //@NotEmpty( message = "#i18n{transparency.validation.electedofficial.FirstName.notEmpty}" )
     @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.FirstName.size}" )
     private String _strFirstName;
 
@@ -55,7 +55,7 @@ public class ElectedOfficial implements Serializable
     @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.LastName.size}" )
     private String _strLastName;
 
-    @NotEmpty( message = "#i18n{transparency.validation.electedofficial.Title.notEmpty}" )
+    //@NotEmpty( message = "#i18n{transparency.validation.electedofficial.Title.notEmpty}" )
     @Size( max = 50, message = "#i18n{transparency.validation.electedofficial.Title.size}" )
     private String _strTitle;
 
@@ -64,20 +64,19 @@ public class ElectedOfficial implements Serializable
      * 
      * @return The Id
      */
-    public int getId( )
+    public String getId( )
     {
-        return _nId;
+        return _strId;
     }
 
     /**
      * Sets the Id
      * 
-     * @param nId
-     *            The Id
+     * @param strId
      */
-    public void setId( int nId )
+    public void setId( String strId )
     {
-        _nId = nId;
+        _strId = strId;
     }
 
     /**

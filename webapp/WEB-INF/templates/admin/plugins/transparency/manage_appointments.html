@@ -32,7 +32,7 @@
             </td>
             <td>
                 <#list appointment.electedOfficialList as electedOfficial>
-                    ${electedOfficial.firstName} ${electedOfficial.lastName} <br>
+                    ${electedOfficial.lastName} <br>
                 </#list>
             </td>
             <td>
@@ -54,9 +54,6 @@
                 <@aButton href='jsp/admin/plugins/transparency/ManageAppointments.jsp?view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
 
                 <@aButton href='jsp/admin/plugins/transparency/ManageAppointments.jsp?action=confirmRemoveAppointment&id=${appointment.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' showTitle=false />
-
-                <@aButton href='jsp/admin/plugins/transparency/ManageAppointments.jsp?action=manageLobbies&id=${appointment.id}' title='#i18n{transparency.manage_appointments.columnLobbies}'  />
-                
             </td>
         </tr>
         </#list>

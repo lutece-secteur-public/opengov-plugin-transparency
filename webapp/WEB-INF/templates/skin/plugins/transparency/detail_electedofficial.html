@@ -7,9 +7,7 @@
 				<@messages errors=errors />
 				<input type="hidden" id="id" name="id" value="${electedofficial.id}"/>
 				
-				<@formGroup labelFor='first_name' labelKey='#i18n{transparency.modify_electedofficial.labelFirstName}' mandatory=true>
-          <@input type='text' id='first_name' name='first_name'  maxlength=255 value='${electedofficial.firstName}' tabIndex='0' />
-				</@formGroup>
+				
 				<@formGroup labelFor='last_name' labelKey='#i18n{transparency.modify_electedofficial.labelLastName}' mandatory=true>
           <@input type='text' id='last_name' name='last_name'  maxlength=255 value='${electedofficial.lastName}' tabIndex='1' />
 				</@formGroup>

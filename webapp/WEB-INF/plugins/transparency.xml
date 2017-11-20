@@ -22,14 +22,6 @@
     <!-- Admin features parameters -->
     <admin-features>
         <admin-feature>
-            <feature-id>TRANSPARENCY_ELECTED_OFFICIALS_MANAGEMENT</feature-id>
-            <feature-title>transparency.adminFeature.ManageElectedOfficials.name</feature-title>
-            <feature-description>transparency.adminFeature.ManageElectedOfficials.description</feature-description>
-            <feature-level>3</feature-level>
-            <feature-url>jsp/admin/plugins/transparency/ManageElectedOfficials.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
-      </admin-feature>
-        <admin-feature>
             <feature-id>TRANSPARENCY_LOBBIES_MANAGEMENT</feature-id>
             <feature-title>transparency.adminFeature.ManageLobbies.name</feature-title>
             <feature-description>transparency.adminFeature.ManageLobbies.description</feature-description>
@@ -43,14 +35,6 @@
             <feature-description>transparency.adminFeature.ManageAppointements.description</feature-description>
             <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/transparency/ManageAppointments.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
-      </admin-feature>
-      <admin-feature>
-            <feature-id>TRANSPARENCY_DELEGATION_MANAGEMENT</feature-id>
-            <feature-title>transparency.adminFeature.ManageDelegation.name</feature-title>
-            <feature-description>transparency.adminFeature.ManageDelegation.description</feature-description>
-            <feature-level>3</feature-level>
-            <feature-url>jsp/admin/plugins/transparency/ManageDelegations.jsp</feature-url>
             <feature-icon-url></feature-icon-url>
       </admin-feature>
     </admin-features>    
@@ -68,10 +52,6 @@
         <application>
             <application-id>lobby</application-id>
             <application-class>fr.paris.lutece.plugins.transparency.web.LobbyXPage</application-class>
-        </application>
-        <application>
-            <application-id>electedofficial</application-id>
-            <application-class>fr.paris.lutece.plugins.transparency.web.ElectedOfficialXPage</application-class>
         </application>
     </applications>
 
