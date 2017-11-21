@@ -34,14 +34,16 @@
 package fr.paris.lutece.plugins.transparency.business;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import java.io.IOException;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Iterator;
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This is the business class for the object Lobby
@@ -219,23 +221,40 @@ public class Lobby implements Serializable
         _dateVersionDate = dateVersionDate;
     }
 
+   
     /**
      * Get the JSON data formated in HTML
      * 
+     * @return the html string
      */
     @JsonIgnore
     public String getHtmlData( )
     {
         if ( !StringUtils.isBlank( _strJsonData ) )
         {
-            return jsonToHtml( new JSONObject( _strJsonData ) );
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+            JsonNode jsonNode = null;
+
+            // parse Json
+            try 
+            {
+                jsonNode = mapper.readTree( _strJsonData );
+            } 
+            catch (IOException e) 
+            {
+                return e.getLocalizedMessage( );
+            }
+            
+            // browse the tree to get an Html View
+            return jsonToHtml(  jsonNode  );
         }
         else
         {
             return "";
         }
-
     }
+
 
     /**
      * convert json Data to structured Html text
@@ -243,59 +262,48 @@ public class Lobby implements Serializable
      * @param json
      * @return string
      */
-    private String jsonToHtml( Object obj )
+    private String jsonToHtml( JsonNode jsonNode )
     {
         StringBuilder html = new StringBuilder( );
 
-        try
+        // print or iterate
+        if ( jsonNode.isValueNode( ) )
         {
-            if ( obj instanceof JSONObject )
+            // print the value
+            html.append( jsonNode.toString( ) );
+        }
+        else if ( jsonNode.isArray( ) )
+        {
+            Iterator<JsonNode> nodeList = jsonNode.elements( );
+            
+            while (nodeList.hasNext( ) )
             {
-                JSONObject jsonObject = (JSONObject) obj;
-                String [ ] keys = JSONObject.getNames( jsonObject );
-
-                html.append( "<div class=\"json_object\">" );
-
-                if ( keys.length > 0 )
-                {
-                    for ( String key : keys )
-                    {
-                        // print the key and open a DIV
-                        html.append( "<div><span class=\"json_title\">" ).append( key ).append( "</span> : " );
-
-                        Object val = jsonObject.get( key );
-                        // recursive call
-                        html.append( jsonToHtml( val ) );
-                        // close the div
-                        html.append( "</div>" );
-                    }
-                }
-
-                html.append( "</div>" );
+                html.append( jsonToHtml( nodeList.next( ) ) );
             }
-            else
-                if ( obj instanceof JSONArray )
-                {
-                    JSONArray array = (JSONArray) obj;
-                    for ( int i = 0; i < array.length( ); i++ )
-                    {
-                        // recursive call
-                        html.append( jsonToHtml( array.get( i ) ) );
-
-                    }
-
-                }
-                else
-                {
-                    // print the value
-                    html.append( obj );
-                }
-
-        }
-        catch( JSONException e )
+        } 
+        else
         {
-            return e.getLocalizedMessage( );
-        }
+            Iterator<String> fields = jsonNode.fieldNames( );
+
+            html.append( "<div class=\"json_object\">" );
+
+            while ( fields.hasNext( ) ) 
+            {
+                String field = fields.next( );
+                
+                // print the key and open a DIV
+                html.append( "<div><span class=\"json_title\">" ).append( field ).append( "</span> : " );
+
+                JsonNode childNode = jsonNode.get( field ) ;
+                // recursive call
+                html.append( jsonToHtml(  childNode ) );
+                // close the div
+                html.append( "</div>" );
+
+            }
+
+            html.append( "</div>" );
+        }    
 
         return html.toString( );
     }
