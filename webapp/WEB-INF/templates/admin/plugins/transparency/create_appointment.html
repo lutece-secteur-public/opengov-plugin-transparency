@@ -78,13 +78,4 @@
     } );
 </script>
 
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/locales/bootstrap-datepicker.fr.js" charset="utf-8"></script>
-<script type="text/javascript" charset="utf-8">
-    /**
-     * add date pickers 
-     */
-    $( function() {
-            $("#start_date").datepicker({language: 'fr', orientation: 'bottom', maxDate: '0'});
-    });
-</script>
+<@getDatePickerBootstrap idField="start_date" language=.locale />
