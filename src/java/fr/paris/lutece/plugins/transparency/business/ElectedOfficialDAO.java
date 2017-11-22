@@ -56,8 +56,6 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
 
     private static final String SQL_ORDER_BY = " ORDER BY role_description ";
 
-    
-
     /**
      * {@inheritDoc }
      */
@@ -82,9 +80,6 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
         return electedOfficial;
     }
 
-    
-    
-
     /**
      * {@inheritDoc }
      */
@@ -100,9 +95,9 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
             ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
 
-            electedOfficial.setId( daoUtil.getString(nIndex++ ) );
+            electedOfficial.setId( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
-            
+
             electedOfficialList.add( electedOfficial );
         }
 
@@ -126,9 +121,9 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
             ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
 
-            electedOfficial.setId( daoUtil.getString(nIndex++ ) );
+            electedOfficial.setId( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
-            
+
             electedOfficialList.add( electedOfficial );
         }
 
@@ -152,9 +147,9 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
             ElectedOfficial electedOfficial = new ElectedOfficial( );
             int nIndex = 1;
 
-            electedOfficial.setId( daoUtil.getString(nIndex++ ) );
+            electedOfficial.setId( daoUtil.getString( nIndex++ ) );
             electedOfficial.setLastName( daoUtil.getString( nIndex++ ) );
-            
+
             electedOfficialList.add( electedOfficial );
         }
 
@@ -193,10 +188,7 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
 
         while ( daoUtil.next( ) )
         {
-            electedOfficialList.addItem( 
-                    daoUtil.getString( 1 ), 
-                    daoUtil.getString( 2 ) 
-            );
+            electedOfficialList.addItem( daoUtil.getString( 1 ), daoUtil.getString( 2 ) );
         }
 
         daoUtil.free( );
@@ -216,10 +208,7 @@ public final class ElectedOfficialDAO implements IElectedOfficialDAO
 
         while ( daoUtil.next( ) )
         {
-            electedOfficialList.addItem( 
-                    daoUtil.getString( 1 ) , 
-                    daoUtil.getString( 2 ) 
-            );
+            electedOfficialList.addItem( daoUtil.getString( 1 ), daoUtil.getString( 2 ) );
         }
 
         daoUtil.free( );

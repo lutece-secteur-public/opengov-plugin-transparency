@@ -69,12 +69,12 @@ public class AppointmentPublicXPage extends MVCApplication
     // Markers
     private static final String MARK_APPOINTMENT_LIST = "appointment_list";
     private static final String MARK_APPOINTMENT = "appointment";
-    private static final String MARK_BASE_URL = "base_url";    
+    private static final String MARK_BASE_URL = "base_url";
     private static final String MARK_LOBBY_REFERENCE_START_URL = "lobbyReferenceStartUrl";
 
     // Properties
     private static final String PROPERTY_LOBBY_REFERENCE_START_URL_KEY = "lobby.json.detail.startUrl";
-    
+
     // Views
     private static final String VIEW_MANAGE_APPOINTMENTS = "manageAppointments";
     private static final String VIEW_DETAIL_APPOINTMENT = "detailAppointment";
@@ -106,7 +106,7 @@ public class AppointmentPublicXPage extends MVCApplication
         filter.setTitle( strSearchTitle );
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); //search
+        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); // search
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOBBY_REFERENCE_START_URL, AppPropertiesService.getProperty( PROPERTY_LOBBY_REFERENCE_START_URL_KEY ) );
 
@@ -136,7 +136,7 @@ public class AppointmentPublicXPage extends MVCApplication
         Map<String, Object> model = getModel( );
         model.put( MARK_APPOINTMENT, _appointment );
         model.put( MARK_LOBBY_REFERENCE_START_URL, AppPropertiesService.getProperty( PROPERTY_LOBBY_REFERENCE_START_URL_KEY ) );
-        
+
         return getXPage( TEMPLATE_DETAIL_APPOINTMENT, request.getLocale( ), model );
     }
 

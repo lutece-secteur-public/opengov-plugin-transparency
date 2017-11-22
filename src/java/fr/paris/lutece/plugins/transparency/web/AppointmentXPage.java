@@ -164,7 +164,7 @@ public class AppointmentXPage extends MVCApplication
         filter.setTitle( strSearchTitle );
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); //search
+        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); // search
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_IS_AUTHENTICATED, isAuthenticated );
 

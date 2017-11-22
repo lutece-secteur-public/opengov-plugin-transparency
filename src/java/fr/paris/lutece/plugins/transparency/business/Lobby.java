@@ -221,7 +221,6 @@ public class Lobby implements Serializable
         _dateVersionDate = dateVersionDate;
     }
 
-   
     /**
      * Get the JSON data formated in HTML
      * 
@@ -232,29 +231,28 @@ public class Lobby implements Serializable
     {
         if ( !StringUtils.isBlank( _strJsonData ) )
         {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+            ObjectMapper mapper = new ObjectMapper( );
+            mapper.getFactory( ).configure( JsonGenerator.Feature.ESCAPE_NON_ASCII, true );
             JsonNode jsonNode = null;
 
             // parse Json
-            try 
+            try
             {
                 jsonNode = mapper.readTree( _strJsonData );
-            } 
-            catch (IOException e) 
+            }
+            catch( IOException e )
             {
                 return e.getLocalizedMessage( );
             }
-            
+
             // browse the tree to get an Html View
-            return jsonToHtml(  jsonNode  );
+            return jsonToHtml( jsonNode );
         }
         else
         {
             return "";
         }
     }
-
 
     /**
      * convert json Data to structured Html text
@@ -272,38 +270,39 @@ public class Lobby implements Serializable
             // print the value
             html.append( jsonNode.toString( ) );
         }
-        else if ( jsonNode.isArray( ) )
-        {
-            Iterator<JsonNode> nodeList = jsonNode.elements( );
-            
-            while (nodeList.hasNext( ) )
-            {
-                html.append( jsonToHtml( nodeList.next( ) ) );
-            }
-        } 
         else
-        {
-            Iterator<String> fields = jsonNode.fieldNames( );
-
-            html.append( "<div class=\"json_object\">" );
-
-            while ( fields.hasNext( ) ) 
+            if ( jsonNode.isArray( ) )
             {
-                String field = fields.next( );
-                
-                // print the key and open a DIV
-                html.append( "<div><span class=\"json_title\">" ).append( field ).append( "</span> : " );
+                Iterator<JsonNode> nodeList = jsonNode.elements( );
 
-                JsonNode childNode = jsonNode.get( field ) ;
-                // recursive call
-                html.append( jsonToHtml(  childNode ) );
-                // close the div
-                html.append( "</div>" );
-
+                while ( nodeList.hasNext( ) )
+                {
+                    html.append( jsonToHtml( nodeList.next( ) ) );
+                }
             }
+            else
+            {
+                Iterator<String> fields = jsonNode.fieldNames( );
 
-            html.append( "</div>" );
-        }    
+                html.append( "<div class=\"json_object\">" );
+
+                while ( fields.hasNext( ) )
+                {
+                    String field = fields.next( );
+
+                    // print the key and open a DIV
+                    html.append( "<div><span class=\"json_title\">" ).append( field ).append( "</span> : " );
+
+                    JsonNode childNode = jsonNode.get( field );
+                    // recursive call
+                    html.append( jsonToHtml( childNode ) );
+                    // close the div
+                    html.append( "</div>" );
+
+                }
+
+                html.append( "</div>" );
+            }
 
         return html.toString( );
     }

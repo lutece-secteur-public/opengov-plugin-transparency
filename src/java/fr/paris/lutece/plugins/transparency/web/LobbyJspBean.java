@@ -60,8 +60,6 @@ import org.apache.commons.beanutils.converters.DateConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
-import javax.ws.rs.core.HttpHeaders;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 
 /**
  * This class provides the user interface to manage Lobby features ( manage, create, modify, remove )
@@ -94,8 +92,8 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
     private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro";
-    private static final String MSG_ERROR_GET_JSON = "transparency.message.synchro.error" ;
-    
+    private static final String MSG_ERROR_GET_JSON = "transparency.message.synchro.error";
+
     // Validations
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
 
@@ -294,47 +292,48 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
 
         try
         {
-            String strUri =  AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE ) ;
+            String strUri = AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE );
 
-            HttpAccess ha = new HttpAccess() ;
-            
-            Map<String,String> headersRequest = new HashMap<>();
-            Map<String,String> headersResponse = new HashMap<>();
-            
-            String strJson = ha.doGet(strUri, null, null, headersRequest , headersResponse);
-            
-            if ( strJson == null ) {
+            HttpAccess ha = new HttpAccess( );
+
+            Map<String, String> headersRequest = new HashMap<>( );
+            Map<String, String> headersResponse = new HashMap<>( );
+
+            String strJson = ha.doGet( strUri, null, null, headersRequest, headersResponse );
+
+            if ( strJson == null )
+            {
                 String msg = I18nService.getLocalizedString( MSG_ERROR_GET_JSON, getLocale( ) );
-                msg = MessageFormat.format( msg, strUri  );
+                msg = MessageFormat.format( msg, strUri );
 
                 addError( msg );
                 return redirectView( request, VIEW_MANAGE_LOBBIES );
             }
-            
-            ObjectMapper mapper = new ObjectMapper();
+
+            ObjectMapper mapper = new ObjectMapper( );
             JsonNode jsonNode = null;
-                    
-            try 
+
+            try
             {
-                jsonNode = mapper.readTree(strJson);
-            } 
-            catch (IOException e) 
+                jsonNode = mapper.readTree( strJson );
+            }
+            catch( IOException e )
             {
                 String msg = I18nService.getLocalizedString( MSG_ERROR_GET_JSON, getLocale( ) );
-                msg = MessageFormat.format( msg, strUri  );
+                msg = MessageFormat.format( msg, strUri );
 
                 addError( msg );
                 return redirectView( request, VIEW_MANAGE_LOBBIES );
             }
-            
+
             // Parse lobbies
-            Iterator<JsonNode> lobbyList = jsonNode.path(CONSTANT_KEY_PUBLICATIONS).elements( );
-            
+            Iterator<JsonNode> lobbyList = jsonNode.path( CONSTANT_KEY_PUBLICATIONS ).elements( );
+
             while ( lobbyList.hasNext( ) )
             {
-                nbLobby ++;
-                Lobby lobby = jsonToLobby( lobbyList.next( ) ) ;
-                
+                nbLobby++;
+                Lobby lobby = jsonToLobby( lobbyList.next( ) );
+
                 Lobby existingLobby = LobbyHome.getByNationalId( lobby.getNationalId( ) );
 
                 if ( existingLobby != null )
@@ -347,35 +346,35 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
                 {
                     // insert new lobby
                     LobbyHome.create( lobby );
-                    nbLobbyCreated ++ ;
+                    nbLobbyCreated++;
                 }
             }
-                    
+
             String msg = I18nService.getLocalizedString( MSG_SYNCHRO_KEY, getLocale( ) );
             msg = MessageFormat.format( msg, nbLobby, nbLobbyCreated, nbLobby - nbLobbyCreated );
 
             addInfo( msg );
 
         }
-        catch (HttpAccessException e) 
+        catch( HttpAccessException e )
         {
             addError( e.getLocalizedMessage( ) );
         }
 
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
-    
+
     /**
      * Parse Json to populate a Lobby bean
      * 
      * @param jsonLobby
      * @return the lobby bean
      */
-    private Lobby  jsonToLobby( JsonNode jsonLobby ) 
+    private Lobby jsonToLobby( JsonNode jsonLobby )
     {
         Lobby lobby = new Lobby( );
 
-        lobby.setName( jsonLobby.get(CONSTANT_KEY_DENOMINATION ).asText( ) );
+        lobby.setName( jsonLobby.get( CONSTANT_KEY_DENOMINATION ).asText( ) );
         lobby.setNationalId( jsonLobby.get( CONSTANT_KEY_IDENTIFIANTNATIONAL ).asText( ) );
         if ( jsonLobby.has( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) )
             lobby.setNationalIdType( jsonLobby.get( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ).asText( ) );

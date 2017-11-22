@@ -199,18 +199,19 @@ public class AppointmentFilter
      * 
      * @return title
      */
-    public String getTitle() {
+    public String getTitle( )
+    {
         return _strTitle;
     }
 
     /**
      * set title
      * 
-     * @param _strTitle 
+     * @param _strTitle
      */
-    public void setTitle(String _strTitle) {
+    public void setTitle( String _strTitle )
+    {
         this._strTitle = _strTitle;
     }
 
-    
 }

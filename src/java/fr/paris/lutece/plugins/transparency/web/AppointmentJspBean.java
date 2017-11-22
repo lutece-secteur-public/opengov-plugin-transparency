@@ -184,7 +184,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         // add elected Official to the appointment
         String strIdElectedOfficial = request.getParameter( PARAMETER_ID_ELECTED_OFFICIAL );
-        
+
         ElectedOfficial electedOfficial = ElectedOfficialHome.findByPrimaryKey( strIdElectedOfficial );
         if ( electedOfficial != null )
         {

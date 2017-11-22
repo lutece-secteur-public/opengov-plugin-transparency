@@ -12,6 +12,7 @@ Contents :
 * Appointments display
 * Appointment management
 * Lobby management
+* Elected Officials management
 
 
 ## Usage

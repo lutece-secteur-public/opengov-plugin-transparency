@@ -23,17 +23,14 @@
                     </ul>
                 <p>Fonctionnalités back office :</p>
                     <ul>
-                        <li>gestion des élus (nom / prenom / civilité) </li>
-                        <li>gestion des délégations (association adminUser / élu )</li>
                         <li>gestion des représentants d'intérêt (liste, création, modification, synchronisation avec le fichier JSON de la HATVP)</li>
                         <li>gestion des RDV (création / modification / suppression)</li>
                     </ul>                        
-                    <p>En backoffice avec Utilisateur délégué connecté</p>
+                <p>En backoffice avec Utilisateur délégué connecté</p>
                     <ul>
-                            <li>gestion des RDV (création / modification / suppression, avec autocompletion pour la selection de lobby) uniquement pour les élus en délégation<br />
+                        <li>gestion des RDV (création / modification / suppression, avec autocompletion pour la selection de lobby) uniquement pour les élus en délégation<br />
                         Actuellement, un RDV = un élu + un lobby (mais la base est prévue pour pouvoir éventuellement associer plusieurs élus et plusieurs lobbies sur un même RDV)</li>
                     </ul>
-                </p>
             </subsection>
             <subsection name="Usage">
                 <p>La base des représentants d'intérêts est synchronisée depuis le site de la Haute Autorité pour la Transparence de la Vie Publique.</p>

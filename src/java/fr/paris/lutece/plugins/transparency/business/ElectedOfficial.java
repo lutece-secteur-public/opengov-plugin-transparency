@@ -47,7 +47,7 @@ public class ElectedOfficial implements Serializable
     // Variables declarations
     private String _strId;
 
-    //@NotEmpty( message = "#i18n{transparency.validation.electedofficial.FirstName.notEmpty}" )
+    // @NotEmpty( message = "#i18n{transparency.validation.electedofficial.FirstName.notEmpty}" )
     @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.FirstName.size}" )
     private String _strFirstName;
 
@@ -55,7 +55,7 @@ public class ElectedOfficial implements Serializable
     @Size( max = 255, message = "#i18n{transparency.validation.electedofficial.LastName.size}" )
     private String _strLastName;
 
-    //@NotEmpty( message = "#i18n{transparency.validation.electedofficial.Title.notEmpty}" )
+    // @NotEmpty( message = "#i18n{transparency.validation.electedofficial.Title.notEmpty}" )
     @Size( max = 50, message = "#i18n{transparency.validation.electedofficial.Title.size}" )
     private String _strTitle;
 

@@ -238,12 +238,11 @@ public final class AppointmentDAO implements IAppointmentDAO
             }
 
             // title
-            if ( !StringUtils.isBlank( filter.getTitle( ) )  )
+            if ( !StringUtils.isBlank( filter.getTitle( ) ) )
             {
                 where.append( SQL_ADD_CLAUSE ).append( SQL_WHERECLAUSE_FILTER_BY_TITLE ).append( SQL_END_ADD_CLAUSE );
             }
 
-            
             // order by
             if ( !StringUtils.isBlank( filter.getOrderBy( ) ) )
             {
