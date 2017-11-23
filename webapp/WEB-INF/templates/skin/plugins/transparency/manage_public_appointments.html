@@ -1,96 +1,86 @@
-
-
 <@row>
 	<@columns>
-		<@messages infos=infos />
-
-                <h4>#i18n{transparency.manage_appointments.title}</h4>
+		<div class="container">
+			<@messages infos=infos />
+			<h2>#i18n{transparency.manage_appointments.title}</h2>
+		</div>
 	</@columns>
 </@row>
 <@row>
 	<@columns>
+		<div class="container">
+			<@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=publicmeeting">
+				<@messages errors=errors />
+													
+				<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}' helpKey='#i18n{transparency.manage_appointments.searchByTitleLabel.help}' >
+					<@input type='text' name='search_title' id='search_title' value='' />
+				</@formGroup>
 
-            <@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=publicmeeting">
-			<@messages errors=errors />
-                        
-			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}' helpKey='#i18n{transparency.manage_appointments.searchByTitleLabel.help}' >
-                            <@input type='text' name='search_title' id='search_title' value='' />
-			</@formGroup>
+				<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
+					<select id="search_period" name="search_period" class="form-control ">
+						<option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
+						<option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
+						<option value="31">#i18n{transparency.manage_appointments.search_since_last_month}</option>
+						<option value="92" selected=selected>#i18n{transparency.manage_appointments.search_since_last_3_months}</option>
+					</select>
+				</@formGroup>
+											
+				<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel.help}' >
+					<@input type='text' name='search_elected_official' id='search_elected_official' value='' />
+				</@formGroup>
+													
+				<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel.help}' >
+					<@input type='text' name='search_lobby' id='search_lobby' value=''  />
+				</@formGroup>	
 
-                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
-                            <select id="search_period" name="search_period" class="form-control ">
-                                <option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
-                                <option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
-                                <option value="31">#i18n{transparency.manage_appointments.search_since_last_month}</option>
-                                <option value="92" selected=selected>#i18n{transparency.manage_appointments.search_since_last_3_months}</option>
-                            </select>
-                        </@formGroup>
-                    
-			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel.help}' >
-                            <@input type='text' name='search_elected_official' id='search_elected_official' value='' />
-			</@formGroup>
-                        
-                        <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel.help}' >
-                            <@input type='text' name='search_lobby' id='search_lobby' value=''  />
-                        </@formGroup>	
-
-                        <@formGroup>                        
-                            <@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" size="" />
-                        </@formGroup>
-
-            </@tform>
-
+				<@formGroup>                        
+					<@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" />
+				</@formGroup>
+			</@tform>
+		</div>
 	</@columns>
 </@row>
-<@row>
+<@row params='style="margin-top:50px;"'>
 	<@columns>
-        <div class="directory-result-list">
-    <@table>
+		<div class="container">
+			<div class="directory-result-list">
+				<table class="table table-striped">
         <tr>
-            <th>#i18n{transparency.manage_appointments.columnTitle}</th>
-            <th>#i18n{transparency.manage_appointments.columnStartDate}</th>
-            <th>#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
-            <th>#i18n{transparency.manage_appointments.columnLobbies}</th>
-            <th>#i18n{transparency.manage_appointments.columnContacts}</th>
+					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnTitle}</th>
+					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}</th>
+					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
+					<th class="col-xs-1 col-sm-3">#i18n{transparency.manage_appointments.columnLobbies}</th>
+					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnContacts}</th>
         </tr>
-    <#list appointment_list as appointment >
+				<#list appointment_list as appointment >
         <tr>
-            <td>
-                <a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
-                    ${appointment.title}
-                </a>
-                <br>
-                ${appointment.description}
-
-            </td>    
-            <td>
-		${appointment.startDate}
-            </td>    
-            <td>
-                <#list appointment.electedOfficialList as electedOfficial>
-                    ${electedOfficial.lastName} <br>
-                </#list>
-            </td>    
-            <td>
-		<#list appointment.lobbyList as lobby>
-                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
-                        ${lobby.name} 
-                    </a>
-
-                    <br>
-                </#list>
-            </td>    
-            <td>
-		${appointment.contacts!''}
-            </td>   
-
-        </tr>
+					<td>
+						<a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
+							${appointment.title}
+						</a>
+					</td>    
+					<td>${appointment.startDate}</td>    
+					<td>
+						<#list appointment.electedOfficialList as electedOfficial>
+							${electedOfficial.lastName} <br>
+						</#list>
+					</td>    
+					<td>
+						<#list appointment.lobbyList as lobby>
+							<a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
+								${lobby.name} 
+							</a>
+							<br />
+						</#list>
+					</td>    
+					<td>${appointment.contacts!''}</td>   
+				</tr>
         </#list>
-    </@table>
+			</table>
+    </div>
     </div>
 	</@columns>
 </@row>
-
 
 <script src="js/jquery/jquery-ui.min.js"></script>  
 

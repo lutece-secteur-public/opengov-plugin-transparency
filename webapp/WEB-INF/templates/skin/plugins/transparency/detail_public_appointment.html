@@ -1,81 +1,57 @@
-
-
 <@row>
 	<@columns>
-		
-      <h4>#i18n{transparency.detail_appointment.title}</h4>
-    
-        <input type="hidden" id="id" name="id" value="${appointment.id}"/>
-
-	
-	<div class="panel-primary">
-	  <div class="panel-heading">${appointment.title}</div>
-
-	  <div class="panel-body">
-	    <div class=list-group">
-		<p>
-                    <strong>#i18n{transparency.modify_appointment.labelTitle}</strong>
-                     : ${appointment.title}
-                </p>
-		<p>		
-                    <strong>#i18n{transparency.modify_appointment.labelDescription}</strong>
-                     : ${appointment.description!''}
-                </p>
-		<p>
-                    <strong>#i18n{transparency.modify_appointment.labelStartDate}</strong>
-                     : ${appointment.startDate}
-                </p>
-                
-                <!-- 
-		<p>
-                    <strong>#i18n{transparency.modify_appointment.labelTypeLabel}</strong>
-                     : ${appointment.typeLabel!''}
-                </p>
-                -->
-
-                <!--
-		<p>
-                    <strong>#i18n{transparency.modify_appointment.labelUrl}</strong>
-                     : 		
-                    <#if appointment.url??>	
-                        <a href='${appointment.url}' target='_blank'>${appointment.url}</a>
-                    </#if>
-                </p>
-                -->
-
-		<p>
-                    <strong>#i18n{transparency.modify_appointment.contactsLabel}</strong>
-                     : ${appointment.contacts!''}
-                </p>
-
-		<p>
-                    <strong>#i18n{transparency.manage_appointments.columnElectedOfficials}</strong>
-                     : 		
-                <#list appointment.electedOfficialList as electedOfficial>
-                    ${electedOfficial.lastName} <br> 
-                </#list>
-                </p>
-		
-		<p>
-                    <strong>#i18n{transparency.manage_appointments.columnLobbies}</strong>
-                     : 		
-		<#list appointment.lobbyList as lobby>
-                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
-                        ${lobby.name} 
-                    </a>
-                    <br>
-                </#list>
-                </p>    
-
-            </div>
-
-                <a class="btn btn-primary pull-right" href="jsp/site/Portal.jsp?page=publicmeeting" >
-                    #i18n{portal.util.labelBack}
-                </a>
-          </div>
-        </div>
-
-
+		<div class="container">
+			<h2>#i18n{transparency.detail_appointment.title}</h2>
+      <input type="hidden" id="id" name="id" value="${appointment.id}"/>
+			<div class="panel-primary">
+				<div class="panel-heading">${appointment.title}</div>
+				<div class="list-group">
+					<p class="list-group-item">
+						<strong>#i18n{transparency.modify_appointment.labelTitle}</strong> : ${appointment.title}
+          </p>
+					<p class="list-group-item">
+						<strong>#i18n{transparency.modify_appointment.labelDescription}</strong> : ${appointment.description!''}
+					</p>
+					<p class="list-group-item">
+						<strong>#i18n{transparency.modify_appointment.labelStartDate}</strong> : ${appointment.startDate}
+					</p> 
+          <!-- 
+					<p>
+            <strong>#i18n{transparency.modify_appointment.labelTypeLabel}</strong> : ${appointment.typeLabel!''}
+          </p>
+          -->
+					<!--
+					<p>
+						<strong>#i18n{transparency.modify_appointment.labelUrl}</strong> :
+						<#if appointment.url??>
+              <a href='${appointment.url}' target='_blank'>${appointment.url}</a>
+            </#if>
+          </p>
+          -->
+					<p class="list-group-item">
+						<strong>#i18n{transparency.modify_appointment.contactsLabel}</strong> : ${appointment.contacts!''}
+          </p>
+					<p class="list-group-item">
+						<strong>#i18n{transparency.manage_appointments.columnElectedOfficials}</strong> :
+						<#list appointment.electedOfficialList as electedOfficial>
+              ${electedOfficial.lastName} <br> 
+            </#list>
+          </p>
+					<p class="list-group-item">
+						<strong>#i18n{transparency.manage_appointments.columnLobbies}</strong> :
+						<#list appointment.lobbyList as lobby>
+              <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
+                ${lobby.name} 
+              </a>
+              <br />
+            </#list>
+          </p>    
+				</div>
+			</div>
+			<a class="btn btn-primary btn-sm" href="jsp/site/Portal.jsp?page=publicmeeting" >
+				<i class="fa fa-arrow-left"></i> #i18n{portal.util.labelBack}
+			</a>
+		</div>
 	</@columns>
 </@row>
 
