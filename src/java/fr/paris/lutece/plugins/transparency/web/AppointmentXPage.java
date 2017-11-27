@@ -92,6 +92,9 @@ public class AppointmentXPage extends MVCApplication
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
     private static final String PARAMETER_ID_LOBBY = "lobby_id";
     private static final String PARAMETER_SELECT_LOBBY = "lobby_select";
+    private static final String PARAMETER_SORTED_ATTRIBUTE_NAME = "sorted_attribute_name"; 
+    private static final String PARAMETER_START_DATE = "start_date" ;
+    private static final String PARAMETER_ASC = "asc_sort" ;
 
     // Markers
     private static final String MARK_APPOINTMENT_LIST = "appointment_list";
@@ -123,6 +126,8 @@ public class AppointmentXPage extends MVCApplication
 
     // Session variable to store working values
     private Appointment _appointment;
+    private List<Appointment> _appointmentList ;
+    private AppointmentFilter _filter = new AppointmentFilter( );
 
     /**
      * Build the Manage View
@@ -135,36 +140,58 @@ public class AppointmentXPage extends MVCApplication
     public XPage getManageAppointments( HttpServletRequest request )
     {
         _appointment = null;
-
-        String strSearchPeriod = request.getParameter( PARAMETER_SEARCH_PERIOD );
-        String strSearchElectedOfficial = request.getParameter( PARAMETER_SEARCH_ELECTED_OFFICIAL );
-        String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
-        String strSearchTitle = request.getParameter( PARAMETER_SEARCH_TITLE );
-
-        // check authentification or public mode
-        String idUser = null;
         boolean isAuthenticated = false;
-        try
+            
+        if (request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ) != null
+                && _appointmentList != null)
         {
-            idUser = checkMyLuteceAuthentication( request );
-            if ( idUser != null )
-                isAuthenticated = true; // if idUser is null, it should be because authentication is not enable
+            // sort list
+            if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ).equals( PARAMETER_START_DATE ) ) 
+            {
+                if ( request.getParameter( PARAMETER_ASC ) != null && request.getParameter( PARAMETER_ASC ).equals( "true" )  ) 
+                {
+                    _appointmentList.sort( (a1,a2) -> a1.getStartDate( ).compareTo( a2.getStartDate( ) ) ) ;
+                } 
+                else
+                {
+                    _appointmentList.sort( (a1,a2) -> a2.getStartDate( ).compareTo( a1.getStartDate( ) ) ) ;
+                }
+            }
         }
-        catch( UserNotSignedException e )
+        else
         {
-            // catch the exception : the appointments will be presented in read only mode
-            isAuthenticated = false;
-        }
+            // new search
+            String strSearchPeriod = request.getParameter( PARAMETER_SEARCH_PERIOD );
+            String strSearchElectedOfficial = request.getParameter( PARAMETER_SEARCH_ELECTED_OFFICIAL );
+            String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
+            String strSearchTitle = request.getParameter( PARAMETER_SEARCH_TITLE );
 
-        AppointmentFilter filter = new AppointmentFilter( );
-        filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, -1 ) );
-        filter.setLobbyName( strSearchLobby );
-        filter.setElectedOfficialName( strSearchElectedOfficial );
-        filter.setUserId( idUser );
-        filter.setTitle( strSearchTitle );
+            // check authentification or public mode
+            String idUser = null;
+            try
+            {
+                idUser = checkMyLuteceAuthentication( request );
+                if ( idUser != null )
+                    isAuthenticated = true; // if idUser is null, it should be because authentication is not enable
+            }
+            catch( UserNotSignedException e )
+            {
+                // catch the exception : the appointments will be presented in read only mode
+                isAuthenticated = false;
+            }
+
+            _filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, -1 ) );
+            _filter.setLobbyName( strSearchLobby );
+            _filter.setElectedOfficialName( strSearchElectedOfficial );
+            _filter.setUserId( idUser );
+            _filter.setTitle( strSearchTitle );
+            
+            // search
+            _appointmentList = AppointmentHome.getFullAppointmentsList( _filter ) ;
+        }
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST, AppointmentHome.getFullAppointmentsList( filter ) ); // search
+        model.put( MARK_APPOINTMENT_LIST,  _appointmentList ); 
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_IS_AUTHENTICATED, isAuthenticated );
 

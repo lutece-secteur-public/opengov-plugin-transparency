@@ -54,7 +54,9 @@
 				<table class="table table-striped">
 					<tr>
 						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnTitle}</th>
-						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}</th>
+						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}
+                                                    <@sort jsp_url="jsp/site/Portal.jsp?page=meeting" attribute="start_date" />
+                                                </th>
 						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
 						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnLobbies}</th>
 						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnContacts}</th>

@@ -45,15 +45,17 @@
 		<div class="container">
 			<div class="directory-result-list">
 				<table class="table table-striped">
-        <tr>
+                                    <tr>
 					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnTitle}</th>
-					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}</th>
+					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}
+                                            <@sort jsp_url="jsp/site/Portal.jsp?page=publicmeeting" attribute="start_date" />
+                                        </th>
 					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
 					<th class="col-xs-1 col-sm-3">#i18n{transparency.manage_appointments.columnLobbies}</th>
 					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnContacts}</th>
-        </tr>
+                                    </tr>
 				<#list appointment_list as appointment >
-        <tr>
+                                    <tr>
 					<td>
 						<a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
 							${appointment.title}
@@ -74,8 +76,8 @@
 						</#list>
 					</td>    
 					<td>${appointment.contacts!''}</td>   
-				</tr>
-        </#list>
+                                    </tr>
+                                </#list>
 			</table>
     </div>
     </div>
