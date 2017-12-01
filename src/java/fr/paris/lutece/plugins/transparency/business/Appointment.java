@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.transparency.business;
 
-import fr.paris.lutece.util.ReferenceList;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
 import java.io.Serializable;
@@ -73,6 +72,8 @@ public class Appointment implements Serializable
     private List<ElectedOfficial> electedOfficialList = new ArrayList<>( );
     private List<Lobby> lobbyList = new ArrayList<>( );
 
+    @NotEmpty( message = "#i18n{transparency.validation.appointment.Contacts.notEmpty}" )    
+    @Size( max = 255, message = "#i18n{transparency.validation.appointment.Contacts.size}" )
     private String _strContacts;
 
     /**

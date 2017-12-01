@@ -31,7 +31,7 @@
 				</@formGroup>
         -->
 
-				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' >
+				<@formGroup labelKey='#i18n{transparency.modify_appointment.contactsLabel}' helpKey='#i18n{transparency.modify_appointment.contactsLabel.help}' mandatory=true>
 					<@input type="text" name="contacts" value="${appointment.contacts!''}" />
 				</@formGroup>
 
