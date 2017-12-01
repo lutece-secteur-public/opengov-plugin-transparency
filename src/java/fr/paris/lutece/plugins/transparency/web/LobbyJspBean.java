@@ -59,6 +59,7 @@ import org.apache.commons.beanutils.converters.DateConverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.paris.lutece.plugins.transparency.service.LobbyService;
 import java.util.HashMap;
 
 /**
@@ -80,9 +81,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String PROPERTY_PAGE_TITLE_MODIFY_LOBBY = "transparency.modify_lobby.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_CREATE_LOBBY = "transparency.create_lobby.pageTitle";
 
-    // Plugin properties
-    private static final String PROPERTY_URL_LOBBY_LIST_REFERENCE = "lobby.json.list.url";
-
+    
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
@@ -92,7 +91,6 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     // Properties
     private static final String MESSAGE_CONFIRM_REMOVE_LOBBY = "transparency.message.confirmRemoveLobby";
     private static final String MSG_SYNCHRO_KEY = "transparency.message.synchro";
-    private static final String MSG_ERROR_GET_JSON = "transparency.message.synchro.error";
 
     // Validations
     private static final String VALIDATION_ATTRIBUTES_PREFIX = "transparency.model.entity.lobby.attribute.";
@@ -114,12 +112,7 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String INFO_LOBBY_UPDATED = "transparency.info.lobby.updated";
     private static final String INFO_LOBBY_REMOVED = "transparency.info.lobby.removed";
 
-    // constants (for synchro)
-    private static final String CONSTANT_KEY_PUBLICATIONS = "publications";
-    private static final String CONSTANT_KEY_DENOMINATION = "denomination";
-    private static final String CONSTANT_KEY_IDENTIFIANTNATIONAL = "identifiantNational";
-    private static final String CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL = "typeIdentifiantNational";
-    private static final String CONSTANT_KEY_LIENSITEWEB = "lienSiteWeb";
+    
 
     // Session variable to store working values
     private Lobby _lobby;
@@ -287,104 +280,11 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     public String synchronizeLobbies( HttpServletRequest request )
     {
 
-        int nbLobby = 0;
-        int nbLobbyCreated = 0;
+        String msg = LobbyService.synchronizeLobbies( getLocale( ) );
 
-        try
-        {
-            String strUri = AppPropertiesService.getProperty( PROPERTY_URL_LOBBY_LIST_REFERENCE );
-
-            HttpAccess ha = new HttpAccess( );
-
-            Map<String, String> headersRequest = new HashMap<>( );
-            Map<String, String> headersResponse = new HashMap<>( );
-
-            String strJson = ha.doGet( strUri, null, null, headersRequest, headersResponse );
-
-            if ( strJson == null )
-            {
-                String msg = I18nService.getLocalizedString( MSG_ERROR_GET_JSON, getLocale( ) );
-                msg = MessageFormat.format( msg, strUri );
-
-                addError( msg );
-                return redirectView( request, VIEW_MANAGE_LOBBIES );
-            }
-
-            ObjectMapper mapper = new ObjectMapper( );
-            JsonNode jsonNode = null;
-
-            try
-            {
-                jsonNode = mapper.readTree( strJson );
-            }
-            catch( IOException e )
-            {
-                String msg = I18nService.getLocalizedString( MSG_ERROR_GET_JSON, getLocale( ) );
-                msg = MessageFormat.format( msg, strUri );
-
-                addError( msg );
-                return redirectView( request, VIEW_MANAGE_LOBBIES );
-            }
-
-            // Parse lobbies
-            Iterator<JsonNode> lobbyList = jsonNode.path( CONSTANT_KEY_PUBLICATIONS ).elements( );
-
-            while ( lobbyList.hasNext( ) )
-            {
-                nbLobby++;
-                Lobby lobby = jsonToLobby( lobbyList.next( ) );
-
-                Lobby existingLobby = LobbyHome.getByNationalId( lobby.getNationalId( ) );
-
-                if ( existingLobby != null )
-                {
-                    // update existing lobby
-                    lobby.setId( existingLobby.getId( ) );
-                    LobbyHome.update( lobby );
-                }
-                else
-                {
-                    // insert new lobby
-                    LobbyHome.create( lobby );
-                    nbLobbyCreated++;
-                }
-            }
-
-            String msg = I18nService.getLocalizedString( MSG_SYNCHRO_KEY, getLocale( ) );
-            msg = MessageFormat.format( msg, nbLobby, nbLobbyCreated, nbLobby - nbLobbyCreated );
-
-            addInfo( msg );
-
-        }
-        catch( HttpAccessException e )
-        {
-            addError( e.getLocalizedMessage( ) );
-        }
-
+        addInfo( msg );
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 
-    /**
-     * Parse Json to populate a Lobby bean
-     * 
-     * @param jsonLobby
-     * @return the lobby bean
-     */
-    private Lobby jsonToLobby( JsonNode jsonLobby )
-    {
-        Lobby lobby = new Lobby( );
-
-        lobby.setName( jsonLobby.get( CONSTANT_KEY_DENOMINATION ).asText( ) );
-        lobby.setNationalId( jsonLobby.get( CONSTANT_KEY_IDENTIFIANTNATIONAL ).asText( ) );
-        if ( jsonLobby.has( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ) )
-            lobby.setNationalIdType( jsonLobby.get( CONSTANT_KEY_TYPEIDENTIFIANTNATIONAL ).asText( ) );
-        if ( jsonLobby.has( CONSTANT_KEY_LIENSITEWEB ) )
-            lobby.setUrl( jsonLobby.get( CONSTANT_KEY_LIENSITEWEB ).asText( ) );
-
-        lobby.setVersionDate( new Date( ( new java.util.Date( ) ).getTime( ) ) );
-
-        lobby.setJsonData( jsonLobby.toString( ) );
-
-        return lobby;
-    }
+    
 }

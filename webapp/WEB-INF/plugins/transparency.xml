@@ -55,6 +55,14 @@
         </application>
     </applications>
 
+    <daemons>
+     <daemon>
+      <daemon-id>lobbySynchroDaemon</daemon-id>
+      <daemon-name>transparency.daemon.LobbySynchroDaemon</daemon-name>
+      <daemon-description>Update the lobby with the json list from the HTTVP site</daemon-description>
+      <daemon-class>fr.paris.lutece.plugins.transparency.service.daemon.LobbySynchroDaemon</daemon-class>
+     </daemon>
+    </daemons>
     <!-- Portlet parameters -->
     <portlets>
    </portlets>
