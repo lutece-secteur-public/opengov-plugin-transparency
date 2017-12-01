@@ -5,8 +5,6 @@
 
 This plugin provides public diffusion of meetings between lobbies and elected officials
 
-## Configuration
-
 Contents :
  
 * Appointments display
@@ -15,9 +13,18 @@ Contents :
 * Elected Officials management
 
 
+## Configuration
+
+The lobby data base is provided by default by the french "Haute Autorité pour la Transparence de la Vie Publique" organism.
+
 ## Usage
 
-The lobby data base is provided by default by the french "Haute Autorité pour la Transparence de la Vie Publique" organism
+URLs :
+ 
+* Appointments public display : [site]/jsp/site/Portal.jsp?page=publicmeeting
+* Appointments public management : [site]/jsp/site/Portal.jsp?page=meeting
+* Backoffice : [site]/jsp/admin/AdminMenu.jsp
+
 
 
 [Maven documentation and reports](http://dev.lutece.paris.fr/plugins/plugin-transparency/)

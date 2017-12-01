@@ -42,13 +42,13 @@ import fr.paris.lutece.portal.service.i18n.I18nService;
  */
 public class LobbySynchroDaemon extends Daemon
 {
- /**
- * {@inheritDoc}
- */ 
- @Override
- public void run( )
- {
-     
-    setLastRunLogs( LobbyService.synchronizeLobbies( I18nService.getDefaultLocale() ) );
- }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void run( )
+    {
+
+        setLastRunLogs( LobbyService.synchronizeLobbies( I18nService.getDefaultLocale( ) ) );
+    }
 }

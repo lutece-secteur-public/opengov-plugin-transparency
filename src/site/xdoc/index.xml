@@ -12,8 +12,6 @@
             -->
             <subsection name="Introduction">
                 <p>This plugin provides public diffusion of meetings between lobbies and elected officials</p>
-            </subsection>
-            <subsection name="Configuration">
                 <p>Contents : 
                     <ul>
                         <li>Appointments display</li>
@@ -23,8 +21,18 @@
                     </ul>
                 </p>
             </subsection>
+            <subsection name="Configuration">
+                <p>The lobby data base is provided by default by the french "Haute Autorité pour la Transparence de la Vie Publique" organism.</p>
+           
+            </subsection>
             <subsection name="Usage">
-                <p>The lobby data base is provided by default by the french "Haute Autorité pour la Transparence de la Vie Publique" organism</p>
+                <p>URLs : 
+                    <ul>
+                        <li>Appointments public display : [site]/jsp/site/Portal.jsp?page=publicmeeting</li>
+                        <li>Appointments public management : [site]/jsp/site/Portal.jsp?page=meeting</li>
+                        <li>Backoffice : [site]/jsp/admin/AdminMenu.jsp</li>                        
+                    </ul>
+                </p>
             </subsection>
         </section>
     </body>

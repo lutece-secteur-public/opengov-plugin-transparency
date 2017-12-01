@@ -13,27 +13,32 @@
             <subsection name="Introduction">
                 <p>Transparence de la vie publique : </p>
                 <p>Déclaration et diffusion de la liste des rencontres entre  élus et représentants d'intérêt</p>
-            </subsection>
-            <subsection name="Configuration">
+                <p>&nbsp;</p>
                 <p>Fonctionnalités front office :</p>
                     <ul>
                         <li>liste des RDV, avec recherche par période, élu, représentant d'intérêt (auto-completion)</li>
-                        <li>page de détail du RDV</li>
-                        <li>page de détail du représentant d'intérêt avec lien  + infos de la HATVP</li>
+                        <li>gestion des RDV (création / modification / suppression, avec autocompletion pour la selection de lobby) uniquement pour les élus délégués</li>
                     </ul>
                 <p>Fonctionnalités back office :</p>
                     <ul>
                         <li>gestion des représentants d'intérêt (liste, création, modification, synchronisation avec le fichier JSON de la HATVP)</li>
                         <li>gestion des RDV (création / modification / suppression)</li>
                     </ul>                        
-                <p>En backoffice avec Utilisateur délégué connecté</p>
-                    <ul>
-                        <li>gestion des RDV (création / modification / suppression, avec autocompletion pour la selection de lobby) uniquement pour les élus en délégation<br />
-                        Actuellement, un RDV = un élu + un lobby (mais la base est prévue pour pouvoir éventuellement associer plusieurs élus et plusieurs lobbies sur un même RDV)</li>
-                    </ul>
+                
+            </subsection>
+            <subsection name="Configuration">
+                <p>La base des représentants d'intérêts est synchronisée depuis le site de la Haute Autorité pour la Transparence de la Vie Publique.</p>
+                <p>Cette liste de représentants est synchronisée périodiquement par un automate.</p>                
             </subsection>
             <subsection name="Usage">
-                <p>La base des représentants d'intérêts est synchronisée depuis le site de la Haute Autorité pour la Transparence de la Vie Publique.</p>
+                <p>URLs : 
+                    <ul>
+                        <li>Liste publique des Rendez-vous : [site]/jsp/site/Portal.jsp?page=publicmeeting</li>
+                        <li>Gestion des Rendez-vous : [site]/jsp/site/Portal.jsp?page=meeting</li>
+                        <li>Administration : [site]/jsp/admin/AdminMenu.jsp</li>                        
+                    </ul>
+                </p>
+                
             </subsection>
         </section>
     </body>

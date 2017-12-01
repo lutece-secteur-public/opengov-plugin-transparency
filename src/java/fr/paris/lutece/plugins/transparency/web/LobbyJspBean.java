@@ -81,7 +81,6 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String PROPERTY_PAGE_TITLE_MODIFY_LOBBY = "transparency.modify_lobby.pageTitle";
     private static final String PROPERTY_PAGE_TITLE_CREATE_LOBBY = "transparency.create_lobby.pageTitle";
 
-    
     // Markers
     private static final String MARK_LOBBY_LIST = "lobby_list";
     private static final String MARK_LOBBY = "lobby";
@@ -111,8 +110,6 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
     private static final String INFO_LOBBY_CREATED = "transparency.info.lobby.created";
     private static final String INFO_LOBBY_UPDATED = "transparency.info.lobby.updated";
     private static final String INFO_LOBBY_REMOVED = "transparency.info.lobby.removed";
-
-    
 
     // Session variable to store working values
     private Lobby _lobby;
@@ -286,5 +283,4 @@ public class LobbyJspBean extends AbstractManageLobbiesJspBean
         return redirectView( request, VIEW_MANAGE_LOBBIES );
     }
 
-    
 }

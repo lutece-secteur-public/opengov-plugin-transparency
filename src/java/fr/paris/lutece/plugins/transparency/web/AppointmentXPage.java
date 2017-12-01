@@ -92,9 +92,9 @@ public class AppointmentXPage extends MVCApplication
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
     private static final String PARAMETER_ID_LOBBY = "lobby_id";
     private static final String PARAMETER_SELECT_LOBBY = "lobby_select";
-    private static final String PARAMETER_SORTED_ATTRIBUTE_NAME = "sorted_attribute_name"; 
-    private static final String PARAMETER_START_DATE = "start_date" ;
-    private static final String PARAMETER_ASC = "asc_sort" ;
+    private static final String PARAMETER_SORTED_ATTRIBUTE_NAME = "sorted_attribute_name";
+    private static final String PARAMETER_START_DATE = "start_date";
+    private static final String PARAMETER_ASC = "asc_sort";
 
     // Markers
     private static final String MARK_APPOINTMENT_LIST = "appointment_list";
@@ -126,7 +126,7 @@ public class AppointmentXPage extends MVCApplication
 
     // Session variable to store working values
     private Appointment _appointment;
-    private List<Appointment> _appointmentList ;
+    private List<Appointment> _appointmentList;
     private AppointmentFilter _filter = new AppointmentFilter( );
 
     /**
@@ -141,20 +141,19 @@ public class AppointmentXPage extends MVCApplication
     {
         _appointment = null;
         boolean isAuthenticated = false;
-            
-        if (request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ) != null
-                && _appointmentList != null)
+
+        if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ) != null && _appointmentList != null )
         {
             // sort list
-            if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ).equals( PARAMETER_START_DATE ) ) 
+            if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ).equals( PARAMETER_START_DATE ) )
             {
-                if ( request.getParameter( PARAMETER_ASC ) != null && request.getParameter( PARAMETER_ASC ).equals( "true" )  ) 
+                if ( request.getParameter( PARAMETER_ASC ) != null && request.getParameter( PARAMETER_ASC ).equals( "true" ) )
                 {
-                    _appointmentList.sort( (a1,a2) -> a1.getStartDate( ).compareTo( a2.getStartDate( ) ) ) ;
-                } 
+                    _appointmentList.sort( ( a1, a2 ) -> a1.getStartDate( ).compareTo( a2.getStartDate( ) ) );
+                }
                 else
                 {
-                    _appointmentList.sort( (a1,a2) -> a2.getStartDate( ).compareTo( a1.getStartDate( ) ) ) ;
+                    _appointmentList.sort( ( a1, a2 ) -> a2.getStartDate( ).compareTo( a1.getStartDate( ) ) );
                 }
             }
         }
@@ -185,13 +184,13 @@ public class AppointmentXPage extends MVCApplication
             _filter.setElectedOfficialName( strSearchElectedOfficial );
             _filter.setUserId( idUser );
             _filter.setTitle( strSearchTitle );
-            
+
             // search
-            _appointmentList = AppointmentHome.getFullAppointmentsList( _filter ) ;
+            _appointmentList = AppointmentHome.getFullAppointmentsList( _filter );
         }
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST,  _appointmentList ); 
+        model.put( MARK_APPOINTMENT_LIST, _appointmentList );
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_IS_AUTHENTICATED, isAuthenticated );
 
