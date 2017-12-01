@@ -17,10 +17,10 @@
 							<strong>#i18n{transparency.modify_lobby.labelName}</strong> : ${lobby.name}
 						</p>
 						<p class="list-group-item">
-							<strong>#i18n{transparency.modify_lobby.labelNationalId}</strong> : ${lobby.nationalId}
+							<strong>#i18n{transparency.modify_lobby.labelNationalId}</strong> : ${lobby.nationalId!''}
 						</p>
 						<p class="list-group-item">	
-							<strong>#i18n{transparency.modify_lobby.labelNationalIdType}</strong> : ${lobby.nationalIdType}
+							<strong>#i18n{transparency.modify_lobby.labelNationalIdType}</strong> : ${lobby.nationalIdType!''}
 						</p>
 						<p class="list-group-item">	
 							<strong>#i18n{transparency.modify_lobby.labelUrl}</strong> : ${lobby.url!''}
@@ -28,10 +28,15 @@
 						<p class="list-group-item">
 							<strong>#i18n{transparency.modify_lobby.labelVersionDate}</strong> : ${lobby.versionDate}
 						</p>
-						<p class="list-group-item">		
-							<a href="${lobbyReferenceStartUrl}${lobby.nationalId}" target=_blank class="btn btn-primary btn-sm">
-								#i18n{transparency.button.lobby.consult}
-							</a>
+						<p class="list-group-item">	
+                                                    <#if lobby.nationalId??>
+                                                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId}" target=_blank class="btn btn-primary btn-sm">
+                                                            #i18n{transparency.button.lobby.consult}
+                                                    </a>
+                                                    <#else>
+                                                            ${lobby.name} 
+                                                    </#if>
+
 						</p>
 					</div>
 

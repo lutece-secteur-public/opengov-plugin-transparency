@@ -69,9 +69,13 @@
 					</td>    
 					<td>
 						<#list appointment.lobbyList as lobby>
+                                                        <#if lobby.nationalId??>
 							<a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
 								${lobby.name} 
 							</a>
+                                                        <#else>
+                                                                ${lobby.name} 
+                                                        </#if>
 							<br />
 						</#list>
 					</td>    
