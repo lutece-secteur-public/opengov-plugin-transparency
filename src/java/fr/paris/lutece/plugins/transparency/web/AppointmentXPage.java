@@ -325,11 +325,10 @@ public class AppointmentXPage extends MVCApplication
     public XPage getConfirmRemoveAppointment( HttpServletRequest request ) throws SiteMessageException
     {
         int nId = Integer.parseInt( request.getParameter( PARAMETER_ID_APPOINTMENT ) );
-        UrlItem url = new UrlItem( JSP_PAGE_PORTAL );
-        url.addParameter( PARAM_PAGE, MARK_APPOINTMENT );
-        url.addParameter( PARAM_ACTION, ACTION_REMOVE_APPOINTMENT );
+        
+        UrlItem url = new UrlItem( getActionFullUrl(ACTION_REMOVE_APPOINTMENT) );
         url.addParameter( PARAMETER_ID_APPOINTMENT, nId );
-
+        
         SiteMessageService.setMessage( request, MESSAGE_CONFIRM_REMOVE_APPOINTMENT, SiteMessage.TYPE_CONFIRMATION, url.getUrl( ) );
         return null;
     }
