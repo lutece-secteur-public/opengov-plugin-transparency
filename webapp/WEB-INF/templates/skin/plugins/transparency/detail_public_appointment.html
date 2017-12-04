@@ -40,11 +40,15 @@
 					<p class="list-group-item">
 						<strong>#i18n{transparency.manage_appointments.columnLobbies}</strong> :
 						<#list appointment.lobbyList as lobby>
-              <a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
-                ${lobby.name} 
-              </a>
-              <br />
-            </#list>
+                                                        <#if lobby.nationalId??>
+							<a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
+								${lobby.name} 
+							</a>
+                                                        <#else>
+                                                                ${lobby.name} 
+                                                        </#if>
+                                                    <br />
+                                                </#list>
           </p>    
 				</div>
 			</div>
