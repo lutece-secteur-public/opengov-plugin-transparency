@@ -98,4 +98,10 @@
     } );
 </script>
 
-<@getDatePickerBootstrap idField="start_date" language=.locale />
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/locales/bootstrap-datepicker.${.locale}.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+        $('#start_date').datepicker({language: '${.locale}', endDate: '-1d'});
+});
+</script>
