@@ -78,17 +78,12 @@ public class AppointmentXPage extends MVCApplication
     private static final String TEMPLATE_CREATE_APPOINTMENT = "/skin/plugins/transparency/create_appointment.html";
     private static final String TEMPLATE_MODIFY_APPOINTMENT = "/skin/plugins/transparency/modify_appointment.html";
 
-    // JSP
-    private static final String JSP_PAGE_PORTAL = "jsp/site/Portal.jsp";
-
     // Parameters
     private static final String PARAMETER_ID_APPOINTMENT = "id";
     private static final String PARAMETER_SEARCH_PERIOD = "search_period";
     private static final String PARAMETER_SEARCH_ELECTED_OFFICIAL = "search_elected_official";
     private static final String PARAMETER_SEARCH_LOBBY = "search_lobby";
     private static final String PARAMETER_SEARCH_TITLE = "search_title";
-    private static final String PARAM_ACTION = "action";
-    private static final String PARAM_PAGE = "page";
     private static final String PARAMETER_ID_ELECTED_OFFICIAL = "id_elected_official";
     private static final String PARAMETER_ID_LOBBY = "lobby_id";
     private static final String PARAMETER_SELECT_LOBBY = "lobby_select";

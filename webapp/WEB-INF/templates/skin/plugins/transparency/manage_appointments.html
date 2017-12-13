@@ -9,36 +9,60 @@
 <@row>
 	<@columns>
 		<div class="container">
-		<@tform class="form-horizontal" method="post" name="form_search_appointment" action="jsp/site/Portal.jsp?page=meeting">
-			<@messages errors=errors />
-      <@formGroup labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}' helpKey='#i18n{transparency.manage_appointments.searchByTitleLabel.help}' >
-				<@input type='text' name='search_title' id='search_title' value='' />
-			</@formGroup>
+                    
+                    <form class="form-inline" action="jsp/site/Portal.jsp?page=meeting" method="post" name="form_search_appointment" role="form">
 
-			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}' helpKey='#i18n{transparency.manage_appointments.searchByPeriodLabel.help}' >
-				<select id="search_period" name="search_period" class="form-control ">
+			<@messages errors=errors />
+                        
+                        <div class="form-group">
+                                <label class="control-label" for="search_title">
+                                    #i18n{transparency.manage_appointments.searchByTitleLabel}
+                                </label>
+                                <div>
+                                    <input class="form-control " id="search_title" name="search_title" type="text" value="" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label" for="search_period">
+                                    #i18n{transparency.manage_appointments.searchByPeriodLabel}
+                                </label>
+                                <div>
+                                <select id="search_period" name="search_period" class="form-control ">
 					<option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
 					<option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
 					<option value="31">#i18n{transparency.manage_appointments.search_since_last_month}</option>
 					<option value="92" selected=selected>#i18n{transparency.manage_appointments.search_since_last_3_months}</option>
 				</select>
-			</@formGroup>
-                    
-			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel.help}' >
-				<@input type='text' name='search_elected_official' id='search_elected_official' value='' />
-			</@formGroup>
-                        
-			<@formGroup labelKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel}' helpKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel.help}' >
-				<@input type='text' name='search_lobby' id='search_lobby' value=''  />
-			</@formGroup>	
-
-			<@formGroup>                        
-				<@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" />
-				<#if is_authenticated  = false >
-					<a href="jsp/site/Portal.jsp?page=mylutece" class="btn btn-primary btn-sm">Authentification</a>
-				</#if>
-			</@formGroup>
-		</@tform>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label" for="search_elected_official">
+                                    #i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}
+                                </label>
+                                <div>
+                                    <input class="form-control" id="search_elected_official" name="search_elected_official" type="text" value="" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label" for="search_lobby">
+                                    #i18n{transparency.manage_appointments.searchByLobbyNameLabel}
+                                </label>
+                                <div>
+                                    <input class="form-control" id="search_lobby" name="search_lobby" type="text" value="" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            
+                        <button class="btn btn-sm btn-primary btn-flat btn-transparencysearch" type="submit" title="Rechercher" name="action_searchAppointment">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            #i18n{portal.site.page_menu_tools.labelSearch}
+                        </button>
+                               
+			<#if is_authenticated  = false >
+                            <a href="jsp/site/Portal.jsp?page=mylutece" class="btn btn-primary btn-sm btn-transparencysearch">Authentification</a>
+			</#if>
+                        </div>
+		</form>
 		<#if is_authenticated  = true>
 			<@tform action='jsp/site/Portal.jsp?page=meeting'>
 				<@button type='submit' name='view_createAppointment' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_appointments.buttonAdd}' />
@@ -105,7 +129,6 @@
 		</div>
 	</@columns>
 </@row>
-
 
 <script src="js/jquery/jquery-ui.min.js"></script>  
 
