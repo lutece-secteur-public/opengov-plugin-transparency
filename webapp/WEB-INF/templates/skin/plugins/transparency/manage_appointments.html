@@ -1,8 +1,9 @@
+<div class="appointment_management">
 <@row>
 	<@columns>
 		<div class="container">
 			<@messages infos=infos />
-			<h2 class="heading-title">#i18n{transparency.manage_appointments.title}</h4>
+			<h2 class="heading-title">#i18n{transparency.manage_appointments.title}</h2>
 		</div>
 	</@columns>
 </@row>
@@ -59,15 +60,16 @@
                         </button>
                                
 			<#if is_authenticated  = false >
-                            <a href="jsp/site/Portal.jsp?page=mylutece" class="btn btn-primary btn-sm btn-transparencysearch">Authentification</a>
-			</#if>
+                                <a href="jsp/site/Portal.jsp?page=mylutece" class="btn btn-primary btn-sm btn-transparencysearch">Authentification</a>
+                        <#else>
+ 				<a href="jsp/site/Portal.jsp?page=meeting&view_createAppointment" class="btn btn-primary btn-sm btn-transparencysearch">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                #i18n{transparency.manage_appointments.buttonAdd}
+                                </a>
+                        </#if>
                         </div>
 		</form>
-		<#if is_authenticated  = true>
-			<@tform action='jsp/site/Portal.jsp?page=meeting'>
-				<@button type='submit' name='view_createAppointment' class='pull-right' buttonIcon='plus' title='#i18n{transparency.manage_appointments.buttonAdd}' />
-			</@tform>
-		</#if>
+
 		</div>
 	</@columns>
 </@row>
@@ -129,7 +131,7 @@
 		</div>
 	</@columns>
 </@row>
-
+</div>
 <script src="js/jquery/jquery-ui.min.js"></script>  
 
 <script  type="text/javascript" >
