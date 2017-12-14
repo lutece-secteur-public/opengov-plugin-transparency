@@ -44,7 +44,9 @@ import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyAppointment;
 import fr.paris.lutece.plugins.transparency.business.LobbyAppointmentHome;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
+import fr.paris.lutece.plugins.transparency.service.ExportAppointmentService;
 import fr.paris.lutece.portal.business.user.AdminUser;
+import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -54,11 +56,15 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.url.UrlItem;
+import java.io.IOException;
 import java.sql.Date;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -107,12 +113,15 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
     private static final String ACTION_CREATE_APPOINTMENT = "createAppointment";
     private static final String ACTION_MODIFY_APPOINTMENT = "modifyAppointment";
     private static final String ACTION_REMOVE_APPOINTMENT = "removeAppointment";
+    private static final String ACTION_EXPORT_APPOINTMENT = "exportAppointment";
     private static final String ACTION_CONFIRM_REMOVE_APPOINTMENT = "confirmRemoveAppointment";
+    
 
     // Infos
     private static final String INFO_APPOINTMENT_CREATED = "transparency.info.appointment.created";
     private static final String INFO_APPOINTMENT_UPDATED = "transparency.info.appointment.updated";
     private static final String INFO_APPOINTMENT_REMOVED = "transparency.info.appointment.removed";
+    private static final String INFO_APPOINTMENT_EXPORTED = "transparency.info.appointment.exported";
 
     // Session variable to store working values
     private Appointment _appointment;
@@ -339,4 +348,30 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
 
         return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
     }
+    
+    /**
+     * Returns the form to create a appointment
+     *
+     * @param request
+     *            The Http request
+     * @return the html code of the appointment form
+     */
+    @Action( ACTION_EXPORT_APPOINTMENT )
+    public void doExportAppointment( HttpServletRequest request, HttpServletResponse response  ) 
+    {
+       
+        List<Appointment> listAppointments = AppointmentHome.getFullAppointmentsList( );
+        try {
+            ExportAppointmentService.exportAppointmentToCSV(request, response,  listAppointments);
+        } catch (IOException ex) {
+            addInfo( ex.getLocalizedMessage( ), getLocale( ) );
+           
+        }
+        
+        //addInfo( INFO_APPOINTMENT_EXPORTED, getLocale( ) );
+        //return redirectView( request, VIEW_MANAGE_APPOINTMENTS );
+        
+    }
+    
+     
 }

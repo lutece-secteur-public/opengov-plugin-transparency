@@ -76,6 +76,8 @@ public class Appointment implements Serializable
     @Size( max = 255, message = "#i18n{transparency.validation.appointment.Contacts.size}" )
     private String _strContacts;
 
+    public static String RESOURCE_TYPE = "transparency_appointment_type";
+    
     /**
      * Returns the Id
      * 

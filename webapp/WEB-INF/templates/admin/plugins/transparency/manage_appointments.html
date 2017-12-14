@@ -5,6 +5,9 @@
 		<@tform class='form-inline pull-right' name='manage_appointment' action='jsp/admin/plugins/transparency/ManageAppointments.jsp'>
 			<@button type='submit' name='view_createAppointment' buttonIcon='plus' title='#i18n{transparency.manage_appointments.buttonAdd}' />
 		</@tform>
+                <@tform class='form-inline pull-right' name='manage_appointment' action='jsp/admin/plugins/transparency/ExportAppointments.jsp'>
+			<@button type='submit' name='action_exportAppointment' buttonIcon='save' title='#i18n{transparency.manage_appointments.buttonExport}' />
+		</@tform>
 	</@boxHeader>
 	<@boxBody>    
     <@messages infos=infos />
