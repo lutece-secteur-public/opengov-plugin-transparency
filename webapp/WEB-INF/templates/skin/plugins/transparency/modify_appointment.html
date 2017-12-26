@@ -2,7 +2,7 @@
 <@row>
 	<@columns>
 		<div class="container">
-		<h2>#i18n{transparency.modify_appointment.title}</h2>
+		<h2 class="heading-title">#i18n{transparency.modify_appointment.title}</h2>
 		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=meeting'>
 			<fieldset>
 				<legend class="sr-only">#i18n{transparency.modify_appointment.title}</legend>
@@ -57,8 +57,8 @@
 				<input type='hidden' name='lobby_id' id='lobby_id' value=${idFirstLobby} />
 
 				<@formGroup>
-					<@button name='action_modifyAppointment' type='submit' tabIndex='7' title='#i18n{portal.util.labelModify}' buttonIcon='plus' />
-					<@button name='view_manageAppointments' type='submit' title='#i18n{portal.util.labelCancel}' buttonIcon='close' color='btn-secondary' cancel=true />
+					<@button name='action_modifyAppointment' type='submit' tabIndex='7' title='#i18n{portal.util.labelModify}' buttonIcon='plus' size='sm' />
+					<@button name='view_manageAppointments' type='submit' title='#i18n{portal.util.labelCancel}' buttonIcon='close' color='btn-secondary' cancel=true size='sm' />
 				</@formGroup>
       </fieldset>
 		</@tform>
@@ -74,6 +74,7 @@
      */
     $( function() 
     {
+			$(document.body).attr('id','loggedIn');
 
       var getData = function (request, response) 
       {

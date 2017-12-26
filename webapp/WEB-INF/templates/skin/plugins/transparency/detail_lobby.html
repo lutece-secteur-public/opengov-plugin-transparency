@@ -29,14 +29,13 @@
 							<strong>#i18n{transparency.modify_lobby.labelVersionDate}</strong> : ${lobby.versionDate}
 						</p>
 						<p class="list-group-item">	
-                                                    <#if lobby.nationalId??>
-                                                    <a href="${lobbyReferenceStartUrl}${lobby.nationalId}" target=_blank class="btn btn-primary btn-sm">
-                                                            #i18n{transparency.button.lobby.consult}
-                                                    </a>
-                                                    <#else>
-                                                            ${lobby.name} 
-                                                    </#if>
-
+							<#if lobby.nationalId??>
+							<a href="${lobbyReferenceStartUrl}${lobby.nationalId}" target="_blank" class="btn btn-primary btn-sm">
+								#i18n{transparency.button.lobby.consult}
+							</a>
+							<#else>
+								${lobby.name} 
+							</#if>
 						</p>
 					</div>
 

@@ -34,7 +34,7 @@
 				</@formGroup>	
 
 				<@formGroup>                        
-					<@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" />
+					<@button type="submit" name="action_searchAppointment" title="#i18n{portal.site.page_menu_tools.labelSearch}" buttonIcon="search" size='sm' />
 				</@formGroup>
 			</@tform>
 		</div>
@@ -45,43 +45,43 @@
 		<div class="container">
 			<div class="directory-result-list">
 				<table class="table table-striped">
-                                    <tr>
-					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnTitle}</th>
-					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}
-                                            <@sort jsp_url="jsp/site/Portal.jsp?page=publicmeeting" attribute="start_date" />
-                                        </th>
-					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
-					<th class="col-xs-1 col-sm-3">#i18n{transparency.manage_appointments.columnLobbies}</th>
-					<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnContacts}</th>
-                                    </tr>
-				<#list appointment_list as appointment >
-                                    <tr>
-					<td>
-						<a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
-							${appointment.title}
-						</a>
-					</td>    
-					<td>${appointment.startDate}</td>    
-					<td>
-						<#list appointment.electedOfficialList as electedOfficial>
-							${electedOfficial.lastName} <br>
-						</#list>
-					</td>    
-					<td>
-						<#list appointment.lobbyList as lobby>
-                                                        <#if lobby.nationalId??>
-							<a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target=_blank >
-								${lobby.name} 
+					<tr>
+						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnTitle}</th>
+						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnStartDate}
+							<@sort jsp_url="jsp/site/Portal.jsp?page=publicmeeting" attribute="start_date" />
+						</th>
+						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnElectedOfficials}</th>
+						<th class="col-xs-1 col-sm-3">#i18n{transparency.manage_appointments.columnLobbies}</th>
+						<th class="col-xs-1 col-sm-2">#i18n{transparency.manage_appointments.columnContacts}</th>
+					</tr>
+					<#list appointment_list as appointment >
+					<tr>
+						<td>
+							<a href='jsp/site/Portal.jsp?page=publicmeeting&view=detailAppointment&id=${appointment.id}' title='#i18n{transparency.detail_appointment.title}' >
+								${appointment.title}
 							</a>
-                                                        <#else>
-                                                                ${lobby.name} 
-                                                        </#if>
-							<br />
-						</#list>
-					</td>    
-					<td>${appointment.contacts!''}</td>   
-                                    </tr>
-                                </#list>
+						</td>    
+						<td>${appointment.startDate}</td>    
+						<td>
+							<#list appointment.electedOfficialList as electedOfficial>
+								${electedOfficial.lastName} <br>
+							</#list>
+						</td>    
+						<td>
+							<#list appointment.lobbyList as lobby>
+								<#if lobby.nationalId??>
+								<a href="${lobbyReferenceStartUrl}${lobby.nationalId!''}" target="_blank">
+									${lobby.name} 
+								</a>
+								<#else>
+									${lobby.name} 
+								</#if>
+								<br />
+							</#list>
+						</td>    
+						<td>${appointment.contacts!''}</td>   
+					</tr>
+					</#list>
 			</table>
     </div>
     </div>
