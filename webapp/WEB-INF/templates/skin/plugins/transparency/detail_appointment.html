@@ -3,7 +3,7 @@
 		<div class="container">
 			<h2>#i18n{transparency.detail_appointment.title}</h2>
 			<input type="hidden" id="id" name="id" value="${appointment.id}"/>
-			<div class="panel-primary">
+			<div class="panel panel-primary">
 				<div class="panel-heading">${appointment.title}</div>
 				<div class="list-group">
 					<p class="list-group-item">
@@ -50,13 +50,16 @@
 						</#list>
 					 </p>    
 				</div>
-
-				<a class="btn btn-primary btn-sm" href="jsp/site/Portal.jsp?page=meeting" >
-					<i class="fa fa-arrow-left"></i> #i18n{portal.util.labelBack}
-				</a>
 			</div>
+			<a class="btn btn-primary btn-sm" href="jsp/site/Portal.jsp?page=meeting" >
+				<i class="fa fa-arrow-left"></i> #i18n{portal.util.labelBack}
+			</a>
 		</div>
 	</@columns>
 </@row>
 
-  
+<script>
+  $( function() {
+		$(document.body).attr('id','loggedIn');
+  } );
+</script>
