@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<plug-in>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>transparency</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
     <version>1.0.0</version>
-    <documentation></documentation>
-    <installation></installation>
-    <changes></changes>
-    <user-guide></user-guide>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
     <description>transparency.plugin.description</description>
     <provider>transparency.plugin.provider</provider>
     <provider-url>http://fr.lutece.paris.fr/fr/</provider-url>
@@ -27,7 +26,7 @@
             <feature-description>transparency.adminFeature.ManageLobbies.description</feature-description>
             <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/transparency/ManageLobbies.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
+            <feature-icon-url/>
       </admin-feature>
         <admin-feature>
             <feature-id>TRANSPARENCY_APPOINTMENTS_MANAGEMENT</feature-id>
@@ -35,7 +34,7 @@
             <feature-description>transparency.adminFeature.ManageAppointements.description</feature-description>
             <feature-level>3</feature-level>
             <feature-url>jsp/admin/plugins/transparency/ManageAppointments.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
+            <feature-icon-url/>
       </admin-feature>
     </admin-features>    
 
