@@ -67,27 +67,13 @@
         <jiraComponentId>TRANSPRNCY</jiraComponentId>
     </properties>
     
-    <profiles>
-    <profile>
-    <id>copyStaticResources</id>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <outputDirectory>${basedir}/target/lutece/WEB-INF/templates</outputDirectory>
-                    <resources>
-                        <resource>
-                            <directory>webapp/WEB-INF/templates</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    </profile>
-    </profiles>
+    
+    
+    <scm>
+        <connection>scm:git:https://github.com/lutece-secteur-public/opengov-plugin-transparency</connection>
+        <developerConnection>scm:git:https://github.com/lutece-secteur-public/opengov-plugin-transparency</developerConnection>
+        <url>https://github.com/lutece-secteur-public/opengov-plugin-transparency</url>
+        <tag>HEAD</tag>
+    </scm>
     
 </project>
