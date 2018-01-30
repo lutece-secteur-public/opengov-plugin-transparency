@@ -43,7 +43,7 @@
 
         <@formGroup labelKey='#i18n{transparency.modify_appointment.labelLobby}' mandatory=false >
 					<#list appointment.lobbyList as lobby>
-            <p class="form-control-static">${lobby.name} TEST</p>
+            <p class="form-control-static">${lobby.name}</p>
           </#list>
         </@formGroup>
 				<@formGroup labelKey='#i18n{transparency.modify_appointment.labelNewLobby}' helpKey='#i18n{transparency.create_appointment.labelNewLobby.help}' >

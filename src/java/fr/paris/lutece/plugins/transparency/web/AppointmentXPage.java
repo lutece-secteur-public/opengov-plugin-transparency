@@ -174,7 +174,7 @@ public class AppointmentXPage extends MVCApplication
                 isAuthenticated = false;
             }
 
-            _filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, -1 ) );
+            if ( strSearchPeriod != null ) _filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, -1 ) );
             _filter.setLobbyName( strSearchLobby );
             _filter.setElectedOfficialName( strSearchElectedOfficial );
             _filter.setUserId( idUser );
