@@ -3,7 +3,7 @@
 	<@columns>
 		<div class="container">
 		<h2 class="heading-title">#i18n{transparency.modify_appointment.title}</h2>
-		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=meeting'>
+		<@tform class='form-horizontal' action='jsp/site/Portal.jsp?page=meeting' id='form_appointment'>
 			<fieldset>
 				<legend class="sr-only">#i18n{transparency.modify_appointment.title}</legend>
 				<@messages errors=errors />
@@ -74,28 +74,33 @@
      */
     $( function() 
     {
-			$(document.body).attr('id','loggedIn');
+        $(document.body).attr('id','loggedIn');
 
-      var getData = function (request, response) 
-      {
-          $.getJSON(
-              "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
-              function (data) 
-              {
-                  response(data);
-              }
-          );
-      };
-
-      $( "#lobby_select" ).autocomplete(
-      {
-        source: getData,
-        minLength: 3,
-        select: function( event, ui ) 
+        var getData = function (request, response) 
         {
-          $( "#lobby_id" ).val( ui.item.id  );
-        }
-      });
+            $.getJSON(
+                "${base_url}rest/transparency/api/v1/lobbies/search=" + request.term,
+                function (data) 
+                {
+                    response(data);
+                }
+            );
+        };
+
+        $( "#lobby_select" ).autocomplete(
+        {
+          source: getData,
+          minLength: 3,
+          select: function( event, ui ) 
+          {
+              $( "#lobby_id" ).val( ui.item.id  );
+          }                   
+        });
+            
+        $( "#form_appointment" ).submit(function( event ) {
+           $( "#lobby_select" ).val( $( "#lobby_select" ).val().replace(/[&<>"]/,"") );
+        } );
+            
     } );
 </script>
 

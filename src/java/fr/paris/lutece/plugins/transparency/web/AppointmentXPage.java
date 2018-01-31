@@ -440,7 +440,8 @@ public class AppointmentXPage extends MVCApplication
         Lobby lobby = LobbyHome.findByPrimaryKey( idLobby );
 
         // check if it's not a new lobby to create
-        if ( idLobby > 0 && lobby != null && lobby.getName( ).equals( strSelectLobby ) )
+        // (the characters '&', '<', '>', '"' of the lobby name are replaced by "" in the xpage to avoid the XSS control)
+        if ( idLobby > 0 && lobby != null && lobby.getName( ).replaceAll("[&<>\"]","").equals( strSelectLobby ) )
         {
             LobbyAppointmentHome.removeByAppointmentId( _appointment.getId( ) );
             LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ), _appointment.getId( ) ) );
