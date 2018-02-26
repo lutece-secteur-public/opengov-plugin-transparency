@@ -45,6 +45,7 @@ import fr.paris.lutece.plugins.transparency.business.Lobby;
 import fr.paris.lutece.plugins.transparency.business.LobbyAppointment;
 import fr.paris.lutece.plugins.transparency.business.LobbyAppointmentHome;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.SiteMessage;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -62,6 +63,7 @@ import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.util.ReferenceList;
 import java.sql.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.codehaus.plexus.util.StringUtils;
@@ -116,6 +118,10 @@ public class AppointmentXPage extends MVCApplication
     private static final String INFO_APPOINTMENT_REMOVED = "transparency.info.appointment.removed";
     private static final String INFO_ACCESS_DENIED = "transparency.info.appointment.accessdenied";
 
+    // Errors
+    private static final String ERROR_APPOINTMENT_VALIDATION_LOBBY_MANDATORY = "transparency.validation.appointment.Lobby.notEmpty";
+    
+    
     // Message
     private static final String MESSAGE_CONFIRM_REMOVE_APPOINTMENT = "transparency.message.confirmRemoveAppointment";
 
@@ -267,6 +273,16 @@ public class AppointmentXPage extends MVCApplication
             return redirectView( request, VIEW_CREATE_APPOINTMENT );
         }
 
+        // Check if a lobby is selected
+        String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
+        String strSelectLobby = request.getParameter( PARAMETER_SELECT_LOBBY );
+
+        if ( StringUtils.isBlank(strSelectLobby) )
+        {
+            addError( I18nService.getLocalizedString( ERROR_APPOINTMENT_VALIDATION_LOBBY_MANDATORY, request.getLocale( ) ) );
+            return redirectView( request, VIEW_CREATE_APPOINTMENT );
+        }
+        
         AppointmentHome.create( _appointment );
 
         // add elected Official to the appointment
@@ -280,13 +296,12 @@ public class AppointmentXPage extends MVCApplication
         }
 
         // add Lobby to the appointment
-        String strIdLobby = request.getParameter( PARAMETER_ID_LOBBY );
-        String strSelectLobby = request.getParameter( PARAMETER_SELECT_LOBBY );
-
         int idLobby = StringUtil.getIntValue( strIdLobby, -1 );
 
         Lobby lobby = LobbyHome.findByPrimaryKey( idLobby );
-        if ( idLobby > 0 && lobby != null )
+        
+        // (the characters '&', '<', '>', '"' of the lobby name are replaced by "" in the xpage to avoid the XSS control)
+        if ( idLobby > 0 && lobby != null && lobby.getName().replaceAll("[&<>\"]","").equals(strSelectLobby) )
         {
             LobbyAppointmentHome.create( new LobbyAppointment( lobby.getId( ), _appointment.getId( ) ) );
             _appointment.getLobbyList( ).add( lobby );
