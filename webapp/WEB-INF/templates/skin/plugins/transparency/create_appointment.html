@@ -96,6 +96,10 @@
 <script src="js/locales/bootstrap-datepicker.${.locale[0..1]}.js" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
 $(function() {
-        $('#start_date').datepicker({language: '${.locale[0..1]}', endDate: '-1d'});
+        $('#start_date').datepicker({
+            language: '${.locale[0..1]}', 
+            endDate: '-1d',
+            autoclose: 'true'
+        });
 });
 </script>
