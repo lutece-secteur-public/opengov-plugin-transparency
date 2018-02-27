@@ -168,11 +168,12 @@ public final class AppointmentHome
     /**
      * Load the id of all the appointment objects and returns them as a list
      * 
+     * @param filter
      * @return the list which contains the id of all the appointment objects
      */
-    public static List<Integer> getIdAppointmentsList( )
+    public static List<Integer> getAppointmentIdsList( AppointmentFilter filter )
     {
-        return _dao.selectIdAppointmentsList( _plugin );
+        return _dao.selectAppointmentIdsList( filter, _plugin );
     }
 
     /**

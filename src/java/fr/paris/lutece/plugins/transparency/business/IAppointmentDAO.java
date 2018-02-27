@@ -102,6 +102,8 @@ public interface IAppointmentDAO
      * @param filter
      * @param plugin
      *            the Plugin
+     * @param IdsOnly
+     *            select only the Ids
      * @return The list which contains the data of all the appointment objects
      */
     List<Appointment> selectAppointmentsList( AppointmentFilter filter, Plugin plugin );
@@ -109,11 +111,12 @@ public interface IAppointmentDAO
     /**
      * Load the id of all the appointment objects and returns them as a list
      * 
+     * @param filter
      * @param plugin
      *            the Plugin
      * @return The list which contains the id of all the appointment objects
      */
-    List<Integer> selectIdAppointmentsList( Plugin plugin );
+    List<Integer> selectAppointmentIdsList( AppointmentFilter filter, Plugin plugin );
 
     /**
      * Load the data of all the appointment objects and returns them as a referenceList

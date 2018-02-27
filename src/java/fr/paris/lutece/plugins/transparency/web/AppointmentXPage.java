@@ -61,9 +61,9 @@ import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.util.ReferenceList;
+import fr.paris.lutece.util.html.Paginator;
 import java.sql.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.codehaus.plexus.util.StringUtils;
@@ -99,6 +99,8 @@ public class AppointmentXPage extends MVCApplication
     private static final String MARK_BASE_URL = "base_url";
     private static final String MARK_IS_AUTHENTICATED = "is_authenticated";
     private static final String MARK_ELECTEDOFFICIALS_LIST = "electedofficials_list";
+    private static final String MARK_PAGINATOR = "paginator" ;
+    private static final String MARK_SEARCH_FILTER = "search_filter" ;
 
     // Views
     private static final String VIEW_MANAGE_APPOINTMENTS = "manageAppointments";
@@ -127,8 +129,15 @@ public class AppointmentXPage extends MVCApplication
 
     // Session variable to store working values
     private Appointment _appointment;
-    private List<Appointment> _appointmentList;
+    private List<Integer> _appointmentIdsList;
     private AppointmentFilter _filter = new AppointmentFilter( );
+    
+    private int _nItemsPerPage = 10;
+    private String _strCurrentPageIndex = "1";
+    
+    // Constants
+    private static int CONSTANT_DEFAULT_SEARCH_PERIOD = 92 ;
+    
 
     /**
      * Build the Manage View
@@ -141,59 +150,106 @@ public class AppointmentXPage extends MVCApplication
     public XPage getManageAppointments( HttpServletRequest request )
     {
         _appointment = null;
+        List<Appointment> appointmentList = null;
         boolean isAuthenticated = false;
-
-        if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ) != null && _appointmentList != null )
+        Paginator<Integer> paginator ;
+                
+        // check authentification or public mode
+        String idUser = null;
+        try
+        {
+            idUser = checkMyLuteceAuthentication( request );
+            if ( idUser != null )
+                isAuthenticated = true; // if idUser is null, it should be because authentication is not enable
+        }
+        catch( UserNotSignedException e )
+        {
+            // catch the exception : the appointments will be presented in read only mode
+            isAuthenticated = false;
+        }
+        
+        // check type of request : paginating / sorting / new search
+        if ( request.getParameter( Paginator.PARAMETER_PAGE_INDEX ) != null && _appointmentIdsList != null ) 
+        {
+            // paginate list
+            _strCurrentPageIndex = request.getParameter( Paginator.PARAMETER_PAGE_INDEX );
+            paginator = new Paginator<Integer>( _appointmentIdsList, _nItemsPerPage, getViewFullUrl( VIEW_MANAGE_APPOINTMENTS ),
+                Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+            
+            _filter.setListIds( paginator.getPageItems( ) );
+            
+            // get full appointments corresponding to the Ids
+            appointmentList = AppointmentHome.getFullAppointmentsList( _filter );
+        }
+        else if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ) != null && _appointmentIdsList != null )
         {
             // sort list
             if ( request.getParameter( PARAMETER_SORTED_ATTRIBUTE_NAME ).equals( PARAMETER_START_DATE ) )
             {
                 if ( request.getParameter( PARAMETER_ASC ) != null && request.getParameter( PARAMETER_ASC ).equals( "true" ) )
                 {
-                    _appointmentList.sort( ( a1, a2 ) -> a1.getStartDate( ).compareTo( a2.getStartDate( ) ) );
+                    _filter.setOrderBy( PARAMETER_START_DATE + " ASC " );
                 }
                 else
                 {
-                    _appointmentList.sort( ( a1, a2 ) -> a2.getStartDate( ).compareTo( a1.getStartDate( ) ) );
+                    _filter.setOrderBy( PARAMETER_START_DATE + " DESC " );
                 }
             }
+            
+            // reinitialize
+            _strCurrentPageIndex = "1" ;
+            _filter.setListIds( null ) ;
+            
+            // search all Ids whith the same filter
+            _appointmentIdsList = AppointmentHome.getAppointmentIdsList( _filter );
+            
+            paginator = new Paginator<Integer>( _appointmentIdsList, _nItemsPerPage, getViewFullUrl( VIEW_MANAGE_APPOINTMENTS ) ,
+                Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+            
+            _filter.setListIds(  paginator.getPageItems( ) );
+            
+            // get full appointments corresponding to the Ids
+            appointmentList = AppointmentHome.getFullAppointmentsList( _filter );
         }
         else
         {
-            // new search
+            // new search 
             String strSearchPeriod = request.getParameter( PARAMETER_SEARCH_PERIOD );
             String strSearchElectedOfficial = request.getParameter( PARAMETER_SEARCH_ELECTED_OFFICIAL );
             String strSearchLobby = request.getParameter( PARAMETER_SEARCH_LOBBY );
             String strSearchTitle = request.getParameter( PARAMETER_SEARCH_TITLE );
 
-            // check authentification or public mode
-            String idUser = null;
-            try
-            {
-                idUser = checkMyLuteceAuthentication( request );
-                if ( idUser != null )
-                    isAuthenticated = true; // if idUser is null, it should be because authentication is not enable
-            }
-            catch( UserNotSignedException e )
-            {
-                // catch the exception : the appointments will be presented in read only mode
-                isAuthenticated = false;
-            }
-
-            if ( strSearchPeriod != null ) _filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, -1 ) );
+            
+            if ( strSearchPeriod != null ) _filter.setNumberOfDays( StringUtil.getIntValue( strSearchPeriod, CONSTANT_DEFAULT_SEARCH_PERIOD ) );
             _filter.setLobbyName( strSearchLobby );
             _filter.setElectedOfficialName( strSearchElectedOfficial );
             _filter.setUserId( idUser );
             _filter.setTitle( strSearchTitle );
-
-            // search
-            _appointmentList = AppointmentHome.getFullAppointmentsList( _filter );
+            
+            // reinitialize
+            _strCurrentPageIndex = "1" ;
+            _filter.setListIds( null ) ;
+            _filter.setOrderBy( null );
+                        
+            // search all Ids 
+            _appointmentIdsList = AppointmentHome.getAppointmentIdsList( _filter );
+            
+            paginator = new Paginator<Integer>( _appointmentIdsList, _nItemsPerPage, getViewFullUrl( VIEW_MANAGE_APPOINTMENTS ) ,
+                Paginator.PARAMETER_PAGE_INDEX, _strCurrentPageIndex );
+            
+            _filter.setListIds( paginator.getPageItems( ) );
+            
+            // get full appointments corresponding to the Ids
+            appointmentList = AppointmentHome.getFullAppointmentsList( _filter );
+            
         }
 
         Map<String, Object> model = getModel( );
-        model.put( MARK_APPOINTMENT_LIST, _appointmentList );
+        model.put( MARK_APPOINTMENT_LIST, appointmentList );
         model.put( MARK_BASE_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_IS_AUTHENTICATED, isAuthenticated );
+        model.put( MARK_PAGINATOR, paginator);
+        model.put( MARK_SEARCH_FILTER, _filter);
 
         return getXPage( TEMPLATE_MANAGE_APPOINTMENTS, request.getLocale( ), model );
     }

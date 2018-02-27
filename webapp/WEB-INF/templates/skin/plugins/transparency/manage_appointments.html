@@ -13,21 +13,25 @@
 			<form class="form-horizontal" action="jsp/site/Portal.jsp?page=meeting" method="post" name="form_search_appointment" role="form">
 				<@messages errors=errors />
         <@formGroup labelFor='search_title' labelKey='#i18n{transparency.manage_appointments.searchByTitleLabel}'>
-					<@input id='search_title' name='search_title' type='text' value='' />
+					<@input id='search_title' name='search_title' type='text' value=search_filter.title! />
 				</@formGroup>
 				<@formGroup labelFor='search_period' labelKey='#i18n{transparency.manage_appointments.searchByPeriodLabel}'>
 					<@select id='search_period' name='search_period'>
-						<option value="-1">#i18n{transparency.manage_appointments.search_since_default}</option>
-						<option value="7" >#i18n{transparency.manage_appointments.search_since_last_week}</option>
-						<option value="31">#i18n{transparency.manage_appointments.search_since_last_month}</option>
-						<option value="92" selected=selected>#i18n{transparency.manage_appointments.search_since_last_3_months}</option>
+						<option value="-1" <#if search_filter?? && search_filter.numberOfDays == -1>selected=selected</#if>  >
+                                                    #i18n{transparency.manage_appointments.search_since_default}</option>
+						<option value="7"  <#if search_filter?? && search_filter.numberOfDays == 7 >selected=selected</#if>  >
+                                                    #i18n{transparency.manage_appointments.search_since_last_week}</option>
+						<option value="31" <#if search_filter?? && search_filter.numberOfDays == 31>selected=selected</#if>  >
+                                                    #i18n{transparency.manage_appointments.search_since_last_month}</option>
+						<option value="92" <#if search_filter?? && search_filter.numberOfDays == 92>selected=selected</#if> >
+                                                    #i18n{transparency.manage_appointments.search_since_last_3_months}</option>
 					</@select>
 				</@formGroup>
 				<@formGroup labelFor='search_elected_official' labelKey='#i18n{transparency.manage_appointments.searchByElectedOfficialNameLabel}'>
-					<@input type='text' id='search_elected_official' name='search_elected_official' value='' />
+					<@input type='text' id='search_elected_official' name='search_elected_official' value=search_filter.electedOfficialName! />
 				</@formGroup>
 				<@formGroup labelFor='search_lobby' labelKey='#i18n{transparency.manage_appointments.searchByLobbyNameLabel}'>
-					<@input type='text' id='search_lobby' name='search_lobby' value='' />
+					<@input type='text' id='search_lobby' name='search_lobby' value=search_filter.lobbyName! />
 				</@formGroup>
 				<@formGroup>
 					<@button type='submit' title='Rechercher' name='action_searchAppointment' buttonIcon='search' size='sm' />
@@ -98,6 +102,13 @@
 				</table>
 			</div>
 		</div>
+	</@columns>
+</@row>
+<@row>
+	<@columns>
+		<div class="container">    
+                    <@pagination paginator=paginator />
+                </div>
 	</@columns>
 </@row>
 </div>

@@ -38,6 +38,8 @@
  */
 package fr.paris.lutece.plugins.transparency.business;
 
+import java.util.List;
+
 /**
  *
  * @author leridons
@@ -53,6 +55,7 @@ public class AppointmentFilter
     private String _strOrderBy; // sort records
     private int _nIdAppointment = -1;
     private boolean _bAsc; // sort records order (ASC = true)
+    private List<Integer> _listIds;
 
     /**
      * get NumberOfDays
@@ -213,5 +216,25 @@ public class AppointmentFilter
     {
         this._strTitle = _strTitle;
     }
+    
+    /**
+     * get the id list
+     * 
+     * @return list id
+     */
+    public List<Integer> getListIds() 
+    {
+        return _listIds;
+    }
+
+    /**
+     * set the idList
+     * @param _listIds 
+     */
+    public void setListIds( List<Integer> _listIds) 
+    {
+        this._listIds = _listIds;
+    }
+    
 
 }
