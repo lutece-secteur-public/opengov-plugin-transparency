@@ -1,3 +1,56 @@
+<#macro paginationRDV paginator >
+	<#assign nbLinkPagesToDisplay = 4 />
+	<#assign offsetPrev = nbLinkPagesToDisplay / 2 />
+	<#assign offsetNext = nbLinkPagesToDisplay / 2 />
+	<#if ( paginator.pageCurrent <= nbLinkPagesToDisplay - offsetPrev )>
+		<#assign offsetPrev = paginator.pageCurrent - 1 />
+		<#assign offsetNext = nbLinkPagesToDisplay - offsetPrev />
+	<#elseif ( paginator.pageCurrent + offsetNext > paginator.pagesCount )>
+		<#assign offsetNext = paginator.pagesCount - paginator.pageCurrent />
+		<#assign offsetPrev = nbLinkPagesToDisplay - offsetNext />
+	</#if>
+
+<#if ( paginator.pagesCount > 1 )>
+	<#if ( paginator.pageCurrent - offsetPrev > 1 )>
+		<a href="${paginator.firstPageLink?xhtml}">
+			<i class="fa fa-angle-double-left"></i>&nbsp;#i18n{portal.util.labelFirst}
+		</a>
+	</#if>
+	<#if ( paginator.pageCurrent > 1 )>
+		<a href="${paginator.previousPageLink?xhtml}">
+			<i class="fa fa-angle-left"></i>&nbsp;#i18n{portal.util.labelPrevious}
+		</a>
+	<#else>
+		&nbsp;&nbsp;
+	</#if>
+	<#if ( paginator.pageCurrent - offsetPrev > 1 )>
+		<strong>...</strong>
+	</#if>
+	<#list paginator.pagesLinks as link>
+		<#if link.index == paginator.pageCurrent>
+			<strong>${link.name}</strong>
+		<#else>
+			<a href="${link.url?xhtml}">${link.name}</a>
+		</#if>
+	</#list>
+	<#if ( paginator.pageCurrent + offsetNext < paginator.pagesCount )>
+		<strong>...</strong>
+	</#if>
+	<#if ( paginator.pageCurrent < paginator.pagesCount )>
+		<a href="${paginator.nextPageLink?xhtml}">
+			<i class="fa fa-angle-right"></i>&nbsp;#i18n{portal.util.labelNext}
+		</a>
+		<#if ( paginator.pageCurrent + offsetNext < paginator.pagesCount )>
+			<a href="${paginator.lastPageLink?xhtml}">
+				<i class="fa fa-angle-double-right"></i>&nbsp;#i18n{portal.util.labelLast}
+			</a>
+		</#if>
+	<#else>
+		&nbsp;&nbsp;
+	</#if>
+</#if>
+</#macro>
+
 <@row>
 	<@columns>
 		<div class="container">
@@ -94,7 +147,7 @@
 <@row>
 	<@columns>
 		<div class="container">    
-                    <@pagination paginator=paginator />
+                    <@paginationRDV paginator=paginator />
                 </div>
 	</@columns>
 </@row>
