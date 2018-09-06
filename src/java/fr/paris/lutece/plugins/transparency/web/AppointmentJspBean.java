@@ -46,7 +46,6 @@ import fr.paris.lutece.plugins.transparency.business.LobbyAppointmentHome;
 import fr.paris.lutece.plugins.transparency.business.LobbyHome;
 import fr.paris.lutece.plugins.transparency.service.ExportAppointmentService;
 import fr.paris.lutece.portal.business.user.AdminUser;
-import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -61,8 +60,6 @@ import java.sql.Date;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.codehaus.plexus.util.StringUtils;
@@ -354,7 +351,7 @@ public class AppointmentJspBean extends AbstractManageAppointementsJspBean
      *
      * @param request
      *            The Http request
-     * @return the html code of the appointment form
+     * @param response
      */
     @Action( ACTION_EXPORT_APPOINTMENT )
     public void doExportAppointment( HttpServletRequest request, HttpServletResponse response  ) 

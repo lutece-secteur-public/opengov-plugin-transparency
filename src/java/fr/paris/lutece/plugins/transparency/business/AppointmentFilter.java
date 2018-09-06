@@ -60,7 +60,7 @@ public class AppointmentFilter
     /**
      * get NumberOfDays
      * 
-     * @return
+     * @return number of days
      */
     public int getNumberOfDays( )
     {
@@ -100,7 +100,7 @@ public class AppointmentFilter
     /**
      * get the Asc order
      * 
-     * @return
+     * @return if is Asc order
      */
     public boolean isAsc( )
     {
@@ -140,7 +140,7 @@ public class AppointmentFilter
     /**
      * get Elected Official name
      * 
-     * @return
+     * @return electd official name
      */
     public String getElectedOfficialName( )
     {

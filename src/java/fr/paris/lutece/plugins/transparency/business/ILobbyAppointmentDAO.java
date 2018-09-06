@@ -54,8 +54,7 @@ public interface ILobbyAppointmentDAO
     /**
      * Delete a record from the table
      * 
-     * @param nKey
-     *            The identifier of the LobbyAppointment to delete
+     * @param lobbyAppointment
      * @param plugin
      *            the Plugin
      */
@@ -64,8 +63,7 @@ public interface ILobbyAppointmentDAO
     /**
      * Delete a record from the table
      * 
-     * @param nKey
-     *            The identifier of the LobbyAppointment to delete
+     * @param nIdAppointment
      * @param plugin
      *            the Plugin
      */

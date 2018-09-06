@@ -37,6 +37,8 @@ package fr.paris.lutece.plugins.transparency.business;
 import fr.paris.lutece.test.LuteceTestCase;
 
 import java.sql.Date;
+import java.util.Calendar;
+import org.apache.commons.lang.time.DateUtils;
 
 public class LobbyBusinessTest extends LuteceTestCase
 {
@@ -72,7 +74,8 @@ public class LobbyBusinessTest extends LuteceTestCase
         assertEquals( lobbyStored.getNationalIdType( ), lobby.getNationalIdType( ) );
         assertEquals( lobbyStored.getUrl( ), lobby.getUrl( ) );
         assertEquals( lobbyStored.getJsonData( ), lobby.getJsonData( ) );
-        assertEquals( lobbyStored.getVersionDate( ), lobby.getVersionDate( ) );
+        assertEquals( DateUtils.truncate(lobbyStored.getVersionDate( ),Calendar.DATE),
+             DateUtils.truncate(lobby.getVersionDate( ),Calendar.DATE) );
 
         // Update test
         lobby.setName( NAME2 );
@@ -88,7 +91,8 @@ public class LobbyBusinessTest extends LuteceTestCase
         assertEquals( lobbyStored.getNationalIdType( ), lobby.getNationalIdType( ) );
         assertEquals( lobbyStored.getUrl( ), lobby.getUrl( ) );
         assertEquals( lobbyStored.getJsonData( ), lobby.getJsonData( ) );
-        assertEquals( lobbyStored.getVersionDate( ), lobby.getVersionDate( ) );
+        assertEquals( DateUtils.truncate(lobbyStored.getVersionDate( ),Calendar.DATE),
+             DateUtils.truncate(lobby.getVersionDate( ),Calendar.DATE) );
 
         // List test
         LobbyHome.getLobbiesList( );

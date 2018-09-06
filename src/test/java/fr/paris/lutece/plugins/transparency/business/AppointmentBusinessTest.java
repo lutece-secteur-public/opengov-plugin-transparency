@@ -37,6 +37,8 @@ package fr.paris.lutece.plugins.transparency.business;
 import fr.paris.lutece.test.LuteceTestCase;
 
 import java.sql.Date;
+import java.util.Calendar;
+import org.apache.commons.lang.time.DateUtils;
 
 public class AppointmentBusinessTest extends LuteceTestCase
 {
@@ -72,8 +74,10 @@ public class AppointmentBusinessTest extends LuteceTestCase
         Appointment appointmentStored = AppointmentHome.findByPrimaryKey( appointment.getId( ) );
         assertEquals( appointmentStored.getTitle( ), appointment.getTitle( ) );
         assertEquals( appointmentStored.getDescription( ), appointment.getDescription( ) );
-        assertEquals( appointmentStored.getStartDate( ), appointment.getStartDate( ) );
-        assertEquals( appointmentStored.getEndDate( ), appointment.getEndDate( ) );
+        assertEquals( DateUtils.truncate(appointmentStored.getStartDate( ),Calendar.DATE),
+             DateUtils.truncate(appointment.getStartDate( ),Calendar.DATE) );
+        assertEquals( DateUtils.truncate(appointmentStored.getEndDate( ),Calendar.DATE),
+             DateUtils.truncate(appointment.getEndDate( ),Calendar.DATE) );
         assertEquals( appointmentStored.getTypeId( ), appointment.getTypeId( ) );
         assertEquals( appointmentStored.getTypeLabel( ), appointment.getTypeLabel( ) );
         assertEquals( appointmentStored.getUrl( ), appointment.getUrl( ) );
@@ -90,8 +94,10 @@ public class AppointmentBusinessTest extends LuteceTestCase
         appointmentStored = AppointmentHome.findByPrimaryKey( appointment.getId( ) );
         assertEquals( appointmentStored.getTitle( ), appointment.getTitle( ) );
         assertEquals( appointmentStored.getDescription( ), appointment.getDescription( ) );
-        assertEquals( appointmentStored.getStartDate( ), appointment.getStartDate( ) );
-        assertEquals( appointmentStored.getEndDate( ), appointment.getEndDate( ) );
+        assertEquals( DateUtils.truncate(appointmentStored.getStartDate( ),Calendar.DATE),
+             DateUtils.truncate(appointment.getStartDate( ),Calendar.DATE) );
+        assertEquals( DateUtils.truncate(appointmentStored.getEndDate( ),Calendar.DATE),
+             DateUtils.truncate(appointment.getEndDate( ),Calendar.DATE) );
         assertEquals( appointmentStored.getTypeId( ), appointment.getTypeId( ) );
         assertEquals( appointmentStored.getTypeLabel( ), appointment.getTypeLabel( ) );
         assertEquals( appointmentStored.getUrl( ), appointment.getUrl( ) );
