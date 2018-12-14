@@ -5,18 +5,10 @@
  */
 package fr.paris.lutece.plugins.transparency.service;
 
-import fr.paris.lutece.plugins.mylutece.business.attribute.IAttribute;
-import fr.paris.lutece.plugins.mylutece.business.attribute.MyLuteceUserField;
-import fr.paris.lutece.plugins.mylutece.business.attribute.MyLuteceUserFieldHome;
-import fr.paris.lutece.plugins.mylutece.modules.database.authentication.business.DatabaseHome;
-import fr.paris.lutece.plugins.mylutece.modules.database.authentication.service.DatabasePlugin;
-import fr.paris.lutece.plugins.mylutece.service.MyLutecePlugin;
 import fr.paris.lutece.plugins.transparency.business.Appointment;
 import fr.paris.lutece.portal.business.xsl.XslExport;
 import fr.paris.lutece.portal.business.xsl.XslExportHome;
-import fr.paris.lutece.portal.service.admin.AccessDeniedException;
-import fr.paris.lutece.portal.service.plugin.Plugin;
-import fr.paris.lutece.portal.service.plugin.PluginService;
+import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.xsl.XslExportService;
 import fr.paris.lutece.util.string.StringUtil;
 import fr.paris.lutece.util.xml.XmlUtil;
@@ -28,7 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -123,11 +116,16 @@ public class ExportAppointmentService {
         StringBuffer sbXml = new StringBuffer(  );
         DateFormat dateFormat = new SimpleDateFormat(  );
 
+        
+        if ( appointment.getId() == 36 ) { 
+            AppLogService.info("appointment id : " + appointment.getId());
+        }
+        
         XmlUtil.beginElement( sbXml, CONSTANT_XML_APPOINTMENT );
         
         XmlUtil.addElement( sbXml, CONSTANT_XML_ID, appointment.getId());
-        XmlUtil.addElement( sbXml, CONSTANT_XML_TITLE, appointment.getTitle( ) );
-        XmlUtil.addElement( sbXml, CONSTANT_XML_DESCRIPTION, appointment.getDescription( ) );
+        XmlUtil.addElement( sbXml, CONSTANT_XML_TITLE, StringEscapeUtils.escapeXml( appointment.getTitle( ) ) );
+        XmlUtil.addElement( sbXml, CONSTANT_XML_DESCRIPTION, StringEscapeUtils.escapeXml(  appointment.getDescription( ) ) );
         XmlUtil.addElement( sbXml, CONSTANT_XML_STARTDATE, dateFormat.format( appointment.getStartDate( ) ) );
         
         List<String> electedOfficialsList = 
@@ -135,15 +133,15 @@ public class ExportAppointmentService {
                     .stream()
                     .map(e -> e.getLastName())
                     .collect(Collectors.toList( ) );
-        XmlUtil.addElement( sbXml, CONSTANT_XML_ELECTEDOFFICIALS, (!electedOfficialsList.isEmpty()?electedOfficialsList.get(0):"") );
+        XmlUtil.addElement( sbXml, CONSTANT_XML_ELECTEDOFFICIALS, (!electedOfficialsList.isEmpty()?StringEscapeUtils.escapeXml( electedOfficialsList.get(0) ):"") );
         
         List<String> lobbyList = 
                 appointment.getLobbyList()
                     .stream()
                     .map(e -> e.getName())
                     .collect(Collectors.toList( ) );
-        XmlUtil.addElement( sbXml, CONSTANT_XML_LOBBIES, (!lobbyList.isEmpty()?lobbyList.get(0):"") );
-        XmlUtil.addElement( sbXml, CONSTANT_XML_CONTACTS, appointment.getContacts( ) );
+        XmlUtil.addElement( sbXml, CONSTANT_XML_LOBBIES, (!lobbyList.isEmpty()?StringEscapeUtils.escapeXml( lobbyList.get(0) ):"") );
+        XmlUtil.addElement( sbXml, CONSTANT_XML_CONTACTS, StringEscapeUtils.escapeXml( appointment.getContacts( ) ) );
         
         XmlUtil.endElement( sbXml, CONSTANT_XML_APPOINTMENT );
 
