@@ -98,6 +98,7 @@ public class ExportAppointmentService {
 
         
             PrintWriter out = response.getWriter(  );
+            out.write('\ufeff'); // add utf8 BOM
             out.write( strExportedAppointments );
             out.flush(  );
             out.close(  );
