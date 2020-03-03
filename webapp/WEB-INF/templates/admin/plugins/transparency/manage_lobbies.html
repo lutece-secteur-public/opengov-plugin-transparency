@@ -42,9 +42,9 @@
                 ${lobby.versionDate}
             </td>
         <td>
-			<@aButton href='jsp/admin/plugins/transparency/ManageLobbies.jsp?view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' showTitle=false />
+			<@aButton href='jsp/admin/plugins/transparency/ManageLobbies.jsp?view=modifyLobby&id=${lobby.id}' title='#i18n{portal.util.labelModify}' buttonIcon='pencil' hideTitle=['all'] />
 						
-			<@aButton href='jsp/admin/plugins/transparency/ManageLobbies.jsp?action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' showTitle=false />
+			<@aButton href='jsp/admin/plugins/transparency/ManageLobbies.jsp?action=confirmRemoveLobby&id=${lobby.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' color='btn-danger' hideTitle=['all'] />
 
         </td>
         </tr>
