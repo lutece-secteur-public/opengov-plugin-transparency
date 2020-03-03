@@ -146,8 +146,8 @@
 						</td>   
 						<#if is_authenticated  = true > 
 						<td>
-							<@aButton href='jsp/site/Portal.jsp?page=meeting&view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' showTitle=false buttonIcon='pencil-square-o' size='xs' />
-							<@aButton href='jsp/site/Portal.jsp?page=meeting&action=confirmRemoveAppointment&id=${appointment.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' showTitle=false color='btn-danger' size='xs' />
+							<@aButton href='jsp/site/Portal.jsp?page=meeting&view=modifyAppointment&id=${appointment.id}' title='#i18n{portal.util.labelModify}' hideTitle=['all'] buttonIcon='pencil-square-o' size='xs' />
+							<@aButton href='jsp/site/Portal.jsp?page=meeting&action=confirmRemoveAppointment&id=${appointment.id}' title='#i18n{portal.util.labelDelete}' buttonIcon='trash' hideTitle=['all'] color='btn-danger' size='xs' />
 						</td>
 						</#if>
 					</tr>
